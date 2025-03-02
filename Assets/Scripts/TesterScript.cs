@@ -37,15 +37,15 @@ public class TesterScript : MonoBehaviour
     /// <summary>
     /// Updates the timer and spawns particle effects when the interval elapses.
     /// </summary>
-    private void Update()
-    {
-        timer += Time.deltaTime;
-        if (timer >= spawnInterval)
-        {
-            SpawnParticleEffect();
-            timer = 0f;
-        }
-    }
+    // private void Update()
+    // {
+    //     timer += Time.deltaTime;
+    //     if (timer >= spawnInterval)
+    //     {
+    //         SpawnParticleEffect();
+    //         timer = 0f;
+    //     }
+    // }
 
     /// <summary>
     /// Spawns the particle effect prefab at a random position within the camera's viewport.

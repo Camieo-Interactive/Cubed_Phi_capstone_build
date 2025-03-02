@@ -12,6 +12,8 @@ public class PoolManager : SingletonBase<PoolManager>
     private Dictionary<int, int> _objToKey = new();
 
     //  ------------------ Public ------------------
+    [Header("Pool Settings")]
+    [Tooltip("Parent GameObject where all pooled objects will be stored.")]
     public GameObject poolParent;
 
     /// <summary>
@@ -23,8 +25,9 @@ public class PoolManager : SingletonBase<PoolManager>
     /// Retrieves an object from the pool or instantiates a new one if none are available.
     /// </summary>
     /// <param name="prefab">The prefab to pool.</param>
+    /// <param name="parent">The parent transform for the instantiated object.</param>
     /// <returns>An active GameObject instance.</returns>
-    public GameObject GetObject(GameObject prefab)
+    public GameObject GetObject(GameObject prefab, Transform parent = null)
     {
         // Create a key for the prefab using its name hash.
         int key = Animator.StringToHash(prefab.name);
@@ -36,8 +39,10 @@ public class PoolManager : SingletonBase<PoolManager>
         Stack<GameObject> pool = _pools[key];
 
         // Retrieve an object from the pool or instantiate a new one.
-        GameObject obj = pool.Count > 0 ?  pool.Pop() : Instantiate(prefab, poolParent.transform);
+        GameObject obj = pool.Count > 0 ? pool.Pop() : Instantiate(prefab);
 
+        // Set parent correctly while retaining local transformation.
+        obj.transform.SetParent(parent != null ? parent : poolParent.transform, false);
         // Activate the object.
         obj.SetActive(true);
 
@@ -54,10 +59,11 @@ public class PoolManager : SingletonBase<PoolManager>
     /// <param name="prefab">The prefab to pool.</param>
     /// <param name="pos">The position to set.</param>
     /// <param name="quaternion">The rotation to set.</param>
+    /// <param name="parent">Optional parent transform.</param>
     /// <returns>An active GameObject instance with updated transform.</returns>
-    public GameObject GetObject(GameObject prefab, Vector3 pos, Quaternion quaternion)
+    public GameObject GetObject(GameObject prefab, Vector3 pos, Quaternion quaternion, Transform parent = null)
     {
-        GameObject retval = GetObject(prefab);
+        GameObject retval = GetObject(prefab, parent);
         retval.transform.SetPositionAndRotation(pos, quaternion);
         return retval;
     }
@@ -73,7 +79,8 @@ public class PoolManager : SingletonBase<PoolManager>
 
         // Ensure the pool exists for this prefab.
         if (!_pools.ContainsKey(key)) _pools[key] = new Stack<GameObject>();
-
+        // Reset parent to the pool parent while preserving local transformation.
+        obj.transform.SetParent(poolParent.transform, false);
         // Deactivate the object.
         obj.SetActive(false);
 

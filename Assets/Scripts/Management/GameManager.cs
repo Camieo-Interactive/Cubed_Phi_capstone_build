@@ -10,6 +10,9 @@ using UnityEngine;
 /// </remarks>
 public class GameManager : SingletonBase<GameManager>
 {
+    [Header("Card List")]
+    [Tooltip("Card List Scriptable Object")]
+    public CardList currentCardList;
     //  ------------------ Public ------------------
     [Header("UI Elements")]
     [Tooltip("Text UI element that displays the bit count.")]
