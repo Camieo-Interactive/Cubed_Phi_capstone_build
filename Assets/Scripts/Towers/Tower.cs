@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Tower : MonoBehaviour, IDamageable
+public abstract class Tower : MonoBehaviour, IDamageable
 {
     public void ChangeHealth(int damageDelta)
     {

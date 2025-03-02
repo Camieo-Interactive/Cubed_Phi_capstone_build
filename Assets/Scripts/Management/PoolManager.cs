@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -25,39 +26,23 @@ public class PoolManager : SingletonBase<PoolManager>
     /// <returns>An active GameObject instance.</returns>
     public GameObject GetObject(GameObject prefab)
     {
-        Debug.Log($"{prefab.name} @ Get Object");
         // Create a key for the prefab using its name hash.
         int key = Animator.StringToHash(prefab.name);
 
         // Ensure a stack exists for this prefab.
-        if (!_pools.ContainsKey(key))
-        {
-            _pools[key] = new Stack<GameObject>();
-            Debug.Log("Initializing new stack @ Get Object");
-        }
+        if (!_pools.ContainsKey(key)) _pools[key] = new Stack<GameObject>();
 
         // Retrieve the pool for this prefab.
         Stack<GameObject> pool = _pools[key];
 
         // Retrieve an object from the pool or instantiate a new one.
-        GameObject obj;
-        if (pool.Count > 0)
-        {
-            obj = pool.Pop();
-            Debug.Log($"Returning an object @ Get Object: Stack size {pool.Count}");
-        }
-        else
-        {
-            obj = Instantiate(prefab, poolParent.transform);
-            Debug.Log("Making a new object @ Get Object");
-        }
+        GameObject obj = pool.Count > 0 ?  pool.Pop() : Instantiate(prefab, poolParent.transform);
 
         // Activate the object.
         obj.SetActive(true);
 
         // Map the object to its pool key.
         int secKey = Animator.StringToHash(obj.name);
-        Debug.Log($"New key: {secKey} to {key}");
         _objToKey[secKey] = key;
 
         return obj;
@@ -85,18 +70,9 @@ public class PoolManager : SingletonBase<PoolManager>
     {
         int secKey = Animator.StringToHash(obj.name);
         int key = _objToKey[secKey];
-        Debug.Log($"{obj} @ Key {key} @ Return Object");
 
         // Ensure the pool exists for this prefab.
-        if (!_pools.ContainsKey(key))
-        {
-            _pools[key] = new Stack<GameObject>();
-            Debug.Log("Initializing new stack @ Return Object");
-        }
-        else
-        {
-            Debug.Log("Base in pool @ Return Object");
-        }
+        if (!_pools.ContainsKey(key)) _pools[key] = new Stack<GameObject>();
 
         // Deactivate the object.
         obj.SetActive(false);
