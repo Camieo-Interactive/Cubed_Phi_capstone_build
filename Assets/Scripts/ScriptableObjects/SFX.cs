@@ -1,5 +1,7 @@
 using UnityEngine;
 
-// Inhertance am I right?
+/// <summary>
+/// Sound asset for sound effects (SFX).
+/// </summary>
 [CreateAssetMenu(fileName = "New SFX", menuName = "Sounds/SFX")]
-public class SFX : Sound {}
+public class SFX : Sound { }

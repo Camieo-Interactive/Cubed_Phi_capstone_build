@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour, IDamageable
 {
-    public void changeHealth(int damageDelta)
+    public void ChangeHealth(int damageDelta)
     {
         throw new System.NotImplementedException();
     }

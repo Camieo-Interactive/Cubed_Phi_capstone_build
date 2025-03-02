@@ -1,5 +1,7 @@
 using UnityEngine;
 
-// Inhertance am I right?
+/// <summary>
+/// Sound asset for background music (BGM).
+/// </summary>
 [CreateAssetMenu(fileName = "New BGM", menuName = "Sounds/BGM")]
-public class BGM : Sound {}
+public class BGM : Sound { }
