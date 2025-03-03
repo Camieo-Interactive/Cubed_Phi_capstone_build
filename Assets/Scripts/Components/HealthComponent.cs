@@ -64,12 +64,11 @@ public class HealthComponent : MonoBehaviour
     {
         OnHealthChanged?.Invoke(value.damage);
         currentStatus = value.damageStatus;
-
-        if (currentStatus != DamageStatus.STUN)
+        if(value.damageStatus != DamageStatus.NONE) {
+            StopAllCoroutines();
             StartCoroutine(WaitForStatus(value.statusDuration));
-
+        }
         _currentHealth += value.damage;
-
         if (_currentHealth <= 0)
             onDeath?.Invoke();
     }

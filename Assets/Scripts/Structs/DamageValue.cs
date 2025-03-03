@@ -17,12 +17,6 @@ public struct DamageValue
     public int damage;
 
     /// <summary>
-    /// The critical tier of the damage, if applicable.
-    /// </summary>
-    [Tooltip("The critical tier of the damage, if applicable.")]
-    public int critTier;
-
-    /// <summary>
     /// The status effect associated with the damage.
     /// </summary>
     [Tooltip("The status effect associated with the damage.")]

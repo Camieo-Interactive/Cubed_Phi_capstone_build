@@ -10,8 +10,8 @@ public enum DamageStatus
     [Tooltip("No status effect.")]
     NONE,
 
-    [Tooltip("Stuns the target.")]
-    STUN,
+    [Tooltip("Slows the target.")]
+    SLOW,
 
     [Tooltip("Applies poison damage over time.")]
     POISON,

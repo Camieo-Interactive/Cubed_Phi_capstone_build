@@ -26,6 +26,7 @@ public class GameControls : MonoBehaviour
         _controls = new GameInputActions();
         _move = _controls.Game.Move;
         _select = _controls.Game.Select;
+        _select.performed += _ => selectorHandler.PlaceTile(_move.ReadValue<Vector2>());
     }
 
     /// <summary>

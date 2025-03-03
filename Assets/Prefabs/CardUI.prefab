@@ -54,10 +54,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   button: {fileID: 2911738077049388611}
+  image: {fileID: 8448493436799979506}
   frontImage: {fileID: 7963296052430264004}
   backImage: {fileID: 3187529540053439262}
+  nonInteractable: {fileID: 21300000, guid: 580f85af021154a439757b66ea71fa2f, type: 3}
+  interactable: {fileID: 226413703, guid: 072cb6441c23e6a489493ea5192798eb, type: 3}
   animator: {fileID: 6802395830027416829}
-  isFlipped: 0
 --- !u!95 &6802395830027416829
 Animator:
   serializedVersion: 5
@@ -148,10 +150,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 0}
-  UICard: {fileID: 8392251424303739069}
   cardImage: {fileID: 967984394246799145}
   cardNameText: {fileID: 3238265033138952823}
   cardCostText: {fileID: 7114988155328643773}
+  cardAnimator: {fileID: 5192552030850164962}
+  cardUsed: 0
+  cardButton: {fileID: 9152815931910287545}
 --- !u!1 &3187529540053439262
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,6 +587,7 @@ GameObject:
   - component: {fileID: 978095563664833027}
   - component: {fileID: 9152815931910287545}
   - component: {fileID: 5192552030850164962}
+  - component: {fileID: 6908231517955551654}
   m_Layer: 5
   m_Name: FrontCard
   m_TagString: Untagged
@@ -693,7 +698,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 978095563664833027}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6700758357122459006}
+        m_TargetAssemblyTypeName: Card, Assembly-CSharp
+        m_MethodName: CardPressed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!95 &5192552030850164962
 Animator:
   serializedVersion: 5
@@ -715,3 +732,32 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6908231517955551654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7963296052430264004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 10
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6700758357122459006}
+          m_TargetAssemblyTypeName: Card, Assembly-CSharp
+          m_MethodName: CardDeselected
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2

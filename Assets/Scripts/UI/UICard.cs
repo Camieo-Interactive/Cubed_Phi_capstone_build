@@ -10,10 +10,13 @@ using UnityEngine.UI; // New Input System
 public class UICard : MonoBehaviour
 {
     //  ------------------ Public ------------------
-    
+
     [Header("References")]
     [Tooltip("Reference to the button component.")]
     public Button button;
+
+    [Tooltip("Reference to the image component.")]
+    public Image image;
 
     [Header("Card Images")]
     [Tooltip("The front image of the card.")]
@@ -22,12 +25,15 @@ public class UICard : MonoBehaviour
     [Tooltip("The back image of the card.")]
     public GameObject backImage;
 
+    [Tooltip("Sprite for when the card is non-interactable.")]
+    public Sprite nonInteractable;
+
+    [Tooltip("Sprite for when the card is interactable.")]
+    public Sprite interactable;
+
     [Header("Animation")]
     [Tooltip("Animator controlling the flip animation.")]
     public Animator animator;
-
-    //  ------------------ Private ------------------
-    private bool _isFlipped;
 
     /// <summary>
     /// Triggers the flip animation.
@@ -41,8 +47,9 @@ public class UICard : MonoBehaviour
     /// <summary>
     /// Triggers the unflip animation.
     /// </summary>
-    public void UnFlipCard() {
-        if(!_isFlipped) return;
+    public void UnFlipCard()
+    {
+        if (!_isFlipped) return;
         animator.Play("UnFlipCard");
     }
 
@@ -52,12 +59,24 @@ public class UICard : MonoBehaviour
     /// </summary>
     public void ToggleVisibility()
     {
-        if(_isFlipped) {
-            button.interactable = true;
+        if (_isFlipped)
+        {
+            Card card = GetComponent<Card>();
+            if (card.cardUsed)
+            {
+                button.interactable = false;
+                image.sprite = nonInteractable;
+            }
+            else button.interactable = true;
             transform.rotation = Quaternion.identity;
         }
+
         _isFlipped = !_isFlipped;
         frontImage.SetActive(_isFlipped);
         backImage.SetActive(!_isFlipped);
     }
+
+    //  ------------------ Private ------------------
+
+    private bool _isFlipped;
 }

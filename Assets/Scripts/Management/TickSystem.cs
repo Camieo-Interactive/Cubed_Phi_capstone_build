@@ -19,6 +19,11 @@ public class TickSystem : SingletonBase<TickSystem>
     /// Event triggered every tick.
     /// </summary>
     public static event OnTick OnTickAction;
+    
+    /// <summary>
+    /// Called after the singleton instance is initialized.
+    /// </summary>
+    public override void PostAwake() => StartCoroutine(TickTimer());
 
     //  ------------------ Private ------------------
     /// <summary>
@@ -40,8 +45,5 @@ public class TickSystem : SingletonBase<TickSystem>
         }
     }
 
-    /// <summary>
-    /// Called after the singleton instance is initialized.
-    /// </summary>
-    public override void PostAwake() => StartCoroutine(TickTimer());
+
 }

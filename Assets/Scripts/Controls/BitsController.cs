@@ -40,9 +40,6 @@ public class BitsController : MonoBehaviour
         triggerModule.SetCollider(0, triggerCollider);
     }
 
-    //  ------------------ Protected ------------------
-    // (No protected members at this time)
-
     //  ------------------ Private ------------------
     private List<ParticleSystem.Particle> _particles = new();
 

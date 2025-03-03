@@ -11,7 +11,6 @@ public abstract class Sound : ScriptableObject
 {
     //  ------------------ Public ------------------
     
-    //  -------------------- Sound Details --------------------
     [Header("Sound Details")]
     [Tooltip("Display name for this sound.")]
     public string soundName;
@@ -28,7 +27,6 @@ public abstract class Sound : ScriptableObject
     [Tooltip("Hash of the sound name for quick lookup.")]
     public int nameHash;
 
-    //  -------------------- Audio Settings --------------------
     [Header("Audio Settings")]
     [Tooltip("Audio clip for this sound.")]
     public AudioClip clip;

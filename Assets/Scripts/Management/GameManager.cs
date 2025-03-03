@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -10,13 +11,30 @@ using UnityEngine;
 /// </remarks>
 public class GameManager : SingletonBase<GameManager>
 {
-    [Header("Card List")]
-    [Tooltip("Card List Scriptable Object")]
-    public CardList currentCardList;
     //  ------------------ Public ------------------
+
+    [Header("Card List")]
+    [Tooltip("Card List Scriptable Object.")]
+    public CardList currentCardList;
+
+    [Tooltip("Card currently selected.")]
+    public Card selectedCard = null;
+
     [Header("UI Elements")]
     [Tooltip("Text UI element that displays the bit count.")]
     public TextMeshProUGUI bitCount;
+
+    [Tooltip("The Mouse object that is the trigger for particle effects.")]
+    public GameObject mouseTrigger;
+
+    [Tooltip("Deck currently in use.")]
+    public Deck CardDeck;
+
+    [Tooltip("Grid currently in use.")]
+    public Grid grid;
+
+    [Tooltip("Dictionary tracking the locations of buildings.")]
+    public Dictionary<Vector3Int, bool> buildingLocations = new();
 
     /// <summary>
     /// The total bits collected.
@@ -37,7 +55,7 @@ public class GameManager : SingletonBase<GameManager>
     /// <summary>
     /// Called after the singleton instance is initialized.
     /// </summary>
-    public override void PostAwake() { }
+    public override void PostAwake() => bitCount.text = $"Bits: 0";
 
     /// <summary>
     /// Raises the OnBitChange event with the specified delta.
@@ -46,12 +64,12 @@ public class GameManager : SingletonBase<GameManager>
     public static void RaiseBitChange(long bitDelta) => OnBitChange?.Invoke(bitDelta);
 
     //  ------------------ Private ------------------
+
     /// <summary>
     /// Handles bit change events by updating the total bits and the UI text.
     /// </summary>
     /// <param name="bitDelta">The change in bits (positive or negative).</param>
-    private void HandleBitChange(long bitDelta) =>
-        bitCount.text = $"Bits: {BitsCollected += bitDelta}";
+    private void HandleBitChange(long bitDelta) => bitCount.text = $"Bits: {BitsCollected += bitDelta}";
 
     /// <summary>
     /// Subscribes to the bit change event.

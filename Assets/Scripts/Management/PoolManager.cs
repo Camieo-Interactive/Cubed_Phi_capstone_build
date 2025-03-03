@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,10 +8,6 @@ using UnityEngine;
 /// </summary>
 public class PoolManager : SingletonBase<PoolManager>
 {
-    //  ------------------ Private ------------------
-    private Dictionary<int, Stack<GameObject>> _pools = new();
-    private Dictionary<int, int> _objToKey = new();
-
     //  ------------------ Public ------------------
     [Header("Pool Settings")]
     [Tooltip("Parent GameObject where all pooled objects will be stored.")]
@@ -108,4 +105,8 @@ public class PoolManager : SingletonBase<PoolManager>
             pool.Push(obj);
         }
     }
+
+     //  ------------------ Private ------------------
+    private Dictionary<int, Stack<GameObject>> _pools = new();
+    private Dictionary<int, int> _objToKey = new();
 }
