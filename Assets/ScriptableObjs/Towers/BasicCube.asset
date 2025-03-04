@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4d23a3a2c29844ebfd67dfb58fbdcc, type: 3}
   m_Name: BasicCube
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 5
   range: 5
   health: 10
   fireRate: 1

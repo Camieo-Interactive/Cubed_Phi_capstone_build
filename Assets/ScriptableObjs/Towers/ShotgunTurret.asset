@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4d23a3a2c29844ebfd67dfb58fbdcc, type: 3}
   m_Name: ShotgunTurret
   m_EditorClassIdentifier: 
-  damage: 25
+  damage: 15
   range: 5
   health: 150
   fireRate: 1

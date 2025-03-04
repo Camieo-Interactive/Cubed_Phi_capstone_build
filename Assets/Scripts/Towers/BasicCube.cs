@@ -20,14 +20,14 @@ public class BasicCube : BuildableUnit
     public float fireAngleThreshold = 5f;
 
     private Vector3 _targetPosition;
-    private bool _hasTarget = false;
+    private GameObject target = null;
 
     /// <summary>
     /// Fires a projectile towards the aligned target.
     /// </summary>
     public override void Fire()
     {
-        if (!_hasTarget || !IsAlignedWithTarget()) return;
+        if (target == null || !IsAlignedWithTarget()) return;
 
         GameObject projectileObject = PoolManager.Instance.GetObject(stats.projectile, firePoint.position, Quaternion.identity);
         Projectile projectile = projectileObject.GetComponent<Projectile>();
@@ -47,12 +47,11 @@ public class BasicCube : BuildableUnit
         RaycastHit2D hit = Physics2D.CircleCast(transform.position, stats.range, Vector2.zero, 0, stats.detectionMask);
         if (hit.collider == null)
         {
-            _hasTarget = false;
+            target = null;
             return;
         }
-
-        _hasTarget = true;
-        _targetPosition = hit.point;
+        if(target == null) target = hit.collider.gameObject;
+        _targetPosition = target.transform.position;
 
         // Adjust firePoint slightly to the side of the target
         UpdateFirePointPosition();
@@ -68,7 +67,7 @@ public class BasicCube : BuildableUnit
     /// </summary>
     private void RotateToTarget()
     {
-        if (!_hasTarget) return;
+        if (target == null ) return;
 
         Vector3 direction = (_targetPosition - transform.position).normalized;
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

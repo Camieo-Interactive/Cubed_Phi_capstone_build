@@ -15,5 +15,5 @@ MonoBehaviour:
   cardName: Basic Turret
   cardSprite: {fileID: -1393327316, guid: e0c4f23be842e6d48853181336f3e830, type: 3}
   cardObject: {fileID: 6739125504722287956, guid: 211c5bc48b28ffd4b8a2df273a4913b8, type: 3}
-  cardCost: 150
+  cardCost: 300
   drawProbability: 0.45

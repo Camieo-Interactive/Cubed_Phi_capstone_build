@@ -15,5 +15,5 @@ MonoBehaviour:
   cardName: Shotgun Turret
   cardSprite: {fileID: 2057974914, guid: e0c4f23be842e6d48853181336f3e830, type: 3}
   cardObject: {fileID: 8775570794289599734, guid: 22789cba7e4468740ab781697c78f01e, type: 3}
-  cardCost: 175
-  drawProbability: 0.1
+  cardCost: 450
+  drawProbability: 0.2

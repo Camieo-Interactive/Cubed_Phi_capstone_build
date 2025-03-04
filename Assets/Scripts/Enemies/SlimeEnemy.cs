@@ -5,6 +5,6 @@ public class SlimeEnemy : EnemyBase {
     {
         base.OnDeath();
         int rand = Random.Range(1, 4);
-        for (int i = 0; i < rand; i++) PoolManager.Instance.GetObject(stats.spawnable);
+        for (int i = 0; i < rand; i++) PoolManager.Instance.GetObject(stats.spawnable, transform.position, Quaternion.identity);
     }
 }

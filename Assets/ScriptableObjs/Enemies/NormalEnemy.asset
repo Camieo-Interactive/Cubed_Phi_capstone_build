@@ -15,5 +15,5 @@ MonoBehaviour:
   movementSpeed: 1
   health: 50
   spawnable: {fileID: 0}
-  bitsOnKill: 25
+  bitsOnKill: 0
   tier: 0

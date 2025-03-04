@@ -30,6 +30,9 @@ public class GameManager : SingletonBase<GameManager>
     [Tooltip("Deck currently in use.")]
     public Deck CardDeck;
 
+    public int reRollDelta = 100;
+    public int reRollMax = 1000;
+
     [Tooltip("Grid currently in use.")]
     public Grid grid;
 

@@ -21,7 +21,7 @@ public abstract class EnemyBase : MonoBehaviour
         // Enemy Manager
         OnDeathCallback?.Invoke();
         PoolManager.Instance.GetObject(bitsParticleSystem, transform.position, Quaternion.identity)
-            .GetComponent<BitsController>().StartBits(25, GameManager.Instance.mouseTrigger);
+            .GetComponent<BitsController>().StartBits(stats.bitsOnKill, GameManager.Instance.mouseTrigger);
         PoolManager.Instance.ReturnObject(gameObject);
     }
 

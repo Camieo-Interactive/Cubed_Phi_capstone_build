@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 
 /// <summary>
@@ -20,11 +22,21 @@ public class Deck : MonoBehaviour
     [Tooltip("Animator controlling the deck animations.")]
     public Animator animator;
 
+    public TextMeshProUGUI rerollText;
+
+    private int _currentFoldAmount = 0;
+
     /// <summary>
     /// Folds the deck, triggering the fold animation.
     /// </summary>
     public void FoldDeck()
     {
+        GameManager manager = GameManager.Instance;
+        if(manager.BitsCollected < _currentFoldAmount) return;
+        if(_isFolded) return;
+        GameManager.RaiseBitChange(-_currentFoldAmount);
+        _currentFoldAmount = Math.Min(_currentFoldAmount + manager.reRollDelta, manager.reRollMax);
+        rerollText.text = $"{_currentFoldAmount} Bits";
         _isFolded = true;
         foreach (GameObject item in cards)
         {
@@ -82,4 +94,6 @@ public class Deck : MonoBehaviour
 
     //  ------------------ Private ------------------
     private bool _isFolded = false;
+
+    private void Start() => rerollText.text = $"{_currentFoldAmount} Bits";
 }

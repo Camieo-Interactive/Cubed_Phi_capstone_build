@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4d23a3a2c29844ebfd67dfb58fbdcc, type: 3}
   m_Name: MagicCube
   m_EditorClassIdentifier: 
-  damage: 35
-  range: 10
+  damage: 20
+  range: 5
   health: 10
   fireRate: 0.5
   rechargeTime: 2.5

@@ -15,5 +15,5 @@ MonoBehaviour:
   movementSpeed: 1
   health: 250
   spawnable: {fileID: 5459283647858481979, guid: 9aebbec8ff6da104a999f7cdf76640b0, type: 3}
-  bitsOnKill: 25
-  tier: 15
+  bitsOnKill: 0
+  tier: 10

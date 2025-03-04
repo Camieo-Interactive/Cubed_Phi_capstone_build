@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4d23a3a2c29844ebfd67dfb58fbdcc, type: 3}
   m_Name: BasicTurret
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 1
   range: 20
   health: 10
-  fireRate: 0.4
+  fireRate: 1
   rechargeTime: 0
   projectile: {fileID: 2922313298252073668, guid: 01f443f32347bf5418d39c3b870e13d3, type: 3}
   detectionMask:

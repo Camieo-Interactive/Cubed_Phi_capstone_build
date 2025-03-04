@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TankEnemy
   m_EditorClassIdentifier: 
   movementSpeed: 0.5
-  health: 1000
+  health: 500
   spawnable: {fileID: 0}
-  bitsOnKill: 25
-  tier: 10
+  bitsOnKill: 0
+  tier: 15

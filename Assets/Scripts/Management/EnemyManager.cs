@@ -18,12 +18,18 @@ public class EnemyManager : SingletonBase<EnemyManager>
 
     [Tooltip("Initial enemies required to progress.")]
     public int enemiesToNextStage = 5;
+    [Tooltip("Total Stages to finish the level.")]
+    public int totalStages = 15;
 
     [Tooltip("Time between enemy spawns.")]
     public float spawnInterval = 3f;
 
+    [Tooltip("How long it takes to start the game.")]
+    public float startDelay = 10f;
+
     [Tooltip("Maximum number of active enemies at once.")]
     public int maxEnemies = 10;
+
 
     [Header("UI Elements")]
     [Tooltip("Progress bar showing enemy kills until the next stage.")]
@@ -48,14 +54,15 @@ public class EnemyManager : SingletonBase<EnemyManager>
     /// </summary>
     private IEnumerator EnemySpawnController()
     {
-        while (true)
+        yield return new WaitForSeconds(startDelay);
+        while (_currentTier < totalStages)
         {
-            if (_activeEnemies < _currentEnemyCap && !_isSpawning)
-            {
-                StartCoroutine(SpawnEnemy());
-            }
+            if (_activeEnemies < _currentEnemyCap && !_isSpawning) StartCoroutine(SpawnEnemy());
             yield return new WaitForSeconds(spawnInterval);
         }
+
+        Debug.Log("End of the stage show a screen here!");
+        yield return null;
     }
 
     /// <summary>
@@ -68,9 +75,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
         if (enemyPrefabs.Count == 0 || spawnPoints.Length == 0) yield break;
 
         // Filter available enemies based on the current tier
-        List<GameObject> availableEnemies = enemyPrefabs
-            .Where(e => e.GetComponent<EnemyBase>().stats.tier <= _currentTier)
-            .ToList();
+        List<GameObject> availableEnemies = enemyPrefabs.Where(e => e.GetComponent<EnemyBase>().stats.tier <= _currentTier).ToList();
 
         if (availableEnemies.Count == 0)
         {
@@ -123,7 +128,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     {
         if (progressBar != null)
         {
-            progressBar.fillAmount = (float)_enemiesDefeated / enemiesToNextStage;
+            progressBar.fillAmount = (float)(_currentTier-1) / totalStages;
         }
     }
 }
