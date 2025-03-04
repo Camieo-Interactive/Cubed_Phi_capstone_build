@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardName: Basic Unit
   cardSprite: {fileID: -544634918, guid: e0c4f23be842e6d48853181336f3e830, type: 3}
-  cardObject: {fileID: 0}
+  cardObject: {fileID: 8866250007770948880, guid: 4700c50560debea4fb67bb7adf5b02ee, type: 3}
   cardCost: 75
   drawProbability: 0.75

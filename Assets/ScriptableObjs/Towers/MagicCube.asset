@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d4d23a3a2c29844ebfd67dfb58fbdcc, type: 3}
-  m_Name: BitGenerator
+  m_Name: MagicCube
   m_EditorClassIdentifier: 
-  damage: 25
-  range: 0
-  health: 0
-  fireRate: 0
-  rechargeTime: 20
-  projectile: {fileID: 3236109327517393351, guid: 653f4e69d23a944438962aeaf06a17b4, type: 3}
+  damage: 35
+  range: 10
+  health: 10
+  fireRate: 0.5
+  rechargeTime: 2.5
+  projectile: {fileID: 2922313298252073668, guid: 190aa0770dc4bd74abfed5210b3713c9, type: 3}
   detectionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
