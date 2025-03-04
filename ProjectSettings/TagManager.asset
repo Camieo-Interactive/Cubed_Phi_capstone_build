@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - EndTrigger
   layers:
   - Default
   - TransparentFX
@@ -41,8 +42,17 @@ TagManager:
   - name: Background
     uniqueID: 917090093
     locked: 0
+  - name: Tilemap
+    uniqueID: 2173206891
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Towers
+    uniqueID: 1897895555
+    locked: 0
+  - name: Enemies
+    uniqueID: 3164818323
     locked: 0
   - name: HUD
     uniqueID: 2220290477

@@ -14,25 +14,32 @@ public class Explosion : MonoBehaviour
 
     [Tooltip("Shrapnel particle effect.")]
     public ParticleSystem shrapnelParticleSystem;
+    private float _range = 10f;
 
     /// <summary>
     /// Initializes and triggers the explosion.
     /// </summary>
     /// <param name="damage">The damage to apply to affected enemies.</param>
     /// <param name="range">The range of the explosion.</param>
-    public void Init(DamageValue damage, float range)
+    public void Init(DamageValue damage, float range, bool isEnemy = false)
     {
+        _range = range;
         // Play explosion and shrapnel particle effects
         explosionParticleSystem.Play();
         shrapnelParticleSystem.Play();
 
         // Detect all colliders within the explosion radius
-        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, range, Vector2.zero);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range);
 
-        // Apply damage to any colliders that have a HealthComponent
-        foreach (RaycastHit2D hit in hits)
+        // Apply damage to valid targets
+        foreach (Collider2D hit in hits)
         {
-            HealthComponent health = hit.collider.GetComponent<HealthComponent>();
+            int layer = hit.gameObject.layer;
+
+            // Skip damage if the target is the same faction as the explosion
+            if ((isEnemy && layer == 6) || (!isEnemy && layer == 7)) continue;
+
+            HealthComponent health = hit.GetComponent<HealthComponent>();
             if (health != null)
             {
                 health.ChangeHealth(damage);
@@ -43,6 +50,14 @@ public class Explosion : MonoBehaviour
         StartCoroutine(DestroyAfterEffects());
     }
 
+    private void OnDrawGizmos()
+    {
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _range);
+    }
+
+
     //  ------------------ Private ------------------
 
     /// <summary>
@@ -52,8 +67,10 @@ public class Explosion : MonoBehaviour
     {
         // Wait for the main explosion effect's duration
         yield return new WaitForSeconds(explosionParticleSystem.main.duration);
-        
+
         // Return the explosion object to the pool for reuse
         PoolManager.Instance.ReturnObject(gameObject);
     }
+
+    private void OnParticleSystemStopped() => PoolManager.Instance.ReturnObject(gameObject);
 }

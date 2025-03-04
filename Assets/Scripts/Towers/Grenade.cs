@@ -27,7 +27,7 @@ public class Grenade : BuildableUnit
         OnBuildingDestroy();
 
         // Destroy the grenade object after firing
-        Destroy(gameObject);
+        PoolManager.Instance.ReturnObject(gameObject);
     }
 
     //  ------------------ Private ------------------

@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Grenade
   m_EditorClassIdentifier: 
   damage: 100
-  range: 5
-  health: 0
+  range: 2.5
+  health: 10000
   fireRate: 0
   rechargeTime: 0.5
   projectile: {fileID: 8555022245141203915, guid: 32d29af3bbad41548865ac569e36e4b9, type: 3}

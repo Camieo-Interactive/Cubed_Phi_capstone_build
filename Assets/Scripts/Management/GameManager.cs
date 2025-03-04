@@ -39,7 +39,7 @@ public class GameManager : SingletonBase<GameManager>
     /// <summary>
     /// The total bits collected.
     /// </summary>
-    public long BitsCollected = 0;
+    public long BitsCollected = 50;
 
     /// <summary>
     /// Delegate for bit change events.
@@ -55,7 +55,7 @@ public class GameManager : SingletonBase<GameManager>
     /// <summary>
     /// Called after the singleton instance is initialized.
     /// </summary>
-    public override void PostAwake() => bitCount.text = $"Bits: 0";
+    public override void PostAwake() => bitCount.text = $"Bits: {BitsCollected}";
 
     /// <summary>
     /// Raises the OnBitChange event with the specified delta.

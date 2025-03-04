@@ -49,13 +49,14 @@ public class SelectorHandler : MonoBehaviour
     /// <param name="position">The screen position where the tile should be placed.</param>
     public void PlaceTile(Vector2 position)
     {
+        
         if (GameManager.Instance.selectedCard == null) return;
 
         Vector3Int cellPosition = grid.WorldToCell(SelectionWorldPosition(position));
         if (!tilemap.HasTile(cellPosition)) return; // Ensure the position is within the tilemap grid
-
+        if(GameManager.Instance.BitsCollected < GameManager.Instance.selectedCard.stats.cardCost) return;
         if (GameManager.Instance.buildingLocations.TryGetValue(cellPosition, out bool isOccupied) && isOccupied) return;
-
+        GameManager.RaiseBitChange(-GameManager.Instance.selectedCard.stats.cardCost);
         Vector3 spawnPosition = grid.GetCellCenterWorld(cellPosition);
         PoolManager.Instance.GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
 

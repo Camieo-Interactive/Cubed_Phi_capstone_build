@@ -6,13 +6,12 @@ using UnityEngine;
 /// Base class for all buildable units in the game.
 /// Implements core behaviors such as damage handling, firing, and lifecycle events.
 /// </summary>
-public abstract class BuildableUnit : MonoBehaviour, IDamageable, IBuildable
+public abstract class BuildableUnit : MonoBehaviour, IBuildable
 {
     //  ------------------ Public ------------------
 
-    [ReadOnly]
     [Tooltip("The stats that define the unit's attributes.")]
-    public TowerStats stats;
+    [ReadOnly] public TowerStats stats;
 
     [Tooltip("The health component responsible for managing this unit's health.")]
     public HealthComponent healthComponent;
@@ -25,8 +24,9 @@ public abstract class BuildableUnit : MonoBehaviour, IDamageable, IBuildable
     /// </summary>
     public virtual void OnBuild()
     {
-        _grid = GameManager.Instance.grid;
-        GameManager.Instance.buildingLocations.Add(_grid.WorldToCell(transform.position), true);
+        healthComponent.InitializeHealth(stats.health);
+        Grid = GameManager.Instance.grid;
+        GameManager.Instance.buildingLocations.Add(Grid.WorldToCell(transform.position), true);
     }
 
     /// <summary>
@@ -34,7 +34,8 @@ public abstract class BuildableUnit : MonoBehaviour, IDamageable, IBuildable
     /// </summary>
     public virtual void OnBuildingDestroy()
     {
-        GameManager.Instance.buildingLocations.Remove(_grid.WorldToCell(transform.position));
+        GameManager.Instance.buildingLocations.Remove(Grid.WorldToCell(transform.position));
+        PoolManager.Instance.ReturnObject(gameObject);
     }
 
     /// <summary>
@@ -58,23 +59,15 @@ public abstract class BuildableUnit : MonoBehaviour, IDamageable, IBuildable
         CanAttack = true;
     }
 
-    /// <summary>
-    /// Applies damage to the unit.
-    /// </summary>
-    /// <param name="damageDelta">The amount of damage received.</param>
-    public virtual void ChangeHealth(int damageDelta)
-    {
-        DamageValue damage = new() { damage = damageDelta };
-        healthComponent.ChangeHealth(damage);
-    }
 
     //  ------------------ Protected ------------------
 
     protected bool CanAttack = true;
 
-    //  ------------------ Private ------------------
+    protected Grid Grid;
 
-    private Grid _grid;
+    //  ------------------ Private --------------------
+
 
     private void OnEnable()
     {

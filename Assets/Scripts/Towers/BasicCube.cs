@@ -116,4 +116,13 @@ public class BasicCube : BuildableUnit
             lineRenderer.SetPosition(1, firePoint.position + Vector3.right * stats.range);
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if (stats == null) return;
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, stats.range);
+    }
+
 }

@@ -37,24 +37,11 @@ public class HealthComponent : MonoBehaviour
     public event Death onDeath;
 
     /// <summary>
-    /// Event invoked when health is initialized.
-    /// </summary>
-    public event InitHealth OnHealthInit;
-
-    /// <summary>
-    /// Event invoked when health changes.
-    /// </summary>
-    public event HealthChanged OnHealthChanged;
-
-    /// <summary>
     /// Initializes the default health of the entity.
     /// </summary>
     /// <param name="defaultHealth">The starting health of the entity.</param>
-    public void InitializeHealth(int defaultHealth)
-    {
-        _currentHealth = defaultHealth;
-        OnHealthInit?.Invoke(defaultHealth);
-    }
+    public void InitializeHealth(int defaultHealth) => _currentHealth = defaultHealth;
+    
 
     /// <summary>
     /// Modifies the entity's health based on the damage value received.
@@ -62,7 +49,6 @@ public class HealthComponent : MonoBehaviour
     /// <param name="value">The damage value, which includes the amount and status effect.</param>
     public void ChangeHealth(DamageValue value)
     {
-        OnHealthChanged?.Invoke(value.damage);
         currentStatus = value.damageStatus;
         if(value.damageStatus != DamageStatus.NONE) {
             StopAllCoroutines();

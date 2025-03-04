@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,7 +12,7 @@ public class Card : MonoBehaviour
 
     [Header("Card Data")]
     [Tooltip("The stats associated with this card.")]
-    public CardStats stats;
+    [ReadOnly] public CardStats stats;
 
     [Header("UI Elements")]
     [Tooltip("The image component displaying the card sprite.")]
