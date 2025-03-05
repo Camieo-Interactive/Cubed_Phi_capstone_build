@@ -38,7 +38,7 @@ We welcome contributions to the development of **Cubed Phi**! If you're interest
   
 - **Art and Sound Contributions:** If you're an artist or sound designer and would like to contribute, we'd love to collaborate with you on creating new assets for the game.
   
-Please check out our [GitHub repository](https://github.com/XOR-SABER/Cubed_Phi/tree/main/Contributions) for more details on how to contribute. Thank you for supporting **Cubed Phi**!
+Please check out our [GitHub repository](https://github.com/XOR-SABER/Cubed_Phi/blob/main/Contributions/StyleGuide.md) for more details on how to contribute. Thank you for supporting **Cubed Phi**!
 
 ---
 
