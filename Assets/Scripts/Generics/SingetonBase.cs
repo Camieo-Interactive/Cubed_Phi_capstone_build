@@ -29,7 +29,6 @@ public abstract class SingletonBase<T> : MonoBehaviour where T : SingletonBase<T
             return;
         }
         Instance = (T)this;
-        DontDestroyOnLoad(gameObject);
         PostAwake();
     }
 }

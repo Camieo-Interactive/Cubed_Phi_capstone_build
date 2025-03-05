@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cd27801f1ed8d4da433e77f78bf84e, type: 3}
   m_Name: SlimeEnemy
   m_EditorClassIdentifier: 
-  movementSpeed: 1
-  health: 250
+  movementSpeed: 0.75
+  health: 150
   spawnable: {fileID: 5459283647858481979, guid: 9aebbec8ff6da104a999f7cdf76640b0, type: 3}
   bitsOnKill: 0
   tier: 10

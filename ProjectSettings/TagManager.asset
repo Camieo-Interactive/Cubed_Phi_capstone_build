@@ -5,6 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - EndTrigger
+  - GameOverCanvas
+  - GameEnd
+  - GameOver
+  - GameUi
+  - DeckUi
+  - BitsTextUi
+  - ProgressUi
   layers:
   - Default
   - TransparentFX

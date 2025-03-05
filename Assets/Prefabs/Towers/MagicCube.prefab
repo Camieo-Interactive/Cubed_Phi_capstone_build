@@ -198,7 +198,7 @@ MonoBehaviour:
   healthComponent: {fileID: 4622583186021231432}
   buildableAnimator: {fileID: 0}
   firePoint: {fileID: 5191230194300936518}
-  equipPoint: {fileID: 0}
+  equipPoint: {fileID: 2782949765977624289}
   lineRenderer: {fileID: 0}
   rotationSpeed: 128
   fireAngleThreshold: 0.5

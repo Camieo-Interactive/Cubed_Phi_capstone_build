@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
 /// <summary>
@@ -49,12 +50,12 @@ public class SelectorHandler : MonoBehaviour
     /// <param name="position">The screen position where the tile should be placed.</param>
     public void PlaceTile(Vector2 position)
     {
-        
+
         if (GameManager.Instance.selectedCard == null) return;
 
         Vector3Int cellPosition = grid.WorldToCell(SelectionWorldPosition(position));
         if (!tilemap.HasTile(cellPosition)) return; // Ensure the position is within the tilemap grid
-        if(GameManager.Instance.BitsCollected < GameManager.Instance.selectedCard.stats.cardCost) return;
+        if (GameManager.Instance.BitsCollected < GameManager.Instance.selectedCard.stats.cardCost) return;
         if (GameManager.Instance.buildingLocations.TryGetValue(cellPosition, out bool isOccupied) && isOccupied) return;
         GameManager.RaiseBitChange(-GameManager.Instance.selectedCard.stats.cardCost);
         Vector3 spawnPosition = grid.GetCellCenterWorld(cellPosition);
@@ -72,7 +73,7 @@ public class SelectorHandler : MonoBehaviour
     /// </summary>
     private void Awake()
     {
-        _mainCamera = Camera.main;
+        _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         selectionSprite.SetActive(false);
     }
 
@@ -112,4 +113,7 @@ public class SelectorHandler : MonoBehaviour
     /// <returns>The world position corresponding to the screen coordinates.</returns>
     private Vector3 SelectionWorldPosition(Vector2 selectionScreenPos) =>
         _mainCamera.ScreenToWorldPoint(new Vector3(selectionScreenPos.x, selectionScreenPos.y, 0));
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) => _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+    private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
+    private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
 }

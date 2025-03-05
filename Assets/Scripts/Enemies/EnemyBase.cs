@@ -9,7 +9,7 @@ public abstract class EnemyBase : MonoBehaviour
     [Tooltip("Direction of movement (normalized).")]
     public Vector2 moveDirection = Vector2.left;
     public GameObject bitsParticleSystem;
-    public System.Action OnDeathCallback;
+    public System.Action<GameObject> OnDeathCallback;
     public virtual void Init() => healthComponent.InitializeHealth(stats.health);
     protected virtual void Move()
     {
@@ -19,7 +19,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void OnDeath()
     {
         // Enemy Manager
-        OnDeathCallback?.Invoke();
+        OnDeathCallback?.Invoke(gameObject);
         PoolManager.Instance.GetObject(bitsParticleSystem, transform.position, Quaternion.identity)
             .GetComponent<BitsController>().StartBits(stats.bitsOnKill, GameManager.Instance.mouseTrigger);
         PoolManager.Instance.ReturnObject(gameObject);
@@ -27,7 +27,7 @@ public abstract class EnemyBase : MonoBehaviour
 
     protected virtual void OnEndReached()
     {
-        Debug.Log("Enemy Hit the end");
+        EnemyManager.Instance.GameOver();
     }
 
     //  ------------------ Private --------------------
