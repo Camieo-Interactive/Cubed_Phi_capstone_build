@@ -34,7 +34,7 @@ public class HealthComponent : MonoBehaviour
     /// <summary>
     /// Event invoked when health reaches zero.
     /// </summary>
-    public event Death onDeath;
+    public event Death OnDeath;
 
     /// <summary>
     /// Initializes the default health of the entity.
@@ -56,7 +56,7 @@ public class HealthComponent : MonoBehaviour
         }
         _currentHealth += value.damage;
         if (_currentHealth <= 0)
-            onDeath?.Invoke();
+            OnDeath?.Invoke();
     }
 
     /// <summary>

@@ -5,9 +5,6 @@ using Unity.Mathematics;
 /// </summary>
 public class BitGenerator : BuildableUnit
 {
-    //  ------------------ Private ------------------
-
-    private float timePassed = 0;
 
     /// <summary>
     /// Checks the time elapsed and triggers bit generation if the recharge time has passed.
@@ -22,6 +19,10 @@ public class BitGenerator : BuildableUnit
             buildableAnimator.Play("GeneratedBits");
         }
     }
+    
+    //  ------------------ Private ------------------
+
+    private float timePassed = 0;
 
     /// <summary>
     /// Initializes the BitGenerator when built.

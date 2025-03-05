@@ -14,6 +14,7 @@ public class Explosion : MonoBehaviour
 
     [Tooltip("Shrapnel particle effect.")]
     public ParticleSystem shrapnelParticleSystem;
+
     private float _range = 10f;
 
     /// <summary>
@@ -24,6 +25,7 @@ public class Explosion : MonoBehaviour
     public void Init(DamageValue damage, float range, bool isEnemy = false)
     {
         _range = range;
+
         // Play explosion and shrapnel particle effects
         explosionParticleSystem.Play();
         shrapnelParticleSystem.Play();
@@ -50,14 +52,6 @@ public class Explosion : MonoBehaviour
         StartCoroutine(DestroyAfterEffects());
     }
 
-    private void OnDrawGizmos()
-    {
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, _range);
-    }
-
-
     //  ------------------ Private ------------------
 
     /// <summary>
@@ -72,5 +66,20 @@ public class Explosion : MonoBehaviour
         PoolManager.Instance.ReturnObject(gameObject);
     }
 
-    private void OnParticleSystemStopped() => PoolManager.Instance.ReturnObject(gameObject);
+    /// <summary>
+    /// Draws a gizmo in the editor to visualize the explosion range.
+    /// </summary>
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, _range);
+    }
+
+    /// <summary>
+    /// Handles cleanup when the particle system finishes playing.
+    /// </summary>
+    private void OnParticleSystemStopped()
+    {
+        PoolManager.Instance.ReturnObject(gameObject);
+    }
 }

@@ -72,12 +72,12 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     private void OnEnable()
     {
         TickSystem.OnTickAction += Check;
-        healthComponent.onDeath += OnBuildingDestroy;
+        healthComponent.OnDeath += OnBuildingDestroy;
     }
 
     private void OnDisable()
     {
-        healthComponent.onDeath -= OnBuildingDestroy;
+        healthComponent.OnDeath -= OnBuildingDestroy;
         TickSystem.OnTickAction -= Check;
     }
 }

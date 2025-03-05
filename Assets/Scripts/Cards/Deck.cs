@@ -24,16 +24,14 @@ public class Deck : MonoBehaviour
 
     public TextMeshProUGUI rerollText;
 
-    private int _currentFoldAmount = 0;
-
     /// <summary>
     /// Folds the deck, triggering the fold animation.
     /// </summary>
     public void FoldDeck()
     {
         GameManager manager = GameManager.Instance;
-        if(manager.BitsCollected < _currentFoldAmount) return;
-        if(_isFolded) return;
+        if (manager.BitsCollected < _currentFoldAmount) return;
+        if (_isFolded) return;
         GameManager.RaiseBitChange(-_currentFoldAmount);
         _currentFoldAmount = Math.Min(_currentFoldAmount + manager.reRollDelta, manager.reRollMax);
         rerollText.text = $"{_currentFoldAmount} Bits";
@@ -96,4 +94,5 @@ public class Deck : MonoBehaviour
     private bool _isFolded = false;
 
     private void Start() => rerollText.text = $"{_currentFoldAmount} Bits";
+    private int _currentFoldAmount = 0;
 }

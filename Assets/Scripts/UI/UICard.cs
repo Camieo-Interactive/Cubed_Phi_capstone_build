@@ -35,6 +35,10 @@ public class UICard : MonoBehaviour
     [Tooltip("Animator controlling the flip animation.")]
     public Animator animator;
 
+    //  ------------------ Private ------------------
+
+    private bool _isFlipped;
+
     /// <summary>
     /// Triggers the flip animation.
     /// </summary>
@@ -67,7 +71,11 @@ public class UICard : MonoBehaviour
                 button.interactable = false;
                 image.sprite = nonInteractable;
             }
-            else button.interactable = true;
+            else
+            {
+                button.interactable = true;
+                image.sprite = interactable;
+            }
             transform.rotation = Quaternion.identity;
         }
 
@@ -75,8 +83,4 @@ public class UICard : MonoBehaviour
         frontImage.SetActive(_isFlipped);
         backImage.SetActive(!_isFlipped);
     }
-
-    //  ------------------ Private ------------------
-
-    private bool _isFlipped;
 }

@@ -1,7 +1,12 @@
 using UnityEngine;
 
+/// <summary>
+/// A buildable unit that behaves like a turret, aiming and firing projectiles at targets within range.
+/// </summary>
 public class BasicCube : BuildableUnit
 {
+    //  ------------------ Public ------------------
+
     [Header("Turret Components")]
     [Tooltip("The point from which projectiles are fired.")]
     public Transform firePoint;
@@ -19,11 +24,8 @@ public class BasicCube : BuildableUnit
     [Tooltip("Maximum angle difference allowed for firing.")]
     public float fireAngleThreshold = 5f;
 
-    private Vector3 _targetPosition;
-    private GameObject target = null;
-
     /// <summary>
-    /// Fires a projectile towards the aligned target.
+    /// Fires a projectile towards the aligned target if aligned.
     /// </summary>
     public override void Fire()
     {
@@ -50,7 +52,8 @@ public class BasicCube : BuildableUnit
             target = null;
             return;
         }
-        if(target == null) target = hit.collider.gameObject;
+
+        if (target == null) target = hit.collider.gameObject;
         _targetPosition = target.transform.position;
 
         // Adjust firePoint slightly to the side of the target
@@ -62,12 +65,17 @@ public class BasicCube : BuildableUnit
         if (CanAttack) Fire();
     }
 
+    //  ------------------ Private ------------------
+
+    private Vector3 _targetPosition;
+    private GameObject target = null;
+
     /// <summary>
     /// Rotates the unit to align with the detected target.
     /// </summary>
     private void RotateToTarget()
     {
-        if (target == null ) return;
+        if (target == null) return;
 
         Vector3 direction = (_targetPosition - transform.position).normalized;
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -116,6 +124,9 @@ public class BasicCube : BuildableUnit
         }
     }
 
+    /// <summary>
+    /// Draws a gizmo to visualize the turret's attack range in the editor.
+    /// </summary>
     private void OnDrawGizmos()
     {
         if (stats == null) return;
@@ -123,5 +134,4 @@ public class BasicCube : BuildableUnit
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, stats.range);
     }
-
 }

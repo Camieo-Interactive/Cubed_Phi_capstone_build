@@ -10,6 +10,8 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class EnemyManager : SingletonBase<EnemyManager>
 {
+    //  ------------------ Public ------------------
+
     [Header("Spawn Settings")]
     [Tooltip("List of enemy prefabs to spawn.")]
     public List<GameObject> enemyPrefabs;
@@ -19,6 +21,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
 
     [Tooltip("Initial enemies required to progress.")]
     public int enemiesToNextStage = 5;
+
     [Tooltip("Total Stages to finish the level.")]
     public int totalStages = 15;
 
@@ -31,22 +34,19 @@ public class EnemyManager : SingletonBase<EnemyManager>
     [Tooltip("Maximum number of active enemies at once.")]
     public int maxEnemies = 10;
 
-
     [Header("UI Elements")]
     [Tooltip("Progress bar showing enemy kills until the next stage.")]
     public Image progressBar;
+
     public GameObject GameEndCanvas;
     public GameObject GameOverScreen;
     public GameObject GameFinishedScreen;
 
-    private int _enemiesDefeated = 0;
-    private int _currentEnemyCap = 1;
-    private bool _isSpawning = false;
-    private int _currentTier = 1;
-    private List<GameObject> _enemyList = new(); // Tracks active enemies
-
     public override void PostAwake() { }
 
+    /// <summary>
+    /// Displays the Game Over screen.
+    /// </summary>
     public void GameOver()
     {
         GameEndCanvas.SetActive(true);
@@ -54,6 +54,9 @@ public class EnemyManager : SingletonBase<EnemyManager>
         Time.timeScale = 0;
     }
 
+    /// <summary>
+    /// Ends the game and returns to the main menu.
+    /// </summary>
     public void EndGame()
     {
         Time.timeScale = 1;
@@ -63,6 +66,9 @@ public class EnemyManager : SingletonBase<EnemyManager>
         SceneManager.LoadScene("MenuScene");
     }
 
+    /// <summary>
+    /// Spawns an enemy instance at the given position.
+    /// </summary>
     public void SpawnEnemyInstance(GameObject enemyPrefab, Vector3 pos)
     {
         GameObject enemy = PoolManager.Instance.GetObject(enemyPrefab, pos, Quaternion.identity);
@@ -73,28 +79,39 @@ public class EnemyManager : SingletonBase<EnemyManager>
         _enemyList.Add(enemy); // Track enemy
     }
 
+
+    //  ------------------ Private ------------------
+
+    private int _enemiesDefeated = 0;
+    private int _currentEnemyCap = 1;
+    private bool _isSpawning = false;
+    private int _currentTier = 1;
+    private List<GameObject> _enemyList = new(); // Tracks active enemies
+
     /// <summary>
     /// Manages the dynamic spawning of enemies.
     /// </summary>
     private IEnumerator EnemySpawnController()
     {
         yield return new WaitForSeconds(startDelay);
+
         while (_currentTier < totalStages)
         {
-            if (_enemyList.Count < _currentEnemyCap && !_isSpawning) StartCoroutine(SpawnEnemy());
+            if (_enemyList.Count < _currentEnemyCap && !_isSpawning)
+                StartCoroutine(SpawnEnemy());
             yield return new WaitForSeconds(spawnInterval);
         }
 
-
-        // Wait for all enemies killed.. 
+        // Wait for all enemies killed..
         while (_enemyList.Count > 0)
         {
             yield return new WaitForSeconds(spawnInterval);
         }
+
         GameEndCanvas.SetActive(true);
         GameFinishedScreen.SetActive(true);
         Time.timeScale = 0;
-        Debug.Log("End of the stage show a screen here!");
+        Debug.Log("End of the stage, show a screen here!");
         yield return null;
     }
 
@@ -119,7 +136,6 @@ public class EnemyManager : SingletonBase<EnemyManager>
         GameObject enemyPrefab = availableEnemies[Random.Range(0, availableEnemies.Count)];
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
         SpawnEnemyInstance(enemyPrefab, spawnPoint.position);
-
 
         yield return new WaitForSeconds(spawnInterval);
         _isSpawning = false;
@@ -159,6 +175,9 @@ public class EnemyManager : SingletonBase<EnemyManager>
         }
     }
 
+    /// <summary>
+    /// Called when the scene is loaded. Initializes UI elements and starts spawning.
+    /// </summary>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         GameObject gameUI = GameObject.FindGameObjectWithTag("GameUi");
@@ -168,6 +187,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
         StartCoroutine(EnemySpawnController());
         UpdateProgressBar(); // Initialize progress bar
     }
+
     private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
     private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
 }

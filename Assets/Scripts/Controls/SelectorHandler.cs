@@ -66,7 +66,6 @@ public class SelectorHandler : MonoBehaviour
 
     //  ------------------ Private ------------------
     private Camera _mainCamera;
-    private CellStatus _selectionStatus;
 
     /// <summary>
     /// Initializes the main camera reference and hides the selection sprite initially.

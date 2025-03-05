@@ -9,7 +9,6 @@ public class MainMenu : MonoBehaviour
     public void OnStartSelected() => StartCoroutine(LoadGameSceneAsync());
     public void OnInstructionsSelected() => instructionsCanvas.SetActive(!instructionsCanvas.activeSelf);
 
-    // private void Start() => 
     private IEnumerator LoadGameSceneAsync()
     {
         // Check if the scene exists in Build Settings before loading
