@@ -73,7 +73,7 @@ public class Projectile : MonoBehaviour
     private void Update()
     {
         if (!_isActive) return;
-        rigidbody2D.velocity = _dir * stats.projectileSpeed;
+        rigidbody2D.linearVelocity = _dir * stats.projectileSpeed;
     }
 
 
