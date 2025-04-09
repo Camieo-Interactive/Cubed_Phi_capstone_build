@@ -23,19 +23,30 @@ public class Deck : MonoBehaviour
     public Animator animator;
 
     public TextMeshProUGUI rerollText;
+    public AudioSource AudioSrc;
 
+    public int numberOfDecks = 0;
+
+    public CardSet starterDeck;
     /// <summary>
     /// Folds the deck, triggering the fold animation.
     /// </summary>
     public void FoldDeck()
     {
+        // Get the manager.. 
         GameManager manager = GameManager.Instance;
+        // If We can't fold
         if (manager.BitsCollected < _currentFoldAmount) return;
+        // We already fold
         if (_isFolded) return;
+        // Change the bits
         GameManager.RaiseBitChange(-_currentFoldAmount);
+        AudioSrc.Play();
+        // Increase the fold amount
         _currentFoldAmount = Math.Min(_currentFoldAmount + manager.reRollDelta, manager.reRollMax);
         rerollText.text = $"{_currentFoldAmount} Bits";
         _isFolded = true;
+        // Unflip the cards
         foreach (GameObject item in cards)
         {
             UICard card = item.GetComponent<UICard>();
@@ -49,7 +60,6 @@ public class Deck : MonoBehaviour
     /// </summary>
     public void RemoveDeck()
     {
-        Debug.Log("Remove Deck called!");
         foreach (GameObject card in cards) PoolManager.Instance.ReturnObject(card);
     }
 
@@ -59,12 +69,13 @@ public class Deck : MonoBehaviour
     public void GenerateDeck()
     {
         cards = new GameObject[numberOfCards];
-        for (int i = 0; i < numberOfCards; i++)
+        if (numberOfDecks == 0 && starterDeck != null)
         {
-            cards[i] = PoolManager.Instance.GetObject(cardPrefab, Vector3.zero, Quaternion.identity, transform);
-            Card card = cards[i].GetComponent<Card>();
-            card.Init();
+            CardStats[] collection = starterDeck.cards;
+            for (int i = 0; i < collection.Length; i++) CreateCard(i, collection[i]);
         }
+        else for (int i = 0; i < numberOfCards; i++) CreateCard(i);
+        numberOfDecks++;
         _isFolded = false;
     }
 
@@ -83,16 +94,21 @@ public class Deck : MonoBehaviour
                 cards[i].GetComponent<Card>().CardUsed();
                 UICard iCard = cards[i].GetComponent<UICard>();
                 iCard.UnFlipCard();
-                // cards[i] = null;
                 break;
             }
         }
-        cards = System.Array.FindAll(cards, card => card != null);
+        cards = Array.FindAll(cards, card => card != null);
     }
 
     //  ------------------ Private ------------------
     private bool _isFolded = false;
-
-    private void Start() => rerollText.text = $"{_currentFoldAmount} Bits";
     private int _currentFoldAmount = 0;
+    private void Start() => rerollText.text = $"{_currentFoldAmount} Bits";
+    private void CreateCard(int index, CardStats stats = null)
+    {
+        cards[index] = PoolManager.Instance.GetObject(cardPrefab, Vector3.zero, Quaternion.identity, transform);
+        Card card = cards[index].GetComponent<Card>();
+        if (stats == null) card.Init();
+        else card.Init(stats);
+    }
 }

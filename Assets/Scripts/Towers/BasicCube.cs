@@ -29,7 +29,7 @@ public class BasicCube : BuildableUnit
     /// </summary>
     public override void Fire()
     {
-        if (target == null || !IsAlignedWithTarget()) return;
+        if (target == null || !IsAlignedWithTarget() || !IsInRange()) return;
 
         GameObject projectileObject = PoolManager.Instance.GetObject(stats.projectile, firePoint.position, Quaternion.identity);
         Projectile projectile = projectileObject.GetComponent<Projectile>();
@@ -46,18 +46,27 @@ public class BasicCube : BuildableUnit
     /// </summary>
     public override void Check()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, stats.range, Vector2.zero, 0, stats.detectionMask);
-        if (hit.collider == null)
+        // Find closest target within range
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, stats.range, stats.detectionMask);
+
+        GameObject closestTarget = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Collider2D collider in colliders)
         {
-            target = null;
-            return;
+            float distance = Vector2.Distance(transform.position, collider.transform.position);
+            if (distance < closestDistance)
+            {
+                closestTarget = collider.gameObject;
+                closestDistance = distance;
+            }
         }
 
-        if (target == null) target = hit.collider.gameObject;
-        _targetPosition = target.transform.position;
+        target = closestTarget;
 
-        // Adjust firePoint slightly to the side of the target
-        UpdateFirePointPosition();
+        if (target == null) return;
+
+        _targetPosition = target.transform.position;
 
         // Rotate towards target
         RotateToTarget();
@@ -79,7 +88,12 @@ public class BasicCube : BuildableUnit
 
         Vector3 direction = (_targetPosition - transform.position).normalized;
         float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        // Rotate the entire turret
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), rotationSpeed * Time.deltaTime);
+
+        // Update firepoint position based on the equipPoint's rotation
+        UpdateFirePointPosition();
 
         if (lineRenderer != null)
         {
@@ -101,14 +115,20 @@ public class BasicCube : BuildableUnit
     }
 
     /// <summary>
-    /// Adjusts the firePoint to be slightly offset next to the enemy.
+    /// Checks if the target is within the attack range.
+    /// </summary>
+    private bool IsInRange() => Vector2.Distance(transform.position, _targetPosition) <= stats.range;
+    
+
+    /// <summary>
+    /// Adjusts the firePoint to be positioned correctly relative to the equipPoint.
     /// </summary>
     private void UpdateFirePointPosition()
     {
         if (equipPoint == null) return;
 
-        Vector3 direction = (_targetPosition - transform.position).normalized;
-        firePoint.position = equipPoint.position + direction * 0.65f; // Adjusting slight offset
+        // Keep firePoint at the edge of the equipPoint in the direction it's facing
+        firePoint.position = equipPoint.position + (Vector3)(equipPoint.right * 0.65f);
     }
 
     /// <summary>

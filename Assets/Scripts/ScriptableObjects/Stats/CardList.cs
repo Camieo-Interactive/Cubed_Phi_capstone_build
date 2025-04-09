@@ -25,13 +25,15 @@ public class CardList : ScriptableObject
         float totalWeight = cards.Sum(card => card.drawProbability);
         float randomValue = UnityEngine.Random.Range(0f, totalWeight);
         float currentWeight = 0f;
+        int currentTier = EnemyManager.Instance.CurrentTier;
 
         foreach (var card in cards)
         {
             currentWeight += card.drawProbability;
-            if (randomValue <= currentWeight) return card;
+            if (randomValue <= currentWeight && currentTier >= card.cardTier) return card;
         }
 
-        return cards.Last();
+        // Bit collectors are evergreen. 
+        return cards.First();
     }
 }

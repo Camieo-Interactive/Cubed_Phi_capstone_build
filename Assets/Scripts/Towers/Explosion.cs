@@ -14,7 +14,7 @@ public class Explosion : MonoBehaviour
 
     [Tooltip("Shrapnel particle effect.")]
     public ParticleSystem shrapnelParticleSystem;
-
+    public AudioSource AudioSrc;
     private float _range = 10f;
 
     /// <summary>
@@ -25,7 +25,7 @@ public class Explosion : MonoBehaviour
     public void Init(DamageValue damage, float range, bool isEnemy = false)
     {
         _range = range;
-
+        AudioSrc.Play();
         // Play explosion and shrapnel particle effects
         explosionParticleSystem.Play();
         shrapnelParticleSystem.Play();
@@ -60,7 +60,7 @@ public class Explosion : MonoBehaviour
     private IEnumerator DestroyAfterEffects()
     {
         // Wait for the main explosion effect's duration
-        yield return new WaitForSeconds(explosionParticleSystem.main.duration);
+        yield return new WaitForSeconds(explosionParticleSystem.main.duration + 1f);
 
         // Return the explosion object to the pool for reuse
         PoolManager.Instance.ReturnObject(gameObject);

@@ -1,11 +1,12 @@
 using Unity.Mathematics;
+using UnityEngine;
 
 /// <summary>
 /// Generates bits at regular intervals by firing a projectile.
 /// </summary>
 public class BitGenerator : BuildableUnit
 {
-
+    public AudioSource AudioSrc;
     /// <summary>
     /// Checks the time elapsed and triggers bit generation if the recharge time has passed.
     /// </summary>
@@ -17,6 +18,7 @@ public class BitGenerator : BuildableUnit
             timePassed = 0;
             Fire();
             buildableAnimator.Play("GeneratedBits");
+            AudioSrc.Play();
         }
     }
     

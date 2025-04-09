@@ -14,7 +14,7 @@ public class BitsController : MonoBehaviour
     [Header("Particle System Settings")]
     [Tooltip("Reference to the ParticleSystem that emits bits.")]
     public ParticleSystem bitsParticleSystem;
-
+    
     /// <summary>
     /// Starts the bits particle system by emitting the specified number of bits.
     /// Also sets the trigger object for the particle system.
@@ -47,8 +47,7 @@ public class BitsController : MonoBehaviour
     /// Called when the particle system stops playing.
     /// Returns the GameObject to the object pool.
     /// </summary>
-    private void OnParticleSystemStopped() =>
-        PoolManager.Instance.ReturnObject(gameObject);
+    private void OnParticleSystemStopped() => PoolManager.Instance.ReturnObject(gameObject);
 
     /// <summary>
     /// Processes trigger events for particles entering the trigger collider.
@@ -57,7 +56,6 @@ public class BitsController : MonoBehaviour
     private void OnParticleTrigger()
     {
         int triggeredParticles = bitsParticleSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, _particles);
-
         for (int i = 0; i < triggeredParticles; i++)
         {
             ParticleSystem.Particle p = _particles[i];
@@ -67,6 +65,7 @@ public class BitsController : MonoBehaviour
         }
 
         GameManager.RaiseBitChange(triggeredParticles);
+        
         bitsParticleSystem.SetTriggerParticles(ParticleSystemTriggerEventType.Enter, _particles);
     }
 }

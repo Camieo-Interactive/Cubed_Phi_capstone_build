@@ -17,3 +17,4 @@ MonoBehaviour:
   cardObject: {fileID: 5070385482898927750, guid: 7aed623fd7ad459419ae78aafc751cf7, type: 3}
   cardCost: 350
   drawProbability: 0.35
+  cardTier: 5

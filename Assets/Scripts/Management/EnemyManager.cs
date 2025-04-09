@@ -20,7 +20,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     public Transform[] spawnPoints;
 
     [Tooltip("Initial enemies required to progress.")]
-    public int enemiesToNextStage = 5;
+    public int baseEnemiesToNextStage = 5;
 
     [Tooltip("Total Stages to finish the level.")]
     public int totalStages = 15;
@@ -38,10 +38,11 @@ public class EnemyManager : SingletonBase<EnemyManager>
     [Tooltip("Progress bar showing enemy kills until the next stage.")]
     public Image progressBar;
 
+    [HideInInspector]
+    public int CurrentTier = 1;
     public GameObject GameEndCanvas;
     public GameObject GameOverScreen;
     public GameObject GameFinishedScreen;
-
     public override void PostAwake() { }
 
     /// <summary>
@@ -85,7 +86,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     private int _enemiesDefeated = 0;
     private int _currentEnemyCap = 1;
     private bool _isSpawning = false;
-    private int _currentTier = 1;
+
     private List<GameObject> _enemyList = new(); // Tracks active enemies
 
     /// <summary>
@@ -95,7 +96,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     {
         yield return new WaitForSeconds(startDelay);
 
-        while (_currentTier < totalStages)
+        while (CurrentTier < totalStages)
         {
             if (_enemyList.Count < _currentEnemyCap && !_isSpawning)
                 StartCoroutine(SpawnEnemy());
@@ -125,7 +126,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
         if (enemyPrefabs.Count == 0 || spawnPoints.Length == 0) yield break;
 
         // Filter available enemies based on the current tier
-        List<GameObject> availableEnemies = enemyPrefabs.Where(e => e.GetComponent<EnemyBase>().stats.tier <= _currentTier).ToList();
+        List<GameObject> availableEnemies = enemyPrefabs.Where(e => e.GetComponent<EnemyBase>().stats.tier <= CurrentTier).ToList();
 
         if (availableEnemies.Count == 0)
         {
@@ -151,14 +152,15 @@ public class EnemyManager : SingletonBase<EnemyManager>
         UpdateProgressBar();
 
         // Progression logic
-        if (_enemiesDefeated >= enemiesToNextStage)
+        int requiredEnemiesThisStage = baseEnemiesToNextStage * CurrentTier;
+        if (_enemiesDefeated >= requiredEnemiesThisStage)
         {
             _enemiesDefeated = 0;
             _currentEnemyCap = Mathf.Min(_currentEnemyCap + 1, maxEnemies);
 
             // Increase enemy tier after every stage progression
-            _currentTier++;
-            Debug.Log($"Stage Progressed! New Enemy Cap: {_currentEnemyCap}, Unlocked Tier: {_currentTier}");
+            CurrentTier++;
+            Debug.Log($"Stage Progressed! New Enemy Cap: {_currentEnemyCap}, Unlocked Tier: {CurrentTier}");
 
             UpdateProgressBar(); // Reset progress bar on new stage
         }
@@ -169,10 +171,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     /// </summary>
     private void UpdateProgressBar()
     {
-        if (progressBar != null)
-        {
-            progressBar.fillAmount = (float)(_currentTier - 1) / totalStages;
-        }
+        if (progressBar != null) progressBar.fillAmount = (float)(CurrentTier - 1) / totalStages;
     }
 
     /// <summary>

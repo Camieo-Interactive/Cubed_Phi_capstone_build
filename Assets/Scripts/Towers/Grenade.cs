@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -6,7 +7,7 @@ using UnityEngine;
 public class Grenade : BuildableUnit
 {
     //  ------------------ Public ------------------
-
+    public AudioSource AudioSrc;
     /// <summary>
     /// Placeholder method for validation checks.
     /// </summary>
@@ -19,19 +20,16 @@ public class Grenade : BuildableUnit
     {
         // Instantiate the explosion
         GameObject explosion = PoolManager.Instance.GetObject(stats.projectile, transform.position, Quaternion.identity);
-        
+        AudioSrc.Play();
         // Initialize the explosion with damage and range
         explosion.GetComponent<Explosion>().Init(new() { damage = -stats.damage }, stats.range);
         
         // Trigger building destruction logic
         OnBuildingDestroy();
-
-        // Destroy the grenade object after firing
-        PoolManager.Instance.ReturnObject(gameObject);
     }
 
     //  ------------------ Private ------------------
-
+    
     /// <summary>
     /// Initializes the grenade upon being built.
     /// </summary>

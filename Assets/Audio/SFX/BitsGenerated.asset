@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1233149941 &-6024475902677142064
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: forceField_002_{-6024475902677142064}
+  m_AudioClip: {fileID: 8300000, guid: cd96f48950095c84fac0c206c62acc28, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &743952039352358158
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: forceField_003_{743952039352358158}
+  m_AudioClip: {fileID: 8300000, guid: d8725a7b194900945a9d46a0316153e0, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &4450496865120948537
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: forceField_004_{4450496865120948537}
+  m_AudioClip: {fileID: 8300000, guid: 1588117ee8c50c9489f8b83e54e1c48b, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1307931743 &6418180475301049370
+AudioRandomContainer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BitsGenerated
+  m_Volume: 0
+  m_Pitch: 0
+  m_AutomaticTriggerTime: 0
+  m_LoopCount: 1
+  m_VolumeRandomizationRange: {x: -15.2, y: 11.678829}
+  m_PitchRandomizationRange: {x: -543.0657, y: 367.8832}
+  m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
+  m_LoopCountRandomizationRange: {x: 0, y: 0}
+  m_Elements:
+  - {fileID: 8098016323593957780}
+  - {fileID: 6707942035975983396}
+  - {fileID: -6024475902677142064}
+  - {fileID: 743952039352358158}
+  - {fileID: 4450496865120948537}
+  m_AvoidRepeatingLast: 0
+  m_PlaybackMode: 2
+  m_TriggerMode: 1
+  m_AutomaticTriggerMode: 1
+  m_LoopMode: 1
+  m_VolumeRandomizationEnabled: 0
+  m_PitchRandomizationEnabled: 1
+  m_AutomaticTriggerTimeRandomizationEnabled: 0
+  m_LoopCountRandomizationEnabled: 0
+--- !u!1233149941 &6707942035975983396
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: forceField_001_{6707942035975983396}
+  m_AudioClip: {fileID: 8300000, guid: 901c055bdbb37514ea4026d627cdf99d, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &8098016323593957780
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: forceField_000_{8098016323593957780}
+  m_AudioClip: {fileID: 8300000, guid: c9b1149ddcb0748468b1defcbd09df04, type: 3}
+  m_Volume: 0
+  m_Enabled: 1

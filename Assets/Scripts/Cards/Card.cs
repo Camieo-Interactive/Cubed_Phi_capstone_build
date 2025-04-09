@@ -31,32 +31,42 @@ public class Card : MonoBehaviour
     /// <summary>
     /// Initializes the card with a random set of stats and assigns UI elements.
     /// </summary>
-    public void Init()
+    public void Init() => Init(GameManager.Instance.currentCardList.PickRandomCard());
+    
+    public void Init(CardStats newStats)
     {
-        stats = GameManager.Instance.currentCardList.PickRandomCard();
-        cardImage.sprite = stats.cardSprite;
-        cardNameText.text = stats.cardName;
-        cardCostText.text = $"Cost: {stats.cardCost}";
+        stats = newStats;
+        SetCardProperties();
         UICard iCard = GetComponent<UICard>();
         iCard.button.interactable = true;
         iCard.image.sprite = iCard.interactable;
-        if(cardUsed) {
+        if (cardUsed)
+        {
             cardUsed = false;
             cardButton.interactable = true;
         }
     }
 
-    public void CardUsed() {
+    public void CardUsed()
+    {
         cardButton.interactable = false;
         cardAnimator.Play("Normal");
         cardUsed = true;
     }
 
+    public void SetCardProperties()
+    {
+        cardImage.sprite = stats.cardSprite;
+        cardNameText.text = stats.cardName;
+        cardCostText.text = $"Cost: {stats.cardCost}";
+    }
+
     /// <summary>
     /// Selects this card.
     /// </summary>
-    public void CardPressed() {
-        if(!cardUsed) GameManager.Instance.selectedCard = this;
+    public void CardPressed()
+    {
+        if (!cardUsed) GameManager.Instance.selectedCard = this;
     }
 
     /// <summary>

@@ -31,4 +31,7 @@ public class CardStats : ScriptableObject
     [Tooltip("The probability of drawing or spawning this card (0.0 to 1.0). Lower the rarer.")]
     [Range(0f, 1f)]
     public float drawProbability;
+
+    [Tooltip("Tier which the card is avaliable for use. 0 Being avaliable at the start of game, and higher being later.")]
+    public int cardTier; 
 }

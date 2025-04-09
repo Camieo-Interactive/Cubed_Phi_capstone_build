@@ -13,6 +13,8 @@ public class HealthComponent : MonoBehaviour
 
     [Tooltip("Blood particle effect to spawn when taking damage.")]
     public GameObject bloodFX;
+    [Tooltip("The Flash component of the entity.")]
+    public FlashComponent flashComponent;
 
     /// <summary>
     /// Delegate triggered when health initializes.
@@ -41,7 +43,7 @@ public class HealthComponent : MonoBehaviour
     /// </summary>
     /// <param name="defaultHealth">The starting health of the entity.</param>
     public void InitializeHealth(int defaultHealth) => _currentHealth = defaultHealth;
-    
+
 
     /// <summary>
     /// Modifies the entity's health based on the damage value received.
@@ -50,7 +52,8 @@ public class HealthComponent : MonoBehaviour
     public void ChangeHealth(DamageValue value)
     {
         currentStatus = value.damageStatus;
-        if(value.damageStatus != DamageStatus.NONE) {
+        if (value.damageStatus != DamageStatus.NONE)
+        {
             StopAllCoroutines();
             StartCoroutine(WaitForStatus(value.statusDuration));
         }
@@ -67,8 +70,8 @@ public class HealthComponent : MonoBehaviour
     /// <param name="quaternion">The rotation of the blood effect.</param>
     public void ChangeHealth(DamageValue value, Vector3 pos, Quaternion quaternion)
     {
-        if (bloodFX != null)
-            PoolManager.Instance.GetObject(bloodFX, pos, quaternion);
+        if (bloodFX != null) PoolManager.Instance.GetObject(bloodFX, pos, quaternion);
+        if (flashComponent != null) flashComponent.Flash(Color.white, default, default);
 
         ChangeHealth(value);
     }

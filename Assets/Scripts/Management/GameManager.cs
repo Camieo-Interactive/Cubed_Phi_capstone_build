@@ -73,6 +73,7 @@ public class GameManager : SingletonBase<GameManager>
     /// </summary>
     /// <param name="bitDelta">The change in bits (positive or negative).</param>
     private void HandleBitChange(long bitDelta) => bitCount.text = $"Bits: {BitsCollected += bitDelta}";
+    
 
     /// <summary>
     /// Subscribes to the bit change event.
