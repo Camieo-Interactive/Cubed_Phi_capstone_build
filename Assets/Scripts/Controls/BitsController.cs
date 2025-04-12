@@ -23,6 +23,7 @@ public class BitsController : MonoBehaviour
     /// <param name="trigger">The GameObject to be used as the trigger.</param>
     public void StartBits(int bitsCount, GameObject trigger)
     {
+        Debug.Log($"Bits emitted: {bitsCount}");
         bitsParticleSystem.Emit(bitsCount);
         SetTriggerObject(trigger);
     }
@@ -49,18 +50,18 @@ public class BitsController : MonoBehaviour
     /// </summary>
     private void OnParticleSystemStopped() => PoolManager.Instance.ReturnObject(gameObject);
 
-    /// <summary>
-    /// Processes trigger events for particles entering the trigger collider.
-    /// Kills the particles, increments the BitsCollected counter, and raises a bit change event.
-    /// </summary>
+    // /// <summary>
+    // /// Processes trigger events for particles entering the trigger collider.
+    // /// Kills the particles, increments the BitsCollected counter, and raises a bit change event.
+    // /// </summary>
     private void OnParticleTrigger()
     {
+        var triggerModule = bitsParticleSystem.trigger;
         int triggeredParticles = bitsParticleSystem.GetTriggerParticles(ParticleSystemTriggerEventType.Enter, _particles);
         for (int i = 0; i < triggeredParticles; i++)
         {
             ParticleSystem.Particle p = _particles[i];
             p.remainingLifetime = 0;
-            GameManager.Instance.BitsCollected++;
             _particles[i] = p;
         }
 

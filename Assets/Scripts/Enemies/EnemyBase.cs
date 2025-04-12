@@ -1,4 +1,5 @@
 using Unity.Collections;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 /// <summary>
@@ -7,7 +8,7 @@ using UnityEngine;
 public abstract class EnemyBase : MonoBehaviour
 {
     //  ------------------ Public ------------------
-
+    [Header("Enemy Base")]
     [ReadOnly] 
     [Tooltip("The stats that define the enemy's attributes.")]
     public EnemyStats stats;
@@ -63,7 +64,11 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void OnEndReached()
     {
         EnemyManager.Instance.GameOver();
+        // Todo: Make a health system.. 
     }
+
+    protected virtual void PostEnable() => healthComponent.OnDeath += OnDeath;
+    protected virtual void PostDisable() => healthComponent.OnDeath -= OnDeath;
 
     //  ------------------ Private ------------------
 
@@ -79,12 +84,11 @@ public abstract class EnemyBase : MonoBehaviour
     /// <summary>
     /// Subscribes to the death event when the object is enabled.
     /// </summary>
-    private void OnEnable() =>
-        healthComponent.OnDeath += OnDeath;
+    private void OnEnable() => PostEnable();
 
     /// <summary>
     /// Unsubscribes from the death event when the object is disabled.
     /// </summary>
-    private void OnDisable() =>
-        healthComponent.OnDeath -= OnDeath;
+    private void OnDisable() => PostDisable();
+
 }

@@ -370,7 +370,7 @@ MonoBehaviour:
   equipPoint: {fileID: 1802440020205104375}
   lineRenderer: {fileID: 1930681689876955537}
   rotationSpeed: 128
-  fireAngleThreshold: 0.5
+  fireAngleThreshold: 5
 --- !u!114 &2486008921015462097
 MonoBehaviour:
   m_ObjectHideFlags: 0

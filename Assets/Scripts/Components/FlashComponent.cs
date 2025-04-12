@@ -35,12 +35,31 @@ public class FlashComponent : MonoBehaviour
     /// <param name="flashes">Number of times to flash.</param>
     public void Flash(Color color = default, float duration = 0.25f, int flashes = 4)
     {
+        Debug.Log("Flash Called!");
         if (_flashRoutine != null)
         {
+            spriteRenderer.material = _originalMaterial;
+            spriteRenderer.color = _originalColor;
             StopCoroutine(_flashRoutine);
         }
 
-        _flashRoutine = StartCoroutine(FlashRoutine(color == default ? Color.white : color, duration, flashes));
+        // Sometimes, enemies will die before they actually do anything.
+        if(gameObject.activeSelf) _flashRoutine = StartCoroutine(FlashRoutine(color == default ? Color.white : color, duration, flashes));
+    }
+
+    public void IntitalizeFlash()
+    {
+        spriteRenderer ??= GetComponent<SpriteRenderer>();
+
+        // Werid Bug with pooling..
+        if (_originalMaterial != spriteRenderer.material && _originalMaterial != null)
+        {
+            spriteRenderer.material = _originalMaterial;
+            spriteRenderer.color = _originalColor;
+        }
+        _originalMaterial = spriteRenderer.material;
+        flashMaterial = new Material(flashMaterial);
+        _originalColor = spriteRenderer.color;
     }
 
     //  ------------------ Private ------------------
@@ -48,15 +67,6 @@ public class FlashComponent : MonoBehaviour
     private Material _originalMaterial;
     private Coroutine _flashRoutine;
     private Color _originalColor;
-
-    private void Start()
-    {
-        spriteRenderer ??= GetComponent<SpriteRenderer>();
-        _originalMaterial = spriteRenderer.material;
-        flashMaterial = new Material(flashMaterial);
-        _originalColor = spriteRenderer.color;
-    }
-
     private IEnumerator FlashRoutine(Color color, float duration, int flashes)
     {
         float timePerFlash = duration / flashes;

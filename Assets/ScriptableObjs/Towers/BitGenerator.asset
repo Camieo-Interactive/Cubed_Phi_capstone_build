@@ -16,7 +16,7 @@ MonoBehaviour:
   range: 0
   health: 0
   fireRate: 0
-  rechargeTime: 20
+  rechargeTime: 12
   projectile: {fileID: 3236109327517393351, guid: 653f4e69d23a944438962aeaf06a17b4, type: 3}
   detectionMask:
     serializedVersion: 2

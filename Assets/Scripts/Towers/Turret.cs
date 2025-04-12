@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a turret unit that fires projectiles at detected targets.
 /// </summary>
-public class Turret : BuildableUnit
+public class Turret : BuildableUnit, IAttackable
 {
     //  ------------------ Public ------------------
 
@@ -18,7 +18,7 @@ public class Turret : BuildableUnit
     /// <summary>
     /// Fires a projectile from the turret.
     /// </summary>
-    public override void Fire()
+    public void OnAttack()
     {    
         // Instantiate the projectile
         GameObject projectileObject = PoolManager.Instance.GetObject(stats.projectile, firePoint.position, quaternion.identity);
@@ -41,7 +41,7 @@ public class Turret : BuildableUnit
         if (hit.collider == null) return;
 
         // If a target is detected and the turret can attack, fire.
-        if (CanAttack) Fire();
+        if (CanAttack) OnAttack();
     }
 
     //  ------------------ Private ------------------

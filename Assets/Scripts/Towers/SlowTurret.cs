@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a slow turret that applies a slowing effect to enemies within range.
 /// </summary>
-public class SlowTurret : BuildableUnit
+public class SlowTurret : BuildableUnit, IAttackable
 {
     //  ------------------ Public ------------------
 
@@ -18,7 +18,7 @@ public class SlowTurret : BuildableUnit
     /// <summary>
     /// Fires the turret, applying a cooldown before it can attack again.
     /// </summary>
-    public override void Fire() => StartCoroutine(Cooldown(stats.fireRate));
+    public void OnAttack() => StartCoroutine(Cooldown(stats.fireRate));
 
     /// <summary>
     /// Checks for targets within the turret's range and applies a slowing effect if possible.
@@ -52,7 +52,7 @@ public class SlowTurret : BuildableUnit
                     damageStatus = DamageStatus.SLOW, 
                     statusDuration = 1f 
                 });
-                Fire();
+                OnAttack();
             }
         }
     }

@@ -34,6 +34,10 @@ public class EnemyManager : SingletonBase<EnemyManager>
     [Tooltip("Maximum number of active enemies at once.")]
     public int maxEnemies = 10;
 
+    [Header("Wave Settings")]
+    [Tooltip("Enemy waves to spawn at specific stage intervals")]
+    public List<EnemyWave> enemyWaves;
+
     [Header("UI Elements")]
     [Tooltip("Progress bar showing enemy kills until the next stage.")]
     public Image progressBar;
@@ -86,6 +90,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     private int _enemiesDefeated = 0;
     private int _currentEnemyCap = 1;
     private bool _isSpawning = false;
+    private bool _isWaveInProgress = false;
 
     private List<GameObject> _enemyList = new(); // Tracks active enemies
 
@@ -96,10 +101,21 @@ public class EnemyManager : SingletonBase<EnemyManager>
     {
         yield return new WaitForSeconds(startDelay);
 
-        while (CurrentTier < totalStages)
+        while (CurrentTier <= totalStages)
         {
-            if (_enemyList.Count < _currentEnemyCap && !_isSpawning)
+            // Check if we should spawn a wave based on the current tier
+            EnemyWave currentWave = enemyWaves.FirstOrDefault(w => w.interval == CurrentTier);
+            
+            if (currentWave != null && !_isWaveInProgress)
+            {
+                StartCoroutine(SpawnEnemyWave(currentWave));
+                yield return new WaitUntil(() => !_isWaveInProgress);
+            }
+            else if (_enemyList.Count < _currentEnemyCap && !_isSpawning)
+            {
                 StartCoroutine(SpawnEnemy());
+            }
+            
             yield return new WaitForSeconds(spawnInterval);
         }
 
@@ -114,6 +130,32 @@ public class EnemyManager : SingletonBase<EnemyManager>
         Time.timeScale = 0;
         Debug.Log("End of the stage, show a screen here!");
         yield return null;
+    }
+
+    /// <summary>
+    /// Spawns a wave of enemies based on the EnemyWave definition
+    /// </summary>
+    private IEnumerator SpawnEnemyWave(EnemyWave wave)
+    {
+        _isWaveInProgress = true;
+        Debug.Log($"Starting Wave at Tier {CurrentTier}!");
+
+        // Spawn all enemies in the wave
+        foreach (GameObject enemyPrefab in wave.enemyPrefabs)
+        {
+            // Wait until we're under the enemy cap
+            yield return new WaitUntil(() => _enemyList.Count < maxEnemies);
+            
+            // Choose a random spawn point
+            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            SpawnEnemyInstance(enemyPrefab, spawnPoint.position);
+            
+            // Small delay between spawns in the same wave
+            yield return new WaitForSeconds(0.5f);
+        }
+
+        _isWaveInProgress = false;
+        Debug.Log("Wave completed!");
     }
 
     /// <summary>
@@ -171,7 +213,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     /// </summary>
     private void UpdateProgressBar()
     {
-        if (progressBar != null) progressBar.fillAmount = (float)(CurrentTier - 1) / totalStages;
+        if (progressBar != null) progressBar.fillAmount = (float)CurrentTier / totalStages;
     }
 
     /// <summary>

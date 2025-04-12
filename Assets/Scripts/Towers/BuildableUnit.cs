@@ -39,11 +39,6 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     }
 
     /// <summary>
-    /// Fires at the current target.
-    /// </summary>
-    public abstract void Fire();
-
-    /// <summary>
     /// Checks for conditions every tick.
     /// </summary>
     public abstract void Check();

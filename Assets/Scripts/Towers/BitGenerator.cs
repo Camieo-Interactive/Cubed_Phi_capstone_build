@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Generates bits at regular intervals by firing a projectile.
 /// </summary>
-public class BitGenerator : BuildableUnit
+public class BitGenerator : BuildableUnit, IAttackable
 {
     public AudioSource AudioSrc;
     /// <summary>
@@ -16,12 +16,21 @@ public class BitGenerator : BuildableUnit
         if (timePassed > stats.rechargeTime)
         {
             timePassed = 0;
-            Fire();
+            OnAttack();
             buildableAnimator.Play("GeneratedBits");
             AudioSrc.Play();
         }
     }
-    
+
+    /// <summary>
+    /// Fires a projectile that generates bits and applies the defined damage.
+    /// </summary>
+    public void OnAttack()
+    {
+        PoolManager.Instance.GetObject(stats.projectile, transform.position, quaternion.identity)
+            .GetComponent<BitsController>().StartBits(stats.damage, GameManager.Instance.mouseTrigger);
+    }
+
     //  ------------------ Private ------------------
 
     private float timePassed = 0;
@@ -32,14 +41,5 @@ public class BitGenerator : BuildableUnit
     private void Start()
     {
         OnBuild();
-    }
-
-    /// <summary>
-    /// Fires a projectile that generates bits and applies the defined damage.
-    /// </summary>
-    public override void Fire()
-    {
-        PoolManager.Instance.GetObject(stats.projectile, transform.position, quaternion.identity)
-            .GetComponent<BitsController>().StartBits(stats.damage, GameManager.Instance.mouseTrigger);
     }
 }

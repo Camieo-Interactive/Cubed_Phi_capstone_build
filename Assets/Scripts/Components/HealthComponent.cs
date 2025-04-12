@@ -42,7 +42,10 @@ public class HealthComponent : MonoBehaviour
     /// Initializes the default health of the entity.
     /// </summary>
     /// <param name="defaultHealth">The starting health of the entity.</param>
-    public void InitializeHealth(int defaultHealth) => _currentHealth = defaultHealth;
+    public void InitializeHealth(int defaultHealth) {
+        _currentHealth = defaultHealth;
+        if (flashComponent != null) flashComponent.IntitalizeFlash();
+    }
 
 
     /// <summary>
@@ -52,6 +55,7 @@ public class HealthComponent : MonoBehaviour
     public void ChangeHealth(DamageValue value)
     {
         currentStatus = value.damageStatus;
+        if (flashComponent != null) flashComponent.Flash(Color.white, 0.25f, 4);
         if (value.damageStatus != DamageStatus.NONE)
         {
             StopAllCoroutines();

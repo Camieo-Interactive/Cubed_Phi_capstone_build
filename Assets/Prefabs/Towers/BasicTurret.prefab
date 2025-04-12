@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2541626500226769786}
   - component: {fileID: 3086340898968333029}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6279134003053663432}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BasicTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 2088198612648111912}
   - component: {fileID: 9177970704700852158}
   - component: {fileID: 146059873022768164}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,6 +277,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentStatus: 0
   bloodFX: {fileID: 0}
+  flashComponent: {fileID: 0}
 --- !u!114 &2088198612648111912
 MonoBehaviour:
   m_ObjectHideFlags: 0

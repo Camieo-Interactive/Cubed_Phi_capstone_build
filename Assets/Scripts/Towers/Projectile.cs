@@ -54,8 +54,7 @@ public class Projectile : MonoBehaviour
     private Vector2 _dir;
     private bool _isEnemy = false;
     private Coroutine _destroyCoroutine;
-
-
+    
     /// <summary>
     /// Resets the trail renderer to avoid visual artifacts when reusing the projectile.
     /// </summary>
@@ -82,6 +81,9 @@ public class Projectile : MonoBehaviour
     /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        int layer = collision.gameObject.layer;
+        if ((_isEnemy && layer == 6) || (!_isEnemy && layer == 7)) return;
+
         HealthComponent healthComponent = collision.gameObject.GetComponent<HealthComponent>();
         if (healthComponent != null)
         {
