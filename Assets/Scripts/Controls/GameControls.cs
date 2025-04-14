@@ -11,7 +11,7 @@ public class GameControls : MonoBehaviour
     [Header("Selection Handler")]
     [Tooltip("Reference to the SelectorHandler responsible for updating the selection sprite.")]
     public SelectorHandler selectorHandler;
-
+    public static Vector3? CurrentTileSelected = null; 
     //  ------------------ Private ------------------
     
     private InputAction _move;
@@ -50,5 +50,9 @@ public class GameControls : MonoBehaviour
     /// <summary>
     /// Updates the selection sprite based on movement input.
     /// </summary>
-    private void Update() => selectorHandler.UpdateSelectionSprite(_move.ReadValue<Vector2>());
+    private void Update() {
+        selectorHandler.UpdateSelectionSprite(_move.ReadValue<Vector2>());
+        Vector3? vector = selectorHandler.GetValidTile(_move.ReadValue<Vector2>());
+        CurrentTileSelected = (vector != null) ? vector : CurrentTileSelected;
+    }
 }

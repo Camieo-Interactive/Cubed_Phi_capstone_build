@@ -28,7 +28,7 @@ public class BitGenerator : BuildableUnit, IAttackable
     public void OnAttack()
     {
         PoolManager.Instance.GetObject(stats.projectile, transform.position, quaternion.identity)
-            .GetComponent<BitsController>().StartBits(stats.damage, GameManager.Instance.mouseTrigger);
+            .GetComponent<BitsController>().StartBits(stats.damage);
     }
 
     //  ------------------ Private ------------------

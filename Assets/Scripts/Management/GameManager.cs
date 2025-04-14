@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -38,6 +39,7 @@ public class GameManager : SingletonBase<GameManager>
 
     [Tooltip("Dictionary tracking the locations of buildings.")]
     public Dictionary<Vector3Int, bool> buildingLocations = new();
+    
 
     /// <summary>
     /// The total bits collected.
@@ -58,7 +60,9 @@ public class GameManager : SingletonBase<GameManager>
     /// <summary>
     /// Called after the singleton instance is initialized.
     /// </summary>
-    public override void PostAwake() => bitCount.text = $"Bits: {BitsCollected}";
+    public override void PostAwake() {
+        bitCount.text = $"Bits: {BitsCollected}";
+    }
 
     /// <summary>
     /// Raises the OnBitChange event with the specified delta.
@@ -84,4 +88,6 @@ public class GameManager : SingletonBase<GameManager>
     /// Unsubscribes from the bit change event.
     /// </summary>
     private void OnDisable() => OnBitChange -= HandleBitChange;
+
+    private void Start() => BitsController.AddTrigger(mouseTrigger);
 }

@@ -15,6 +15,3 @@ MonoBehaviour:
   loopThrough: 0
   cards:
   - {fileID: 11400000, guid: 5b57e6d9b06d19148ab24a4ad8b2dbd1, type: 2}
-  - {fileID: 11400000, guid: 5b57e6d9b06d19148ab24a4ad8b2dbd1, type: 2}
-  - {fileID: 11400000, guid: 5b57e6d9b06d19148ab24a4ad8b2dbd1, type: 2}
-  - {fileID: 11400000, guid: 5b57e6d9b06d19148ab24a4ad8b2dbd1, type: 2}

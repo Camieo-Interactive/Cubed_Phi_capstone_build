@@ -35,7 +35,16 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     public virtual void OnBuildingDestroy()
     {
         GameManager.Instance.buildingLocations.Remove(Grid.WorldToCell(transform.position));
-        PoolManager.Instance.ReturnObject(gameObject);
+        try
+        {
+            PoolManager.Instance.ReturnObject(gameObject);
+        }
+        catch
+        {
+            // We are testing right now. soo don't worry about it. 
+            Debug.LogWarning("This instance is not in the object pool!");
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>

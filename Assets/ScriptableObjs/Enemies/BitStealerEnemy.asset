@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0cd27801f1ed8d4da433e77f78bf84e, type: 3}
   m_Name: BitStealerEnemy
   m_EditorClassIdentifier: 
-  movementSpeed: 0
-  health: 50
+  movementSpeed: 1
+  health: 200
   spawnable: {fileID: 0}
   bitsOnKill: 0
-  tier: 0
+  tier: 17

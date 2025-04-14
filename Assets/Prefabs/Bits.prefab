@@ -3807,7 +3807,7 @@ ParticleSystem:
     outside: 0
     enter: 2
     exit: 0
-    colliderQueryMode: 0
+    colliderQueryMode: 2
     radiusScale: 1
     primitives: []
   SubModule:
@@ -4847,3 +4847,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bitsParticleSystem: {fileID: 306037772951344226}
+  numberOfTriggers: 0

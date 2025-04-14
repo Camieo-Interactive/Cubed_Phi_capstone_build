@@ -24,7 +24,8 @@ public class Projectile : MonoBehaviour
     /// </summary>
     public void CreateSpawnable()
     {
-        Instantiate(stats.spawnable, transform.position, Quaternion.Inverse(transform.rotation));
+        GameObject obj = PoolManager.Instance.GetObject(stats.spawnable, transform.position, transform.rotation);
+        obj.GetComponent<Explosion>().Init(_damage, 2.0f, false);
         CleanupAndReturn();
     }
 
@@ -38,6 +39,10 @@ public class Projectile : MonoBehaviour
         _dir = direction;
         _isEnemy = isEnemy;
         _isActive = true;
+
+        // Rotate the projectile to face the direction it's moving
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
 
         // Ensure trail is reset when reusing the object
         ResetTrailRenderer();
@@ -54,7 +59,7 @@ public class Projectile : MonoBehaviour
     private Vector2 _dir;
     private bool _isEnemy = false;
     private Coroutine _destroyCoroutine;
-    
+
     /// <summary>
     /// Resets the trail renderer to avoid visual artifacts when reusing the projectile.
     /// </summary>

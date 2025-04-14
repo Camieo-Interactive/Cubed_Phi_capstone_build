@@ -15,13 +15,14 @@ public class EnemyAttackStats : ScriptableObject
 
     [Header("Attack Enemy Stats Stats")]
     [Space(8)]
-    [Header("Attack Attributes")]
-    
     [Tooltip("The attack range of the enemy.")]
     public float AttackRange = 30f;
 
     [Tooltip("The attack duration. [Fire rate or duration]")]
     public float AttackDuration = 10f;
+    
+    [Tooltip("The attack cooldown.")]
+    public float AttackCooldownDuration = 10f;
 
     [Tooltip("The layer in which the attacks work.")]
     public LayerMask AttackMask;

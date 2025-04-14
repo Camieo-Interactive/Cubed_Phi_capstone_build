@@ -50,12 +50,14 @@ public abstract class EnemyBase : MonoBehaviour
         // Notify the enemy manager of the death
         OnDeathCallback?.Invoke(gameObject);
 
-        // Spawn the bits particle system
-        PoolManager.Instance.GetObject(bitsParticleSystem, transform.position, Quaternion.identity)
-            .GetComponent<BitsController>().StartBits(stats.bitsOnKill, GameManager.Instance.mouseTrigger);
-
         // Return the enemy object to the pool
+        try {
         PoolManager.Instance.ReturnObject(gameObject);
+        } catch {
+            // We are testing right now. soo don't worry about it. 
+            Debug.LogWarning("This instance is not in the object pool!");
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>

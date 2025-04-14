@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   range: 25
-  health: 75
+  health: 30
   fireRate: 0.5
   rechargeTime: 0
   projectile: {fileID: 0}

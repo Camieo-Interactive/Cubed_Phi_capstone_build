@@ -43,6 +43,18 @@ public class SelectorHandler : MonoBehaviour
         else
             OnDeselectionOfTile();
     }
+    /// <summary>
+    /// Returns the world position of a valid tile under the given screen position, or null if invalid.
+    /// </summary>
+    /// <param name="screenPosition">Mouse screen position.</param>
+    /// <returns>Nullable Vector3 world position of a valid tile, or null.</returns>
+    public Vector3? GetValidTile(Vector2 mouseScreenPosition)
+    {
+        Vector3Int cellPosition = grid.WorldToCell(SelectionWorldPosition(mouseScreenPosition));
+
+        if (!tilemap.HasTile(cellPosition)) return null;
+        return grid.GetCellCenterWorld(cellPosition);
+    }
 
     /// <summary>
     /// Attempts to place a tile at the given position.

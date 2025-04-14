@@ -42,7 +42,8 @@ public class HealthComponent : MonoBehaviour
     /// Initializes the default health of the entity.
     /// </summary>
     /// <param name="defaultHealth">The starting health of the entity.</param>
-    public void InitializeHealth(int defaultHealth) {
+    public void InitializeHealth(int defaultHealth)
+    {
         _currentHealth = defaultHealth;
         if (flashComponent != null) flashComponent.IntitalizeFlash();
     }
@@ -58,8 +59,10 @@ public class HealthComponent : MonoBehaviour
         if (flashComponent != null) flashComponent.Flash(Color.white, 0.25f, 4);
         if (value.damageStatus != DamageStatus.NONE)
         {
-            StopAllCoroutines();
-            StartCoroutine(WaitForStatus(value.statusDuration));
+            if (value.damageStatus == DamageStatus.POISON || value.damageStatus == DamageStatus.FIRE)
+                StartCoroutine(DecayHealth(value, value.statusDuration));
+            if (currentStatus != DamageStatus.NONE)
+                StartCoroutine(WaitForStatus(value.statusDuration));
         }
         _currentHealth += value.damage;
         if (_currentHealth <= 0)
@@ -91,5 +94,17 @@ public class HealthComponent : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         currentStatus = DamageStatus.NONE;
+    }
+
+    private IEnumerator DecayHealth(DamageValue damageValue, float duration)
+    {
+        float timeElapsed = 0f;
+        damageValue.damageStatus = DamageStatus.NONE;
+        while (timeElapsed < duration)
+        {
+            ChangeHealth(damageValue);
+            yield return new WaitForSeconds(1f);
+            timeElapsed += 1f;
+        }
     }
 }

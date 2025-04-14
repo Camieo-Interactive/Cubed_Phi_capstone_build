@@ -1,52 +1,52 @@
 fileFormatVersion: 2
-guid: 529fd7ee1d249b6429074188946eeff1
+guid: f62fcab0b6ba7e74080b69611bccef39
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7887488545224757908
-    second: CardAssets 1_0
+      213: -3520578097340162987
+    second: CardAssets2_0
   - first:
-      213: -71062494393543327
-    second: CardAssets 1_1
+      213: -8477757812283215748
+    second: CardAssets2_1
   - first:
-      213: -6735885792440944202
-    second: CardAssets 1_2
+      213: 7212653429230187828
+    second: CardAssets2_2
   - first:
-      213: -5549700749154714553
-    second: CardAssets 1_3
+      213: -3522866821365618248
+    second: CardAssets2_3
   - first:
-      213: 8519761784690488647
-    second: CardAssets 1_4
+      213: -4548790514378338906
+    second: CardAssets2_4
   - first:
-      213: -5201062985163310522
-    second: CardAssets 1_5
+      213: 2130584692443137578
+    second: CardAssets2_5
   - first:
-      213: -3643014235497596574
-    second: CardAssets 1_6
+      213: 2330341056282882358
+    second: CardAssets2_6
   - first:
-      213: 3288008977854795069
-    second: CardAssets 1_7
+      213: -7069855146596854097
+    second: CardAssets2_7
   - first:
-      213: -2947128377688898210
-    second: CardAssets 1_8
+      213: -2104718966796987890
+    second: CardAssets2_8
   - first:
-      213: 3168498322876503657
-    second: CardAssets 1_9
+      213: -2307740812890503380
+    second: CardAssets2_9
   - first:
-      213: 35759239194498303
-    second: CardAssets 1_10
+      213: -793400014197725502
+    second: CardAssets2_10
   - first:
-      213: -1580859093003081775
-    second: CardAssets 1_11
+      213: -4150253051878002119
+    second: CardAssets2_11
   - first:
-      213: -33516301817948682
-    second: CardAssets 1_12
+      213: 3364370326985871525
+    second: CardAssets2_12
   - first:
-      213: -6109497801349646550
-    second: CardAssets 1_13
+      213: -5254530908715036246
+    second: CardAssets2_13
   - first:
-      213: -3037218851001435781
-    second: CardAssets 1_14
+      213: -359770695176957530
+    second: CardAssets2_14
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -155,7 +155,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CardAssets 1_0
+      name: CardAssets1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -163,21 +163,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 492951cca0df57d60800000000000000
-      internalID: 7887488545224757908
+      spriteID: 4d10ccc26feefa146945ab62d11a6149
+      internalID: -1053605263
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardAssets 1_1
+      name: CardAssets1_1
       rect:
         serializedVersion: 2
         x: 32
@@ -185,21 +185,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 165d1d0b909830ff0800000000000000
-      internalID: -71062494393543327
+      spriteID: ef1cc6b7dd31bb343aa53570ad8e10dc
+      internalID: -1173238794
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardAssets 1_2
+      name: CardAssets1_2
       rect:
         serializedVersion: 2
         x: 64
@@ -207,21 +207,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 6b9f4fd5f835582a0800000000000000
-      internalID: -6735885792440944202
+      spriteID: c760c9ba742df9c4087f003430451faa
+      internalID: 1672301504
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardAssets 1_3
+      name: CardAssets1_3
       rect:
         serializedVersion: 2
         x: 96
@@ -229,21 +229,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 74cf9ec72908bf2b0800000000000000
-      internalID: -5549700749154714553
+      spriteID: cf2741ea7d37f8141929b03308b576e6
+      internalID: 231319926
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardAssets 1_4
+      name: CardAssets1_4
       rect:
         serializedVersion: 2
         x: 128
@@ -251,21 +251,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 745bc6b14364c3670800000000000000
-      internalID: 8519761784690488647
+      spriteID: c797ed45224acc9418505d5b54c3707c
+      internalID: -178499090
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardAssets 1_5
+      name: CardAssets1_5
       rect:
         serializedVersion: 2
         x: 160
@@ -273,21 +273,21 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 64a78ea75cc12d7b0800000000000000
-      internalID: -5201062985163310522
+      spriteID: 0e2d1b9fb1e667c47933bd80b9ee6245
+      internalID: -2101171565
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CardAssets 1_6
+      name: CardAssets1_6
       rect:
         serializedVersion: 2
         x: 192
@@ -295,15 +295,15 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 2697975bad9617dc0800000000000000
-      internalID: -3643014235497596574
+      spriteID: a748356e47001d14690116da5cbcd055
+      internalID: 2080489981
       vertices: []
       indices: 
       edges: []
@@ -312,7 +312,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 756a73cce8ddcca4e969ab45861824bc
+    spriteID: f764d5ee2c2c02e4d8029cfea87f9430
     internalID: 0
     vertices: []
     indices: 
@@ -322,13 +322,13 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      CardAssets 1_0: 7887488545224757908
-      CardAssets 1_1: -71062494393543327
-      CardAssets 1_2: -6735885792440944202
-      CardAssets 1_3: -5549700749154714553
-      CardAssets 1_4: 8519761784690488647
-      CardAssets 1_5: -5201062985163310522
-      CardAssets 1_6: -3643014235497596574
+      CardAssets1_0: -1053605263
+      CardAssets1_1: -1173238794
+      CardAssets1_2: 1672301504
+      CardAssets1_3: 231319926
+      CardAssets1_4: -178499090
+      CardAssets1_5: -2101171565
+      CardAssets1_6: 2080489981
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
