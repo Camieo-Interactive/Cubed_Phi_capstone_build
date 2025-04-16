@@ -24,9 +24,6 @@ public class HealthBarComponent : MonoBehaviour
     // The GUI to subscribe to
     public TextMeshProUGUI healthText;
 
-    [Tooltip("The component to subscribe to")]
-    // The component to subscribe to
-    public HealthComponent healthComponent;
 
     /// <summary>
     /// Function that sets the intial private values of health
@@ -46,13 +43,13 @@ public class HealthBarComponent : MonoBehaviour
     /// <param name="currentHealth">
     /// current health of the health bar component
     /// </param>
-    public void setHealth(int healthDelta)
+    public void setHealth(int healthDelta, DamageStatus currentStatus = DamageStatus.NONE)
     {
         _currentHealth += healthDelta;
         _currentHealth = math.max(0, _currentHealth);
         if (healthText != null)
         {
-            healthText.text = $"Health: {_currentHealth}/{_initalhealth}" + healthComponent.currentStatus switch
+            healthText.text = $"Health: {_currentHealth}/{_initalhealth}" + currentStatus switch
             {
                 DamageStatus.STUN => "<sprite name=\"STUNSTATUS\">",
                 DamageStatus.POISON => "<sprite name=\"POISIONSTATUS\">",

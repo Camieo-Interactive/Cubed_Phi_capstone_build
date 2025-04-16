@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: SlowTower
   m_EditorClassIdentifier: 
   damage: 1
+  status: 4
   range: 25
   health: 30
   fireRate: 0.5

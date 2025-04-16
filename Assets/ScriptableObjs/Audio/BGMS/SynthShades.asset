@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b9c3962c3021904d97eef77a043129e, type: 3}
+  m_Name: SynthShades
+  m_EditorClassIdentifier: 
+  soundName: SYNTHSHADES
+  soundNameActual: Synth Shades
+  soundAuth: Marcelo Fernandez
+  soundDesc: 
+  nameHash: -1228115609
+  clip: {fileID: 8300000, guid: 8ef7d0e277276634d8a49d780517a636, type: 3}
+  audioMixerGroup: {fileID: -3441634497480133724, guid: 37916061f6651df4bbe8c13bf8412841, type: 2}
+  volume: 0.5
+  pitch: 1

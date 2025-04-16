@@ -22,7 +22,7 @@ public class Explosion : MonoBehaviour
     /// </summary>
     /// <param name="damage">The damage to apply to affected enemies.</param>
     /// <param name="range">The range of the explosion.</param>
-    public void Init(DamageValue damage, float range, bool isEnemy = false)
+    public void Init(DamageValue damage, float range, bool isEnemy = false, DamageStatus stats = DamageStatus.NONE)
     {
         _range = range;
         AudioSrc.Play();

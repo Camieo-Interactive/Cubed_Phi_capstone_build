@@ -1,203 +1,273 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
+using TMPro;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Manages background music playback throughout the game.
+/// Manages the background music (BGM) playback, including volume control, song fading, and random song selection.
 /// </summary>
-/// <remarks>
-/// Dedicated solely to handling BGM.
-/// </remarks>
 public class BGMManager : SingletonBase<BGMManager>
 {
     //  ------------------ Public ------------------
 
     [Header("BGM Configuration")]
-    [Tooltip("BGM sound group")]
+    [Tooltip("The sound group that contains all background music.")]
     public SoundGroup BGM;
 
-    [Tooltip("Audio mixer for BGM control")]
+    [Tooltip("The audio mixer for controlling volumes.")]
     public AudioMixer audioMixer;
 
-    [Tooltip("Audio source used for BGM playback")]
+    [Tooltip("The audio source responsible for playing the background music.")]
     public AudioSource audioSource;
 
-    [Tooltip("Text UI displaying current BGM track")]
+    [Tooltip("Text UI element to display the currently playing music.")]
     public TextMeshProUGUI MusicText;
 
-    [Tooltip("Animation curve used for fade transitions")]
-    public AnimationCurve curve;
+    [Tooltip("Animation curve for fading the music volume.")]
+    public AnimationCurve fadeCurve;
 
-    public static bool IsMute = false;
-
-    /// <summary>
-    /// Sets the master volume and updates the audio mixer.
-    /// </summary>
-    /// <param name="volume">Linear volume value between 0.0 and 1.0</param>
-    public void SetMasterVolume(float volume)
-    {
-        float clamped = Mathf.Clamp01(volume);
-        float db = Mathf.Log10(Mathf.Max(clamped, 0.00001f)) * 20f;
-
-        audioMixer.SetFloat("Master", db);
-        PlayerPrefs.SetFloat("MasterVolume", clamped);
-        PlayerPrefs.Save();
-    }
+    // Static property to control mute state
+    public static bool IsMute { get; set; } = false;
 
     /// <summary>
-    /// Sets the BGM volume and updates the audio mixer.
-    /// </summary>
-    /// <param name="volume">Linear volume value between 0.0 and 1.0</param>
-    public void SetBGMVolume(float volume)
-    {
-        float clamped = Mathf.Clamp01(volume);
-        float db = Mathf.Log10(Mathf.Max(clamped, 0.00001f)) * 20f;
-
-        audioMixer.SetFloat("BGM", db);
-        PlayerPrefs.SetFloat("BGMVolume", clamped);
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
-    /// Sets the SFX volume and updates the audio mixer.
-    /// </summary>
-    /// <param name="volume">Linear volume value between 0.0 and 1.0</param>
-    public void SetSFXVolume(float volume)
-    {
-        float clamped = Mathf.Clamp01(volume);
-        float db = Mathf.Log10(Mathf.Max(clamped, 0.00001f)) * 20f;
-
-        audioMixer.SetFloat("SFX", db);
-        PlayerPrefs.SetFloat("SFXVolume", clamped);
-        PlayerPrefs.Save();
-    }
-
-    /// <summary>
-    /// Initializes BGM manager after Awake lifecycle.
+    /// Called after the singleton instance is initialized.
     /// </summary>
     public override void PostAwake()
     {
-        DontDestroyOnLoad(gameObject);
-        LoadSoundDictionary(BGM);
-    }
-
-    /// <summary>
-    /// Begins playing a random BGM with fade-in.
-    /// </summary>
-    public void PlayBGM()
-    {
-        audioSource.Stop();
-        StartCoroutine(FadeInto(0.5f));
-        StartCoroutine(WaitForNextSong(audioSource.clip));
-    }
-
-    /// <summary>
-    /// Queries a random BGM sound.
-    /// </summary>
-    #nullable enable
-    public Sound? QueryRandomBGM() =>
-        BGM.Sounds[UnityEngine.Random.Range(0, BGM.Sounds.Length)];
-
-    /// <summary>
-    /// Applies audio settings from a Sound to an AudioSource.
-    /// </summary>
-    public static void SetAudioSettings(AudioSource source, Sound? sound) =>
-        _SetSourceSettings(source, sound);
-
-    //  ------------------ Private ------------------
-    private readonly Dictionary<int, int> _bgmDictionary = new();
-
-    private void InitializeMixerVolumes()
-    {
-        float masterVol = PlayerPrefs.GetFloat("MasterVolume", 1.0f);
-        float bgmVol = PlayerPrefs.GetFloat("BGMVolume", 1.0f);
-
-        float masterDb = Mathf.Log10(Mathf.Max(masterVol, 0.00001f)) * 20f;
-        float bgmDb = Mathf.Log10(Mathf.Max(bgmVol, 0.00001f)) * 20f;
-
-        audioMixer.SetFloat("BGM", bgmDb);
-        audioMixer.SetFloat("Master", masterDb);
-    }
-
-    private void LoadSoundDictionary(SoundGroup soundGroup)
-    {
-        for (int i = 0; i < soundGroup.Sounds.Length; i++)
-        {
-            soundGroup.Sounds[i].nameHash = Animator.StringToHash(soundGroup.Sounds[i].soundName);
-            _bgmDictionary[soundGroup.Sounds[i].nameHash] = i;
-        }
-    }
-
-    private static void _SetSourceSettings(AudioSource source, Sound? sound)
-    {
-        if (sound == null) return;
-
-        source.clip = sound.clip;
-        source.mute = IsMute;
-        source.outputAudioMixerGroup = sound.audioMixerGroup;
-        source.volume = sound.volume;
-        source.pitch = sound.pitch;
-    }
-
-    private IEnumerator WaitForNextSong(AudioClip clip)
-    {
-        while (audioSource.time < clip.length)
-        {
-            yield return null;
-        }
-
-        PlayBGM();
-    }
-
-    private IEnumerator FadeInto(float fadeTime)
-    {
-        float t = 0f;
-        Sound? sound = QueryRandomBGM();
-
-        if (sound == null)
-        {
-            yield break;
-        }
-
-        SetAudioSettings(audioSource, sound);
-        if (MusicText != null) MusicText.SetText($"Now Playing: {sound}");
-
-        audioSource.Play();
-
-        float targetVolume = audioSource.volume;
-        audioSource.volume = 0f;
-
-        while (t < fadeTime)
-        {
-            t += Time.deltaTime;
-            float normalized = t / fadeTime;
-            audioSource.volume = Mathf.Clamp(curve.Evaluate(normalized) * targetVolume, 0f, targetVolume);
-            yield return null;
-        }
-
-        audioSource.volume = targetVolume;
-    }
-    private void Start()
-    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
         InitializeMixerVolumes();
     }
 
-    private void OnEnable()
+    /// <summary>
+    /// Starts playing background music with fading in the volume.
+    /// </summary>
+    public void PlayBGM()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        if (!_forcePlayNew && audioSource.isPlaying) 
+            return;
+        
+        StopMusicCoroutines();
+        audioSource.Stop();
+        _fadeCoroutine = StartCoroutine(FadeInto(0.5f));
+        _forcePlayNew = false;
     }
 
-    private void OnDisable()
+    /// <summary>
+    /// Forces a new BGM to play regardless of current playback state.
+    /// </summary>
+    public void ForceNewBGM()
+    {
+        _forcePlayNew = true;
+        PlayBGM();
+    }
+
+    /// <summary>
+    /// Queries a random BGM sound from the list.
+    /// </summary>
+    public Sound QueryRandomBGM() =>
+        BGM.Sounds[Random.Range(0, BGM.Sounds.Length)];
+
+    /// <summary>
+    /// Sets the master volume in the audio mixer.
+    /// </summary>
+    public void SetMasterVolume(float volume) => 
+        SetMixerVolume("Master", volume, "MasterVolume");
+
+    /// <summary>
+    /// Sets the BGM volume in the audio mixer.
+    /// </summary>
+    public void SetBGMVolume(float volume) => 
+        SetMixerVolume("BGM", volume, "BGMVolume");
+
+    /// <summary>
+    /// Sets the SFX volume in the audio mixer.
+    /// </summary>
+    public void SetSFXVolume(float volume) => 
+        SetMixerVolume("SFX", volume, "SFXVolume");
+
+    //  ------------------ Protected ------------------
+    
+    //  ------------------ Private ------------------
+    
+    private Coroutine _fadeCoroutine;
+    private Coroutine _nextSongCoroutine;
+    private bool _forcePlayNew = false;
+    private string _currentSongName = string.Empty;
+    private float _lastPlayPosition = 0f;
+    private bool _wasPlayingBeforePause = false;
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        InitializeMixerVolumes();
+        _forcePlayNew = true;
+        PlayBGM();
+    }
+
+    private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnApplicationFocus(bool hasFocus)
     {
-        PlayBGM();
+        if (!hasFocus)
+        {
+            // Store state when losing focus
+            if (audioSource.clip != null)
+            {
+                _wasPlayingBeforePause = audioSource.isPlaying;
+                _lastPlayPosition = audioSource.time;
+            }
+        }
+        else
+        {
+            // Restore state when gaining focus
+            RestoreMusicState();
+        }
+    }
+
+    private void OnApplicationPause(bool pauseStatus)
+    {
+        if (pauseStatus)
+        {
+            // Store state when pausing
+            if (audioSource.clip != null)
+            {
+                _wasPlayingBeforePause = audioSource.isPlaying;
+                _lastPlayPosition = audioSource.time;
+            }
+        }
+        else
+        {
+            // Restore state when unpausing
+            RestoreMusicState();
+        }
+    }
+
+    private void RestoreMusicState()
+    {
+        if (audioSource.clip == null || !_wasPlayingBeforePause) 
+            return;
+        
+        // Resume playback at the stored position
+        if (!audioSource.isPlaying)
+        {
+            audioSource.time = _lastPlayPosition;
+            audioSource.Play();
+        }
+    }
+
+    private void StopMusicCoroutines()
+    {
+        if (_fadeCoroutine != null)
+        {
+            StopCoroutine(_fadeCoroutine);
+            _fadeCoroutine = null;
+        }
+        
+        if (_nextSongCoroutine != null)
+        {
+            StopCoroutine(_nextSongCoroutine);
+            _nextSongCoroutine = null;
+        }
+    }
+
+    /// <summary>
+    /// Sets the volume for a specific audio mixer parameter and saves it to PlayerPrefs.
+    /// </summary>
+    private void SetMixerVolume(string mixerParam, float volume, string prefsKey)
+    {
+        float clamped = Mathf.Clamp01(volume);
+        float db = Mathf.Log10(Mathf.Max(clamped, 0.00001f)) * 20f;
+
+        audioMixer.SetFloat(mixerParam, db);
+        PlayerPrefs.SetFloat(prefsKey, clamped);
+        PlayerPrefs.Save();
+    }
+
+    /// <summary>
+    /// Initializes the mixer volumes from saved player preferences.
+    /// </summary>
+    private void InitializeMixerVolumes()
+    {
+        SetMixerVolume("Master", PlayerPrefs.GetFloat("MasterVolume", 1.0f), "MasterVolume");
+        SetMixerVolume("BGM", PlayerPrefs.GetFloat("BGMVolume", 1.0f), "BGMVolume");
+        SetMixerVolume("SFX", PlayerPrefs.GetFloat("SFXVolume", 1.0f), "SFXVolume");
+    }
+
+    /// <summary>
+    /// Fades the audio volume into the target volume over a specified time.
+    /// </summary>
+    private IEnumerator FadeInto(float fadeTime)
+    {
+        Sound sound = QueryRandomBGM();
+        
+        // Store current song information
+        _currentSongName = sound.soundName;
+
+        // Apply sound settings
+        audioSource.clip = sound.clip;
+        audioSource.mute = IsMute;
+        audioSource.outputAudioMixerGroup = sound.audioMixerGroup;
+        audioSource.volume = 0f;
+        audioSource.pitch = sound.pitch;
+
+        // Update UI with current song
+        if (MusicText != null)
+            MusicText.SetText($"Now Playing: {sound}");
+
+        audioSource.Play();
+
+        float targetVolume = sound.volume;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < fadeTime)
+        {
+            elapsedTime += Time.deltaTime;
+            float normalizedTime = elapsedTime / fadeTime;
+            audioSource.volume = Mathf.Clamp(fadeCurve.Evaluate(normalizedTime) * targetVolume, 0f, targetVolume);
+            yield return null;
+        }
+
+        audioSource.volume = targetVolume;
+        _wasPlayingBeforePause = true;
+
+        // Queue next song
+        _nextSongCoroutine = StartCoroutine(WaitForNextSong());
+    }
+
+    /// <summary>
+    /// Waits for the current song to finish before starting the next one.
+    /// </summary>
+    private IEnumerator WaitForNextSong()
+    {
+        if (audioSource.clip == null) 
+            yield break;
+        
+        float clipLength = audioSource.clip.length;
+        bool songFinished = false;
+        
+        while (!songFinished && audioSource.clip != null)
+        {
+            // Only check if we're actually playing
+            if (audioSource.isPlaying)
+            {
+                // Consider the song finished when it's very close to the end
+                songFinished = audioSource.time >= clipLength - 0.1f;
+            }
+            
+            yield return null;
+        }
+        
+        // Only play a new song if the current one finished properly
+        if (songFinished)
+        {
+            _wasPlayingBeforePause = false; // Reset state before playing new song
+            _forcePlayNew = true;
+            PlayBGM();
+        }
     }
 }

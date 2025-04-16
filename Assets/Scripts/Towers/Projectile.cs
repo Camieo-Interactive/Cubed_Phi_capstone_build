@@ -25,7 +25,7 @@ public class Projectile : MonoBehaviour
     public void CreateSpawnable()
     {
         GameObject obj = PoolManager.Instance.GetObject(stats.spawnable, transform.position, transform.rotation);
-        obj.GetComponent<Explosion>().Init(_damage, 2.0f, false);
+        obj.GetComponent<Explosion>()?.Init(_damage, 2.0f, false, DamageStatus.STUN);
         CleanupAndReturn();
     }
 

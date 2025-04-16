@@ -10,11 +10,14 @@ public class HealthComponent : MonoBehaviour
     [Header("Health Settings")]
     [Tooltip("Current damage status of the entity.")]
     public DamageStatus currentStatus = DamageStatus.NONE;
-
     [Tooltip("Blood particle effect to spawn when taking damage.")]
     public GameObject bloodFX;
     [Tooltip("The Flash component of the entity.")]
     public FlashComponent flashComponent;
+    [Tooltip("The Health bar component of the entity.")]
+    // The component to subscribe to
+    public HealthBarComponent healthBarComponent;
+
 
     /// <summary>
     /// Delegate triggered when health initializes.
@@ -46,6 +49,7 @@ public class HealthComponent : MonoBehaviour
     {
         _currentHealth = defaultHealth;
         if (flashComponent != null) flashComponent.IntitalizeFlash();
+        if (healthBarComponent != null) healthBarComponent.setInitalHealth(defaultHealth);
     }
 
 
@@ -64,6 +68,7 @@ public class HealthComponent : MonoBehaviour
             if (currentStatus != DamageStatus.NONE)
                 StartCoroutine(WaitForStatus(value.statusDuration));
         }
+        if (healthBarComponent != null) healthBarComponent.setHealth(value.damage, currentStatus);
         _currentHealth += value.damage;
         if (_currentHealth <= 0)
             OnDeath?.Invoke();

@@ -87,6 +87,7 @@ public class BitStealerEnemy : EnemyBase, IAttackable
             : stats.movementSpeed * 0.25f;
 
         speed = _isAttacking ? 0f : speed;
+        speed = (healthComponent.currentStatus != DamageStatus.STUN) ? speed : 0;
 
         transform.position += (Vector3)(moveDirection.normalized * speed * Time.deltaTime);
     }

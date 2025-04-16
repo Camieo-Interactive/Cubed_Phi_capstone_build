@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ef471b999ddf4488b94015272539cf, type: 3}
   m_Name: Landmine
   m_EditorClassIdentifier: 
-  cardName: Grenade
-  cardSprite: {fileID: -1138580353, guid: e0c4f23be842e6d48853181336f3e830, type: 3}
-  cardObject: {fileID: 7172660582400175214, guid: 9501c86c374513e4ba018ac1c4041b70, type: 3}
-  cardCost: 25
-  drawProbability: 0.5
+  cardName: Landmine
+  cardSprite: {fileID: -1053605263, guid: f62fcab0b6ba7e74080b69611bccef39, type: 3}
+  cardObject: {fileID: 7172660582400175214, guid: 0ba61eb0e4dd7864994a49411154826a, type: 3}
+  cardCost: 75
+  drawProbability: 0.35
+  cardTier: 1

@@ -49,7 +49,7 @@ public class SlowTurret : BuildableUnit, IAttackable
                 healthComponent.ChangeHealth(new() 
                 { 
                     damage = -stats.damage, 
-                    damageStatus = DamageStatus.SLOW, 
+                    damageStatus = stats.status, 
                     statusDuration = 1f 
                 });
                 OnAttack();

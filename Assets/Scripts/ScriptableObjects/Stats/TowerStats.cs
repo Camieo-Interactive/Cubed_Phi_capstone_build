@@ -17,6 +17,8 @@ public class TowerStats : ScriptableObject
 
     [Tooltip("The damage dealt by the tower.")]
     public int damage;
+    [Tooltip("The status dealt by the tower.")]
+    public DamageStatus status;
 
     [Tooltip("The attack range of the tower.")]
     public float range;

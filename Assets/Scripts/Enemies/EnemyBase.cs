@@ -39,6 +39,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void Move()
     {
         float speed = (healthComponent.currentStatus != DamageStatus.SLOW) ? stats.movementSpeed : (stats.movementSpeed * 0.25f);
+        speed = (healthComponent.currentStatus != DamageStatus.STUN) ? speed : 0;
         transform.position += (Vector3)(moveDirection.normalized * speed * Time.deltaTime);
     }
 
@@ -66,7 +67,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void OnEndReached()
     {
         EnemyManager.Instance.GameOver();
-        // Todo: Make a health system.. 
+        // TODO: Make a health system.. 
     }
 
     protected virtual void PostEnable() => healthComponent.OnDeath += OnDeath;

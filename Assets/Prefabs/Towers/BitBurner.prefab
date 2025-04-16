@@ -80,6 +80,7 @@ MonoBehaviour:
   currentStatus: 0
   bloodFX: {fileID: 0}
   flashComponent: {fileID: 0}
+  healthBarComponent: {fileID: 0}
 --- !u!60 &6867349065795067851
 PolygonCollider2D:
   m_ObjectHideFlags: 0

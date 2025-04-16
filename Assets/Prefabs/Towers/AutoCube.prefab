@@ -386,6 +386,7 @@ MonoBehaviour:
   currentStatus: 0
   bloodFX: {fileID: 0}
   flashComponent: {fileID: 0}
+  healthBarComponent: {fileID: 0}
 --- !u!61 &7857396456100611946
 BoxCollider2D:
   m_ObjectHideFlags: 0
