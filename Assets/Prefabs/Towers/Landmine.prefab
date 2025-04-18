@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 688790299545919759}
   - component: {fileID: 7805777875057057010}
   - component: {fileID: 7033398748636582154}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Landmine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,6 +108,7 @@ MonoBehaviour:
   currentStatus: 0
   bloodFX: {fileID: 0}
   flashComponent: {fileID: 0}
+  healthBarComponent: {fileID: 0}
 --- !u!114 &7283642959100817716
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: BitBurner
   m_EditorClassIdentifier: 
   damage: 10
+  status: 0
   range: 5
-  health: 25
+  health: 1000
   fireRate: 0
   rechargeTime: 2.5
   projectile: {fileID: 0}
   detectionMask:
     serializedVersion: 2
     m_Bits: 64
+  sellValue: 25

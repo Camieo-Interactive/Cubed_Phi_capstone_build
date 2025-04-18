@@ -37,4 +37,7 @@ public class TowerStats : ScriptableObject
 
     [Tooltip("The layer mask used to detect enemies within range.")]
     public LayerMask detectionMask;
+
+    [Tooltip("Sell value")]
+    public int sellValue = 25;
 }

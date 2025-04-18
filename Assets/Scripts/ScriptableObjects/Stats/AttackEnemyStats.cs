@@ -27,4 +27,7 @@ public class EnemyAttackStats : ScriptableObject
     [Tooltip("The layer in which the attacks work.")]
     public LayerMask AttackMask;
 
+    [Tooltip("Damage dealt to towers per attack tick.")]
+    public int attackDamage = 0;
+
 }

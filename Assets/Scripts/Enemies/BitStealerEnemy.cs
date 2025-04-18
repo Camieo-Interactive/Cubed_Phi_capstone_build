@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 /// <summary>
@@ -25,6 +26,9 @@ public class BitStealerEnemy : EnemyBase, IAttackable
     [Tooltip("Particle system for the sucking visual effect.")]
     public ParticleSystem suckField;
 
+    [Tooltip("Steal trigger refrence to refund bits")]
+    public StealBitTrigger stealBitTrigger;
+
     /// <summary>
     /// Triggers the enemy's attack sequence if not already attacking or cooling down.
     /// </summary>
@@ -32,8 +36,11 @@ public class BitStealerEnemy : EnemyBase, IAttackable
     {
         if (_isAttacking || _isCoolingDown) return;
 
+        if (!IsBitGeneratorInRange()) return;
+
         _isAttacking = true;
-        StartCoroutine(SuckAttack());
+        
+        if (gameObject.activeSelf) StartCoroutine(SuckAttack());
     }
 
     public override void Init()
@@ -82,6 +89,9 @@ public class BitStealerEnemy : EnemyBase, IAttackable
     /// </summary>
     protected override void Move()
     {
+        if (_isAttacking || healthComponent.currentStatus == DamageStatus.STUN)
+            return;
+
         float speed = (healthComponent.currentStatus != DamageStatus.SLOW)
             ? stats.movementSpeed
             : stats.movementSpeed * 0.25f;
@@ -116,7 +126,15 @@ public class BitStealerEnemy : EnemyBase, IAttackable
     /// </summary>
     protected override void OnDeath()
     {
+        _isAttacking = false;
+        _isCoolingDown = false;
+        forceField.gameObject.SetActive(false);
+        suckField.gameObject.SetActive(false);
+        _isAttacking = false;
+        StopAllCoroutines();
         BitsController.RemoveTrigger(gameObject);
+        PoolManager.Instance.GetObject(bitsParticleSystem, transform.position, quaternion.identity)
+            .GetComponent<BitsController>().StartBits(stealBitTrigger.numOfBitsCollected);
         base.OnDeath();
     }
 
@@ -131,6 +149,12 @@ public class BitStealerEnemy : EnemyBase, IAttackable
     /// </summary>
     private IEnumerator SuckAttack()
     {
+        if (!IsBitGeneratorInRange())
+        {
+            _isAttacking = false;
+            yield break;
+        }
+
         forceField.gameObject.SetActive(true);
         suckField.gameObject.SetActive(true);
 
@@ -157,5 +181,25 @@ public class BitStealerEnemy : EnemyBase, IAttackable
     /// Updates enemy movement every frame.
     /// </summary>
     private void Update() => Move();
-    
+
+
+    /// <summary>
+    /// Returns true if a BitGenerator is currently within attack range.
+    /// </summary>
+    private bool IsBitGeneratorInRange()
+    {
+        _colliderCheck = Physics2D.OverlapCircleAll(
+            transform.position,
+            attackStats.AttackRange,
+            attackStats.AttackMask
+        );
+
+        foreach (Collider2D collider in _colliderCheck)
+        {
+            if (collider.CompareTag("BitGenerator"))
+                return true;
+        }
+
+        return false;
+    }
 }

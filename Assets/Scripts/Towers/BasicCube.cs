@@ -91,7 +91,7 @@ public class BasicCube : BuildableUnit, IAttackable
 
         // Skip rotation if target is too close (prevents fidgeting)
         float distanceToTarget = toTarget.magnitude;
-        if (distanceToTarget < 1.25f) return; // Adjust this minimum distance as needed
+        if (distanceToTarget < 1f) return; // Adjust this minimum distance as needed
 
         // Calculate the angle needed to align firePoint with target
         float targetAngle = Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg;

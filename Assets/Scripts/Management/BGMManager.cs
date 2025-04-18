@@ -46,9 +46,9 @@ public class BGMManager : SingletonBase<BGMManager>
     /// </summary>
     public void PlayBGM()
     {
-        if (!_forcePlayNew && audioSource.isPlaying) 
+        if (!_forcePlayNew && audioSource.isPlaying)
             return;
-        
+
         StopMusicCoroutines();
         audioSource.Stop();
         _fadeCoroutine = StartCoroutine(FadeInto(0.5f));
@@ -73,25 +73,25 @@ public class BGMManager : SingletonBase<BGMManager>
     /// <summary>
     /// Sets the master volume in the audio mixer.
     /// </summary>
-    public void SetMasterVolume(float volume) => 
+    public void SetMasterVolume(float volume) =>
         SetMixerVolume("Master", volume, "MasterVolume");
 
     /// <summary>
     /// Sets the BGM volume in the audio mixer.
     /// </summary>
-    public void SetBGMVolume(float volume) => 
+    public void SetBGMVolume(float volume) =>
         SetMixerVolume("BGM", volume, "BGMVolume");
 
     /// <summary>
     /// Sets the SFX volume in the audio mixer.
     /// </summary>
-    public void SetSFXVolume(float volume) => 
+    public void SetSFXVolume(float volume) =>
         SetMixerVolume("SFX", volume, "SFXVolume");
 
     //  ------------------ Protected ------------------
-    
+
     //  ------------------ Private ------------------
-    
+
     private Coroutine _fadeCoroutine;
     private Coroutine _nextSongCoroutine;
     private bool _forcePlayNew = false;
@@ -149,9 +149,9 @@ public class BGMManager : SingletonBase<BGMManager>
 
     private void RestoreMusicState()
     {
-        if (audioSource.clip == null || !_wasPlayingBeforePause) 
+        if (audioSource.clip == null || !_wasPlayingBeforePause)
             return;
-        
+
         // Resume playback at the stored position
         if (!audioSource.isPlaying)
         {
@@ -167,7 +167,7 @@ public class BGMManager : SingletonBase<BGMManager>
             StopCoroutine(_fadeCoroutine);
             _fadeCoroutine = null;
         }
-        
+
         if (_nextSongCoroutine != null)
         {
             StopCoroutine(_nextSongCoroutine);
@@ -193,9 +193,9 @@ public class BGMManager : SingletonBase<BGMManager>
     /// </summary>
     private void InitializeMixerVolumes()
     {
-        SetMixerVolume("Master", PlayerPrefs.GetFloat("MasterVolume", 1.0f), "MasterVolume");
-        SetMixerVolume("BGM", PlayerPrefs.GetFloat("BGMVolume", 1.0f), "BGMVolume");
-        SetMixerVolume("SFX", PlayerPrefs.GetFloat("SFXVolume", 1.0f), "SFXVolume");
+        SetMixerVolume("Master", PlayerPrefs.GetFloat("MasterVolume", 0.5f), "MasterVolume");
+        SetMixerVolume("BGM", PlayerPrefs.GetFloat("BGMVolume", 0.5f), "BGMVolume");
+        SetMixerVolume("SFX", PlayerPrefs.GetFloat("SFXVolume", 0.5f), "SFXVolume");
     }
 
     /// <summary>
@@ -204,7 +204,7 @@ public class BGMManager : SingletonBase<BGMManager>
     private IEnumerator FadeInto(float fadeTime)
     {
         Sound sound = QueryRandomBGM();
-        
+
         // Store current song information
         _currentSongName = sound.soundName;
 
@@ -244,12 +244,12 @@ public class BGMManager : SingletonBase<BGMManager>
     /// </summary>
     private IEnumerator WaitForNextSong()
     {
-        if (audioSource.clip == null) 
+        if (audioSource.clip == null)
             yield break;
-        
+
         float clipLength = audioSource.clip.length;
         bool songFinished = false;
-        
+
         while (!songFinished && audioSource.clip != null)
         {
             // Only check if we're actually playing
@@ -258,10 +258,10 @@ public class BGMManager : SingletonBase<BGMManager>
                 // Consider the song finished when it's very close to the end
                 songFinished = audioSource.time >= clipLength - 0.1f;
             }
-            
+
             yield return null;
         }
-        
+
         // Only play a new song if the current one finished properly
         if (songFinished)
         {

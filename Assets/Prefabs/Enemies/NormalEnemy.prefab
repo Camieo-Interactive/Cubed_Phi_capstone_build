@@ -109,6 +109,7 @@ MonoBehaviour:
   healthComponent: {fileID: 8695944437261778004}
   moveDirection: {x: -1, y: 0}
   bitsParticleSystem: {fileID: 3236109327517393351, guid: 653f4e69d23a944438962aeaf06a17b4, type: 3}
+  attackStats: {fileID: 11400000, guid: 6d8c1ee06b7b2f147a16d3b06e8fb0bf, type: 2}
 --- !u!114 &8695944437261778004
 MonoBehaviour:
   m_ObjectHideFlags: 0

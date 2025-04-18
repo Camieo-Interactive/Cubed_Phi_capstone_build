@@ -35,7 +35,6 @@ public class FlashComponent : MonoBehaviour
     /// <param name="flashes">Number of times to flash.</param>
     public void Flash(Color color = default, float duration = 0.25f, int flashes = 4)
     {
-        Debug.Log("Flash Called!");
         if (_flashRoutine != null)
         {
             spriteRenderer.material = _originalMaterial;

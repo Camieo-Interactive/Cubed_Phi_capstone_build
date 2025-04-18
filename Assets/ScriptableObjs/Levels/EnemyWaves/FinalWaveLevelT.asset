@@ -29,4 +29,4 @@ MonoBehaviour:
   - {fileID: 7159984874550267967, guid: f5266a84e13b9164f80c191eb97bbb17, type: 3}
   - {fileID: 7159984874550267967, guid: f5266a84e13b9164f80c191eb97bbb17, type: 3}
   - {fileID: 7350387733073794881, guid: 01a091c234a4f444b98128371bd1dc68, type: 3}
-  interval: 21
+  interval: 24

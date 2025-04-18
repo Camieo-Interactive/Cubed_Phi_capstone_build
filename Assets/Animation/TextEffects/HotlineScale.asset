@@ -47,4 +47,4 @@ MonoBehaviour:
     m_RotationOrder: 4
   clampBetween0And1: 1
   startScale: 1
-  endScale: 1.25
+  endScale: 1.15

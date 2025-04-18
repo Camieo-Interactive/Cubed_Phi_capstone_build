@@ -40,6 +40,7 @@ public class HealthComponent : MonoBehaviour
     /// Event invoked when health reaches zero.
     /// </summary>
     public event Death OnDeath;
+    public event HealthChanged OnHealthChanged;
 
     /// <summary>
     /// Initializes the default health of the entity.
@@ -47,7 +48,9 @@ public class HealthComponent : MonoBehaviour
     /// <param name="defaultHealth">The starting health of the entity.</param>
     public void InitializeHealth(int defaultHealth)
     {
+        _maxHealth = defaultHealth;
         _currentHealth = defaultHealth;
+        OnHealthChanged?.Invoke(_currentHealth);
         if (flashComponent != null) flashComponent.IntitalizeFlash();
         if (healthBarComponent != null) healthBarComponent.setInitalHealth(defaultHealth);
     }
@@ -59,6 +62,7 @@ public class HealthComponent : MonoBehaviour
     /// <param name="value">The damage value, which includes the amount and status effect.</param>
     public void ChangeHealth(DamageValue value)
     {
+        OnHealthChanged?.Invoke(_currentHealth);
         currentStatus = value.damageStatus;
         if (flashComponent != null) flashComponent.Flash(Color.white, 0.25f, 4);
         if (value.damageStatus != DamageStatus.NONE)
@@ -88,8 +92,25 @@ public class HealthComponent : MonoBehaviour
         ChangeHealth(value);
     }
 
+    /// <summary>
+    /// Returns the current health as a normalized percent (0 to 1).
+    /// </summary>
+    public float CurrentPercent
+    {
+        get
+        {
+            if (_maxHealth <= 0)
+            {
+                Debug.LogWarning("CurrentPercent accessed before health was initialized!");
+                return 0f;
+            }
+            return Mathf.Min((float)_currentHealth / _maxHealth , 1);
+        }
+    }
+
     //  ------------------ Private ------------------
     private int _currentHealth = 0;
+    private int _maxHealth = 100;
 
     /// <summary>
     /// Waits for the duration of a status effect before resetting the status.

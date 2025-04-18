@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Collections;
 using UnityEngine;
@@ -19,6 +20,9 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     [Tooltip("The animator used for handling the buildable unit's animations.")]
     public Animator buildableAnimator;
 
+    [Tooltip("Main Object refrence for pooling")]
+    public GameObject baseObject;
+
     /// <summary>
     /// Called when the unit is built.
     /// </summary>
@@ -26,7 +30,7 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     {
         healthComponent.InitializeHealth(stats.health);
         Grid = GameManager.Instance.grid;
-        GameManager.Instance.buildingLocations.Add(Grid.WorldToCell(transform.position), true);
+        GameManager.Instance.buildingLocations.Add(Grid.WorldToCell(transform.position), new Tuple<bool, GameObject>(true, baseObject));
     }
 
     /// <summary>
@@ -37,13 +41,13 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
         GameManager.Instance.buildingLocations.Remove(Grid.WorldToCell(transform.position));
         try
         {
-            PoolManager.Instance.ReturnObject(gameObject);
+            PoolManager.Instance.ReturnObject(baseObject);
         }
         catch
         {
             // We are testing right now. soo don't worry about it. 
-            Debug.LogWarning("This instance is not in the object pool!");
-            Destroy(gameObject);
+            Debug.LogWarning($"This instance of {baseObject.name} is not in the object pool!");
+            Destroy(baseObject);
         }
     }
 
@@ -63,6 +67,11 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
         CanAttack = true;
     }
 
+    public virtual int Sell() {
+        int value = stats.sellValue;
+        OnBuildingDestroy();
+        return value;
+    }
 
     //  ------------------ Protected ------------------
 

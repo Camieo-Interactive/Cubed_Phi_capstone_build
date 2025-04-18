@@ -16,5 +16,5 @@ MonoBehaviour:
   cardSprite: {fileID: -2101171565, guid: f62fcab0b6ba7e74080b69611bccef39, type: 3}
   cardObject: {fileID: 143866893369968617, guid: b55e08a464ba84f4aab20d2797649f69, type: 3}
   cardCost: 125
-  drawProbability: 0.2
+  drawProbability: 0.325
   cardTier: 3

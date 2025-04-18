@@ -15,13 +15,13 @@ public class DiscordPresence : SingletonBase<DiscordPresence>
 {
     [Header("Discord")]
     [Space(10)]
-    
+
     /// <summary>
     /// The application ID for the Discord application.
     /// </summary>
     [Tooltip("The Application ID for Discord.")]
     public long applicationID;
-    
+
     /// <summary>
     /// The details text for Discord presence.
     /// </summary>
@@ -45,32 +45,55 @@ public class DiscordPresence : SingletonBase<DiscordPresence>
     /// </summary>
     [Tooltip("Text associated with the large image in Discord.")]
     public string largeText = "Cubed";
-    
+
     private Discord.Discord _discord;
     private long _time;
 
     // Unity lifecycle method
     public override void PostAwake() { }
 
-    #if UNITY_STANDALONE
+#if UNITY_STANDALONE
+
+    /// <summary>
+    /// Cleans up and disposes the Discord instance safely.
+    /// </summary>
+    private void DisposeDiscord()
+    {
+        try
+        {
+            _discord?.Dispose();
+        }
+        catch
+        {
+            // Ignore any exceptions during dispose
+        }
+
+        _discord = null;
+    }
     private void Start()
     {
-        // Initialize Discord with the Application ID
-        _discord = new Discord.Discord(applicationID, (System.UInt64)CreateFlags.NoRequireDiscord);
-        _time = System.DateTimeOffset.Now.ToUnixTimeMilliseconds();
-        details = SplashText.GetCurrentSplash();
+        try
+        {
+            _discord = new Discord.Discord(applicationID, (System.UInt64)CreateFlags.NoRequireDiscord);
+            _time = System.DateTimeOffset.Now.ToUnixTimeMilliseconds();
+            state = SplashText.GetCurrentSplash();
+        }
+        catch
+        {
+            DisposeDiscord();
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
     {
-        // Ensure the Discord callbacks are processed each frame
         try
         {
             _discord.RunCallbacks();
         }
         catch
         {
-            // If Discord isn't running, destroy the object
+            DisposeDiscord();
             Destroy(gameObject);
         }
     }
@@ -89,37 +112,40 @@ public class DiscordPresence : SingletonBase<DiscordPresence>
 
     private void UpdateStatus()
     {
+        if (_discord == null)
+            return;
+
         try
         {
-            // Create and update the activity status on Discord
             ActivityManager activityManager = _discord.GetActivityManager();
             Activity activity = new Activity
             {
                 Details = details,
-                
+                State = state,
+
                 Assets =
-                {
-                    LargeImage = largeImage,
-                    LargeText = largeText,
-                    SmallText = state,
-                },
+            {
+                LargeImage = largeImage,
+                LargeText = largeText,
+                SmallText = state,
+            },
                 Timestamps =
-                {
-                    Start = _time
-                }
+            {
+                Start = _time
+            }
             };
 
-            activityManager.UpdateActivity(activity, (res) =>
+            activityManager.UpdateActivity(activity, result =>
             {
-                if (res != Result.Ok)
-                    Debug.LogWarning("Failed connecting to Discord!");
+                if (result != Result.Ok)
+                    Debug.LogWarning("Failed to update Discord status.");
             });
         }
         catch
         {
-            // If updating the status fails, destroy the object
+            DisposeDiscord();
             Destroy(gameObject);
         }
     }
-    #endif
+#endif
 }

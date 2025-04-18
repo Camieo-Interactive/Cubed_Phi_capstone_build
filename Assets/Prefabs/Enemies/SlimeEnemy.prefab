@@ -260,6 +260,7 @@ MonoBehaviour:
   healthComponent: {fileID: 8809426306325461373}
   moveDirection: {x: -1, y: 0}
   bitsParticleSystem: {fileID: 3236109327517393351, guid: 653f4e69d23a944438962aeaf06a17b4, type: 3}
+  attackStats: {fileID: 11400000, guid: 38ea5999a68273c4aa37755272a1718e, type: 2}
 --- !u!114 &8809426306325461373
 MonoBehaviour:
   m_ObjectHideFlags: 0

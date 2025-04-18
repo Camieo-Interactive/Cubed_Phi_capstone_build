@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7245562785870691137}
   - component: {fileID: 6102849747027680216}
   - component: {fileID: 9084814227194753396}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Grenade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,6 +144,7 @@ MonoBehaviour:
   currentStatus: 0
   bloodFX: {fileID: 0}
   flashComponent: {fileID: 0}
+  healthBarComponent: {fileID: 0}
 --- !u!82 &9084814227194753396
 AudioSource:
   m_ObjectHideFlags: 0

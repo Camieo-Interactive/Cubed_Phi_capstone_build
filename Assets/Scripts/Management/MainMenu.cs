@@ -2,12 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject instructionsCanvas;
+    public SettingsManager settingsManager;
+
+    [Header("Platform-Specific UI")]
+    [Tooltip("Quit button, only shown on PC builds.")]
+    public Button QuitButton;
     public void OnStartSelected() => StartCoroutine(LoadGameSceneAsync());
-    public void OnInstructionsSelected() => instructionsCanvas.SetActive(!instructionsCanvas.activeSelf);
+    public void OnInstructionsSelected()
+    {
+        if (settingsManager.isSettingsVisible) settingsManager.SettingsToggle();
+        instructionsCanvas.SetActive(!instructionsCanvas.activeSelf);
+    }
 
     private IEnumerator LoadGameSceneAsync()
     {
@@ -33,4 +43,33 @@ public class MainMenu : MonoBehaviour
         yield return new WaitForSeconds(0.1f); // Optional delay
         operation.allowSceneActivation = true;
     }
+
+    /// <summary>
+    /// Shows the quit button only if running on a standalone (PC) build.
+    /// </summary>
+    public void ShowQuitButtonIfPC()
+    {
+#if UNITY_STANDALONE
+        QuitButton?.gameObject.SetActive(true);
+#else
+    QuitButton?.gameObject.SetActive(false);
+#endif
+    }
+
+
+    private void Start() => ShowQuitButtonIfPC();
+
+    /// <summary>
+    /// Quits the application. Has no effect in the editor.
+    /// </summary>
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+    Application.Quit();
+#endif
+    }
+
+
 }

@@ -5710,11 +5710,12 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 0795eda6be012124b88130ffbd6f87e1, type: 2}
   healthComponent: {fileID: 7385933647086028328}
   moveDirection: {x: -1, y: 0}
-  bitsParticleSystem: {fileID: 2404806731550339505}
+  bitsParticleSystem: {fileID: 3236109327517393351, guid: 653f4e69d23a944438962aeaf06a17b4, type: 3}
   attackStats: {fileID: 11400000, guid: 88b7810f1772ede4a994fa3e135015af, type: 2}
   forceField: {fileID: 145685459905814430}
   bitStealerTriggerObject: {fileID: 5068723080706179619}
   suckField: {fileID: 1648524818346515650}
+  stealBitTrigger: {fileID: 5042272577595797559}
 --- !u!114 &7385933647086028328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5830,6 +5831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 424f70cfcc0828540b4075d526e18b3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numOfBitsCollected: 0
 --- !u!1 &9222816077418778882
 GameObject:
   m_ObjectHideFlags: 0

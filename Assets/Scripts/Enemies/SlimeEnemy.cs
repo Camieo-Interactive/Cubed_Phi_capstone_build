@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// A slime enemy that spawns additional enemies upon death.
 /// </summary>
-public class SlimeEnemy : EnemyBase
+public class SlimeEnemy : BasicEnemy
 {
     //  ------------------ Protected ------------------
 

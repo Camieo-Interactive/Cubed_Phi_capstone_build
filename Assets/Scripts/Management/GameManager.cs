@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -38,8 +39,7 @@ public class GameManager : SingletonBase<GameManager>
     public Grid grid;
 
     [Tooltip("Dictionary tracking the locations of buildings.")]
-    public Dictionary<Vector3Int, bool> buildingLocations = new();
-    
+    public Dictionary<Vector3Int, Tuple<bool, GameObject>> buildingLocations = new();
 
     /// <summary>
     /// The total bits collected.
