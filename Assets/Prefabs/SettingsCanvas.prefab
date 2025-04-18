@@ -3202,6 +3202,7 @@ MonoBehaviour:
   ResolutionDropdown: {fileID: 165278215628575291}
   FullscreenToggle: {fileID: 3723146792561859591}
   PresetAsset: {fileID: 11400000, guid: d8bc09f6fe049a147a0f381a73049725, type: 2}
+  ResolutionText: {fileID: 3387297052891846318}
   settingsAnimator: {fileID: 5019285639398057793}
   mainMenu: {fileID: 0}
   isSettingsVisible: 0

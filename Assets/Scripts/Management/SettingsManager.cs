@@ -34,6 +34,8 @@ public class SettingsManager : MonoBehaviour
     [Header("Resolution Presets")]
     [Tooltip("Reference to the resolution preset asset.")]
     public ResolutionPresetAsset PresetAsset;
+    [Tooltip("Reference to the resolution text asset.")]
+    public TextMeshProUGUI ResolutionText;
 
     [Header("Settings Panel Animation")]
     [Tooltip("Animator controlling the settings panel.")]
@@ -94,7 +96,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     private void InitializeResolutionSettings()
     {
-#if UNITY_WEBGL || UNITY_STANDALONE
+#if UNITY_STANDALONE
         if (PresetAsset == null || PresetAsset.resolutions.Length == 0)
         {
             ResolutionDropdown.gameObject.SetActive(false);
@@ -136,6 +138,7 @@ public class SettingsManager : MonoBehaviour
         // Apply resolution immediately
         SetResolution(savedIndex);
 #else
+    ResolutionText.gameObject.SetActive(false);
     ResolutionDropdown.gameObject.SetActive(false);
 #endif
     }
@@ -146,9 +149,13 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     private void InitializeFullscreenToggle()
     {
-#if UNITY_STANDALONE
+#if UNITY_STANDALONE || UNITY_WEBGL
+#if UNITY_STANDALONE 
         bool isFullscreen = PlayerPrefs.GetInt("IsFullscreen", 1) == 1;
-
+#endif
+#if UNITY_WEBGL 
+        bool isFullscreen = PlayerPrefs.GetInt("IsFullscreen", 0) == 1;
+#endif
         FullscreenToggle.SetIsOnWithoutNotify(isFullscreen);
         Screen.fullScreen = isFullscreen;
 
@@ -168,7 +175,7 @@ public class SettingsManager : MonoBehaviour
     /// </summary>
     private void ApplyStartupSettings()
     {
-#if UNITY_WEBGL || UNITY_STANDALONE
+#if UNITY_STANDALONE
         int savedIndex = PlayerPrefs.GetInt("ResolutionIndex", 0);
         savedIndex = Mathf.Clamp(savedIndex, 0, PresetAsset.resolutions.Length - 1);
         SetResolution(savedIndex);

@@ -46,7 +46,9 @@ public class DiscordPresence : SingletonBase<DiscordPresence>
     [Tooltip("Text associated with the large image in Discord.")]
     public string largeText = "Cubed";
 
+    #if UNITY_STANDALONE
     private Discord.Discord _discord;
+    #endif
     private long _time;
 
     // Unity lifecycle method
