@@ -124,6 +124,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: db6535e5b7c0d1440be4bb218702ee87, type: 2}
   healthComponent: {fileID: 6102849747027680216}
   buildableAnimator: {fileID: 0}
+  baseObject: {fileID: 7172660582400175214}
   AudioSrc: {fileID: 9084814227194753396}
 --- !u!82 &9084814227194753396
 AudioSource:
