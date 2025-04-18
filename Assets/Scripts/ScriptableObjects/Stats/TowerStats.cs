@@ -17,6 +17,8 @@ public class TowerStats : ScriptableObject
 
     [Tooltip("The damage dealt by the tower.")]
     public int damage;
+    [Tooltip("The status dealt by the tower.")]
+    public DamageStatus status;
 
     [Tooltip("The attack range of the tower.")]
     public float range;
@@ -35,4 +37,7 @@ public class TowerStats : ScriptableObject
 
     [Tooltip("The layer mask used to detect enemies within range.")]
     public LayerMask detectionMask;
+
+    [Tooltip("Sell value")]
+    public int sellValue = 25;
 }

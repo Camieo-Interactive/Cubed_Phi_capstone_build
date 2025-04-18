@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ef471b999ddf4488b94015272539cf, type: 3}
+  m_Name: LauncherCube
+  m_EditorClassIdentifier: 
+  cardName: Launcher Unit
+  cardSprite: {fileID: -1173238794, guid: f62fcab0b6ba7e74080b69611bccef39, type: 3}
+  cardObject: {fileID: 8866250007770948880, guid: 58d1a4fdbc2e42a4aa4c362e0c253b8e, type: 3}
+  cardCost: 750
+  drawProbability: 0.2
+  cardTier: 15

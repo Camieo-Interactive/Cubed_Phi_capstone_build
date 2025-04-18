@@ -7,13 +7,13 @@ using UnityEngine.InputSystem;
 public class GameControls : MonoBehaviour
 {
     //  ------------------ Public ------------------
-    
+
     [Header("Selection Handler")]
     [Tooltip("Reference to the SelectorHandler responsible for updating the selection sprite.")]
     public SelectorHandler selectorHandler;
-
+    public static Vector3? CurrentTileSelected = null;
     //  ------------------ Private ------------------
-    
+
     private InputAction _move;
     private InputAction _select;
     private GameInputActions _controls;
@@ -26,7 +26,6 @@ public class GameControls : MonoBehaviour
         _controls = new GameInputActions();
         _move = _controls.Game.Move;
         _select = _controls.Game.Select;
-        _select.performed += _ => selectorHandler.PlaceTile(_move.ReadValue<Vector2>());
     }
 
     /// <summary>
@@ -36,6 +35,7 @@ public class GameControls : MonoBehaviour
     {
         _move.Enable();
         _select.Enable();
+        _select.performed += _ => selectorHandler.PlaceTile(_move.ReadValue<Vector2>());
     }
 
     /// <summary>
@@ -43,6 +43,7 @@ public class GameControls : MonoBehaviour
     /// </summary>
     private void OnDisable()
     {
+        _select.performed -= _ => selectorHandler.PlaceTile(_move.ReadValue<Vector2>());
         _move.Disable();
         _select.Disable();
     }
@@ -50,5 +51,10 @@ public class GameControls : MonoBehaviour
     /// <summary>
     /// Updates the selection sprite based on movement input.
     /// </summary>
-    private void Update() => selectorHandler.UpdateSelectionSprite(_move.ReadValue<Vector2>());
+    private void Update()
+    {
+        selectorHandler.UpdateSelectionSprite(_move.ReadValue<Vector2>());
+        Vector3? vector = selectorHandler.GetValidTile(_move.ReadValue<Vector2>());
+        CurrentTileSelected = (vector != null) ? vector : CurrentTileSelected;
+    }
 }

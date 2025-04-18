@@ -1,12 +1,13 @@
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
 /// Represents a grenade unit that can be fired and causes an explosion on impact.
 /// </summary>
-public class Grenade : BuildableUnit
+public class Grenade : BuildableUnit, IAttackable
 {
     //  ------------------ Public ------------------
-
+    public AudioSource AudioSrc;
     /// <summary>
     /// Placeholder method for validation checks.
     /// </summary>
@@ -15,19 +16,16 @@ public class Grenade : BuildableUnit
     /// <summary>
     /// Fires the grenade, instantiates an explosion, and destroys itself.
     /// </summary>
-    public override void Fire()
+    public void OnAttack()
     {
         // Instantiate the explosion
         GameObject explosion = PoolManager.Instance.GetObject(stats.projectile, transform.position, Quaternion.identity);
-        
+        AudioSrc.Play();
         // Initialize the explosion with damage and range
         explosion.GetComponent<Explosion>().Init(new() { damage = -stats.damage }, stats.range);
         
         // Trigger building destruction logic
         OnBuildingDestroy();
-
-        // Destroy the grenade object after firing
-        PoolManager.Instance.ReturnObject(gameObject);
     }
 
     //  ------------------ Private ------------------

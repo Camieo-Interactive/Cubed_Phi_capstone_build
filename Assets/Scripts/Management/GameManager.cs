@@ -1,4 +1,7 @@
+using System;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -37,7 +40,7 @@ public class GameManager : SingletonBase<GameManager>
     public Grid grid;
 
     [Tooltip("Dictionary tracking the locations of buildings.")]
-    public Dictionary<Vector3Int, bool> buildingLocations = new();
+    public Dictionary<Vector3Int, Tuple<bool, GameObject>> buildingLocations = new();
 
     /// <summary>
     /// The total bits collected.
@@ -58,7 +61,10 @@ public class GameManager : SingletonBase<GameManager>
     /// <summary>
     /// Called after the singleton instance is initialized.
     /// </summary>
-    public override void PostAwake() => bitCount.text = $"Bits: {BitsCollected}";
+    public override void PostAwake()
+    {
+        bitCount.text = $"Bits: {BitsCollected}";
+    }
 
     /// <summary>
     /// Raises the OnBitChange event with the specified delta.
@@ -74,13 +80,34 @@ public class GameManager : SingletonBase<GameManager>
     /// <param name="bitDelta">The change in bits (positive or negative).</param>
     private void HandleBitChange(long bitDelta) => bitCount.text = $"Bits: {BitsCollected += bitDelta}";
 
+
     /// <summary>
     /// Subscribes to the bit change event.
     /// </summary>
-    private void OnEnable() => OnBitChange += HandleBitChange;
+    private void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        OnBitChange += HandleBitChange;
+    }
 
     /// <summary>
     /// Unsubscribes from the bit change event.
     /// </summary>
-    private void OnDisable() => OnBitChange -= HandleBitChange;
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        OnBitChange -= HandleBitChange;
+    }
+
+    /// <summary>
+    /// Handles scene load logic.
+    /// </summary>
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // Reset the list..
+        BitsController.triggers = new List<GameObject>();
+        BitsController.AddTrigger(mouseTrigger);
+
+    }
+
 }

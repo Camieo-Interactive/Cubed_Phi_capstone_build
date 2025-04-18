@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1233149941 &-7936229978124854106
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: card-slide-4_{-7936229978124854106}
+  m_AudioClip: {fileID: 8300000, guid: 5c6e78a3796d5b44ab0e71e2564f2f4f, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-3584414481212315782
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: card-slide-8_{-3584414481212315782}
+  m_AudioClip: {fileID: 8300000, guid: 1938a01cfd49f3f4b82d066e2a76c91b, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-2846574068440218542
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: card-slide-6_{-2846574068440218542}
+  m_AudioClip: {fileID: 8300000, guid: 14ac81a904ddaae499cde69822d43600, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-1277776192572434186
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: card-slide-3_{-1277776192572434186}
+  m_AudioClip: {fileID: 8300000, guid: 58500975a2f4acf488b0178f7d630914, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-1065656784796063533
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: card-slide-7_{-1065656784796063533}
+  m_AudioClip: {fileID: 8300000, guid: 9ee7a68be7dc78148af6cb8973a3024e, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &1538369111618498067
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: card-slide-1_{1538369111618498067}
+  m_AudioClip: {fileID: 8300000, guid: 7a40d07cc6a5abe4aaca5165f1dd4c71, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &4077419678088708272
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: card-slide-2_{4077419678088708272}
+  m_AudioClip: {fileID: 8300000, guid: f3574445fc112444f91cb973cb4f37d9, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &4106601214664524433
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: card-slide-5_{4106601214664524433}
+  m_AudioClip: {fileID: 8300000, guid: 5fbc70f6be4e0ff41a2c43f382530f38, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1307931743 &6418180475301049370
+AudioRandomContainer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CardFlips
+  m_Volume: 0
+  m_Pitch: 0
+  m_AutomaticTriggerTime: 0
+  m_LoopCount: 1
+  m_VolumeRandomizationRange: {x: -19.854015, y: 16.934309}
+  m_PitchRandomizationRange: {x: -420.438, y: 446.71527}
+  m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
+  m_LoopCountRandomizationRange: {x: 0, y: 0}
+  m_Elements:
+  - {fileID: 1538369111618498067}
+  - {fileID: 4077419678088708272}
+  - {fileID: -1277776192572434186}
+  - {fileID: -7936229978124854106}
+  - {fileID: 4106601214664524433}
+  - {fileID: -2846574068440218542}
+  - {fileID: -1065656784796063533}
+  - {fileID: -3584414481212315782}
+  m_AvoidRepeatingLast: 0
+  m_PlaybackMode: 2
+  m_TriggerMode: 1
+  m_AutomaticTriggerMode: 1
+  m_LoopMode: 1
+  m_VolumeRandomizationEnabled: 0
+  m_PitchRandomizationEnabled: 1
+  m_AutomaticTriggerTimeRandomizationEnabled: 0
+  m_LoopCountRandomizationEnabled: 0

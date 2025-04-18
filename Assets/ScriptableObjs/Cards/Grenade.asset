@@ -15,5 +15,5 @@ MonoBehaviour:
   cardName: Grenade
   cardSprite: {fileID: -1138580353, guid: e0c4f23be842e6d48853181336f3e830, type: 3}
   cardObject: {fileID: 7172660582400175214, guid: 9501c86c374513e4ba018ac1c4041b70, type: 3}
-  cardCost: 75
+  cardCost: 25
   drawProbability: 0.5

@@ -27,6 +27,12 @@ public class SelectorHandler : MonoBehaviour
     [Tooltip("Reference to the sprite renderer for color changes.")]
     public SpriteRenderer spriteRenderer;
 
+    [Tooltip("Bits Gameobject")]
+    public GameObject bitsParticleSystem;
+
+    [Tooltip("Sell Gameobject")]
+    public GameObject sellMenu;
+
     /// <summary>
     /// Updates the position and visibility of the selection sprite based on mouse position.
     /// </summary>
@@ -43,6 +49,18 @@ public class SelectorHandler : MonoBehaviour
         else
             OnDeselectionOfTile();
     }
+    /// <summary>
+    /// Returns the world position of a valid tile under the given screen position, or null if invalid.
+    /// </summary>
+    /// <param name="screenPosition">Mouse screen position.</param>
+    /// <returns>Nullable Vector3 world position of a valid tile, or null.</returns>
+    public Vector3? GetValidTile(Vector2 mouseScreenPosition)
+    {
+        Vector3Int cellPosition = grid.WorldToCell(SelectionWorldPosition(mouseScreenPosition));
+
+        if (!tilemap.HasTile(cellPosition)) return null;
+        return grid.GetCellCenterWorld(cellPosition);
+    }
 
     /// <summary>
     /// Attempts to place a tile at the given position.
@@ -50,18 +68,48 @@ public class SelectorHandler : MonoBehaviour
     /// <param name="position">The screen position where the tile should be placed.</param>
     public void PlaceTile(Vector2 position)
     {
+        Vector3Int cellPosition = grid.WorldToCell(SelectionWorldPosition(position));
+
+        if (GameManager.Instance.buildingLocations.TryGetValue(cellPosition, out var isOccupied) && isOccupied.Item1)
+        {
+            if (sellMenu.activeSelf) return;
+            Vector3 pos = SelectionWorldPosition(position);
+            pos.z = 0;
+            sellMenu.transform.position = pos;
+            sellMenu.SetActive(true);
+            return;
+        }
+        sellMenu.SetActive(false);
 
         if (GameManager.Instance.selectedCard == null) return;
 
-        Vector3Int cellPosition = grid.WorldToCell(SelectionWorldPosition(position));
+
         if (!tilemap.HasTile(cellPosition)) return; // Ensure the position is within the tilemap grid
+
         if (GameManager.Instance.BitsCollected < GameManager.Instance.selectedCard.stats.cardCost) return;
-        if (GameManager.Instance.buildingLocations.TryGetValue(cellPosition, out bool isOccupied) && isOccupied) return;
+
         GameManager.RaiseBitChange(-GameManager.Instance.selectedCard.stats.cardCost);
         Vector3 spawnPosition = grid.GetCellCenterWorld(cellPosition);
         PoolManager.Instance.GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
 
         GameManager.Instance.CardDeck.RemoveCardFromDeck(GameManager.Instance.selectedCard.gameObject);
+    }
+
+    public void sellTower()
+    {
+        Vector3Int cell = grid.WorldToCell(_mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
+
+        if (!GameManager.Instance.buildingLocations.TryGetValue(cell, out var data) || !data.Item1 || data.Item2 == null)
+            return;
+
+        if (data.Item2.TryGetComponent(out BuildableUnit unit))
+            PoolManager.Instance
+                .GetObject(bitsParticleSystem, grid.GetCellCenterWorld(cell), Quaternion.identity)
+                .GetComponent<BitsController>()
+                .StartBits(unit.Sell());
+        
+
+        sellMenu.SetActive(false);
     }
 
     //  ------------------ Private ------------------
@@ -93,7 +141,7 @@ public class SelectorHandler : MonoBehaviour
 
         selectionSprite.SetActive(true);
         transform.position = grid.GetCellCenterWorld(cellPosition);
-        spriteRenderer.color = GameManager.Instance.buildingLocations.TryGetValue(cellPosition, out bool isOccupied) && isOccupied ? Color.red : Color.green;
+        spriteRenderer.color = GameManager.Instance.buildingLocations.TryGetValue(cellPosition, out var isOccupied) && isOccupied.Item1 ? Color.red : Color.green;
     }
 
     /// <summary>

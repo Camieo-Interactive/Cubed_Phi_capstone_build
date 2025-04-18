@@ -2,7 +2,7 @@
 %TAG !u! tag:unity3d.com,2011:
 --- !u!78 &1
 TagManager:
-  serializedVersion: 2
+  serializedVersion: 3
   tags:
   - EndTrigger
   - GameOverCanvas
@@ -12,6 +12,9 @@ TagManager:
   - DeckUi
   - BitsTextUi
   - ProgressUi
+  - BitCursor
+  - BitCollector
+  - BitGenerator
   layers:
   - Default
   - TransparentFX
@@ -64,3 +67,5 @@ TagManager:
   - name: HUD
     uniqueID: 2220290477
     locked: 0
+  m_RenderingLayers:
+  - Default

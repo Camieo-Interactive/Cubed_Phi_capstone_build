@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: BasicProjectile
   m_EditorClassIdentifier: 
   projectileSpeed: 15
-  bulletLifeTime: 10
+  bulletLifeTime: 5
   spawnOnHit: 0
   numberOfSpawnables: 0
   spawnable: {fileID: 0}

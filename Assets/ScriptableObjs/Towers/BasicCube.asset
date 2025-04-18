@@ -12,12 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d4d23a3a2c29844ebfd67dfb58fbdcc, type: 3}
   m_Name: BasicCube
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 15
+  status: 0
   range: 5
-  health: 10
-  fireRate: 1
+  health: 25
+  fireRate: 1.5
   rechargeTime: 2.5
   projectile: {fileID: 2922313298252073668, guid: 01f443f32347bf5418d39c3b870e13d3, type: 3}
   detectionMask:
     serializedVersion: 2
     m_Bits: 64
+  sellValue: 25

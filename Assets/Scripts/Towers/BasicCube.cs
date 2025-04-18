@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// A buildable unit that behaves like a turret, aiming and firing projectiles at targets within range.
 /// </summary>
-public class BasicCube : BuildableUnit
+public class BasicCube : BuildableUnit, IAttackable
 {
     //  ------------------ Public ------------------
 
@@ -27,9 +27,9 @@ public class BasicCube : BuildableUnit
     /// <summary>
     /// Fires a projectile towards the aligned target if aligned.
     /// </summary>
-    public override void Fire()
+    public void OnAttack()
     {
-        if (target == null || !IsAlignedWithTarget()) return;
+        if (target == null || !IsAlignedWithTarget() || !IsInRange()) return;
 
         GameObject projectileObject = PoolManager.Instance.GetObject(stats.projectile, firePoint.position, Quaternion.identity);
         Projectile projectile = projectileObject.GetComponent<Projectile>();
@@ -42,27 +42,36 @@ public class BasicCube : BuildableUnit
     }
 
     /// <summary>
-    /// Checks for targets within range and moves to align firePoint with the detected target.
+    /// Checks for targets within range and rotates the entire turret to aim at the target.
     /// </summary>
     public override void Check()
     {
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, stats.range, Vector2.zero, 0, stats.detectionMask);
-        if (hit.collider == null)
+        // Find closest target within range
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, stats.range, stats.detectionMask);
+
+        GameObject closestTarget = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Collider2D collider in colliders)
         {
-            target = null;
-            return;
+            float distance = Vector2.Distance(transform.position, collider.transform.position);
+            if (distance < closestDistance)
+            {
+                closestTarget = collider.gameObject;
+                closestDistance = distance;
+            }
         }
 
-        if (target == null) target = hit.collider.gameObject;
+        target = closestTarget;
+
+        if (target == null) return;
+
         _targetPosition = target.transform.position;
 
-        // Adjust firePoint slightly to the side of the target
-        UpdateFirePointPosition();
+        // Rotate the entire turret towards target
+        RotateTurretToTarget();
 
-        // Rotate towards target
-        RotateToTarget();
-
-        if (CanAttack) Fire();
+        if (CanAttack) OnAttack();
     }
 
     //  ------------------ Private ------------------
@@ -71,44 +80,58 @@ public class BasicCube : BuildableUnit
     private GameObject target = null;
 
     /// <summary>
-    /// Rotates the unit to align with the detected target.
+    /// Rotates the entire turret to align the firePoint with the target.
     /// </summary>
-    private void RotateToTarget()
+    private void RotateTurretToTarget()
     {
-        if (target == null) return;
+        if (target == null || firePoint == null) return;
 
-        Vector3 direction = (_targetPosition - transform.position).normalized;
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // Calculate the vector from firePoint to target
+        Vector3 toTarget = _targetPosition - firePoint.position;
+
+        // Skip rotation if target is too close (prevents fidgeting)
+        float distanceToTarget = toTarget.magnitude;
+        if (distanceToTarget < 1f) return; // Adjust this minimum distance as needed
+
+        // Calculate the angle needed to align firePoint with target
+        float targetAngle = Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg;
+
+        // Apply rotation to the entire turret
         transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, 0, targetAngle), rotationSpeed * Time.deltaTime);
 
+        // Update line renderer to show the actual firing trajectory
         if (lineRenderer != null)
         {
+            Vector3 firingDirection = toTarget.normalized;
             lineRenderer.SetPosition(0, firePoint.position);
-            lineRenderer.SetPosition(1, firePoint.position + direction * stats.range);
+            lineRenderer.SetPosition(1, firePoint.position + firingDirection * stats.range);
         }
     }
 
+
     /// <summary>
-    /// Ensures the gun does not fire unless it is properly aligned with the target.
+    /// Ensures the turret does not fire unless the firePoint is properly aligned with the target.
     /// </summary>
     private bool IsAlignedWithTarget()
     {
-        Vector3 direction = (_targetPosition - transform.position).normalized;
-        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        float currentAngle = transform.eulerAngles.z;
+        if (firePoint == null) return false;
 
-        return Mathf.Abs(Mathf.DeltaAngle(currentAngle, targetAngle)) <= fireAngleThreshold;
+        // Calculate the direction vectors
+        Vector3 toTarget = _targetPosition - firePoint.position;
+        Vector3 firingDirection = transform.right; // Assuming firePoint is aligned with local X-axis
+
+        // Calculate the angle between the firing direction and direction to target
+        float angle = Vector3.Angle(firingDirection, toTarget);
+
+        return angle <= fireAngleThreshold;
     }
 
     /// <summary>
-    /// Adjusts the firePoint to be slightly offset next to the enemy.
+    /// Checks if the target is within the attack range.
     /// </summary>
-    private void UpdateFirePointPosition()
+    private bool IsInRange()
     {
-        if (equipPoint == null) return;
-
-        Vector3 direction = (_targetPosition - transform.position).normalized;
-        firePoint.position = equipPoint.position + direction * 0.65f; // Adjusting slight offset
+        return Vector2.Distance(transform.position, _targetPosition) <= stats.range;
     }
 
     /// <summary>

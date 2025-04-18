@@ -4,7 +4,7 @@ using UnityEngine;
 /// <summary>
 /// Represents a shotgun turret that fires three projectiles in a spread pattern.
 /// </summary>
-public class ShotgunTurret : BuildableUnit
+public class ShotgunTurret : BuildableUnit, IAttackable
 {
     //  ------------------ Public ------------------
 
@@ -31,13 +31,13 @@ public class ShotgunTurret : BuildableUnit
         if (hit.collider == null) return;
 
         // If a target is detected and the turret can attack, fire.
-        if (CanAttack) Fire();
+        if (CanAttack) OnAttack();
     }
 
     /// <summary>
     /// Fires three projectiles in a spread pattern (-15°, 0°, +15°).
     /// </summary>
-    public override void Fire()
+    public void OnAttack()
     {
         float[] angles = { -15f, 0f, 15f };
 

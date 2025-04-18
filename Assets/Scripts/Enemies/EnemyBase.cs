@@ -1,4 +1,5 @@
 using Unity.Collections;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 /// <summary>
@@ -7,7 +8,7 @@ using UnityEngine;
 public abstract class EnemyBase : MonoBehaviour
 {
     //  ------------------ Public ------------------
-
+    [Header("Enemy Base")]
     [ReadOnly] 
     [Tooltip("The stats that define the enemy's attributes.")]
     public EnemyStats stats;
@@ -38,6 +39,7 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void Move()
     {
         float speed = (healthComponent.currentStatus != DamageStatus.SLOW) ? stats.movementSpeed : (stats.movementSpeed * 0.25f);
+        speed = (healthComponent.currentStatus != DamageStatus.STUN) ? speed : 0;
         transform.position += (Vector3)(moveDirection.normalized * speed * Time.deltaTime);
     }
 
@@ -49,12 +51,14 @@ public abstract class EnemyBase : MonoBehaviour
         // Notify the enemy manager of the death
         OnDeathCallback?.Invoke(gameObject);
 
-        // Spawn the bits particle system
-        PoolManager.Instance.GetObject(bitsParticleSystem, transform.position, Quaternion.identity)
-            .GetComponent<BitsController>().StartBits(stats.bitsOnKill, GameManager.Instance.mouseTrigger);
-
         // Return the enemy object to the pool
+        try {
         PoolManager.Instance.ReturnObject(gameObject);
+        } catch {
+            // We are testing right now. soo don't worry about it. 
+            Debug.LogWarning("This instance is not in the object pool!");
+            Destroy(gameObject);
+        }
     }
 
     /// <summary>
@@ -63,7 +67,11 @@ public abstract class EnemyBase : MonoBehaviour
     protected virtual void OnEndReached()
     {
         EnemyManager.Instance.GameOver();
+        // TODO: Make a health system.. 
     }
+
+    protected virtual void PostEnable() => healthComponent.OnDeath += OnDeath;
+    protected virtual void PostDisable() => healthComponent.OnDeath -= OnDeath;
 
     //  ------------------ Private ------------------
 
@@ -79,12 +87,11 @@ public abstract class EnemyBase : MonoBehaviour
     /// <summary>
     /// Subscribes to the death event when the object is enabled.
     /// </summary>
-    private void OnEnable() =>
-        healthComponent.OnDeath += OnDeath;
+    private void OnEnable() => PostEnable();
 
     /// <summary>
     /// Unsubscribes from the death event when the object is disabled.
     /// </summary>
-    private void OnDisable() =>
-        healthComponent.OnDeath -= OnDeath;
+    private void OnDisable() => PostDisable();
+
 }

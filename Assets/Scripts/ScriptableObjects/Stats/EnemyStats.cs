@@ -12,7 +12,8 @@ using UnityEngine;
 public class EnemyStats : ScriptableObject
 {
     //  ------------------ Public ------------------
-
+    [Header("Enemy Stats")]
+    [Space(8)]
     [Header("Enemy Attributes")]
     
     [Tooltip("The movement speed of the enemy.")]

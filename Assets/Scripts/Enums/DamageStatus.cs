@@ -1,21 +1,18 @@
-using System;
 using UnityEngine;
 
 /// <summary>
-/// Represents different statuses that can be applied through damage.
+/// Enum representing different damage statuses with tooltips for each status.
 /// </summary>
-[Serializable]
 public enum DamageStatus
 {
-    [Tooltip("No status effect.")]
-    NONE,
-
-    [Tooltip("Slows the target.")]
-    SLOW,
-
-    [Tooltip("Applies poison damage over time.")]
-    POISON,
-
-    [Tooltip("Sets the target on fire, dealing continuous damage.")]
-    FIRE
+    [Tooltip("No damage status.")]
+    NONE, // Nothing
+    [Tooltip("The entity is stunned.")]
+    STUN, // Stun 
+    [Tooltip("The entity is poisoned.")]
+    POISON, // Poison
+    [Tooltip("The entity is on fire.")]
+    FIRE, // On Fire
+    [Tooltip("The entity is Slowed")]
+    SLOW, // Slowed
 }
