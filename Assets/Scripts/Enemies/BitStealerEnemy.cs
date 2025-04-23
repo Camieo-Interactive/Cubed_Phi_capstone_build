@@ -56,9 +56,6 @@ public class BitStealerEnemy : EnemyBase, IAttackable
     /// <summary>
     /// Performs a range check and attacks if a BitGenerator is found.
     /// </summary>
-    /// <summary>
-    /// Performs a range check and attacks if a BitGenerator is found.
-    /// </summary>
     protected virtual void Check()
     {
         bool bitDetected = false;
@@ -78,10 +75,7 @@ public class BitStealerEnemy : EnemyBase, IAttackable
             }
         }
 
-        if (bitDetected)
-        {
-            OnAttack();
-        }
+        if (bitDetected) OnAttack();
     }
 
     /// <summary>
@@ -89,17 +83,8 @@ public class BitStealerEnemy : EnemyBase, IAttackable
     /// </summary>
     protected override void Move()
     {
-        if (_isAttacking || healthComponent.currentStatus == DamageStatus.STUN)
-            return;
-
-        float speed = (healthComponent.currentStatus != DamageStatus.SLOW)
-            ? stats.movementSpeed
-            : stats.movementSpeed * 0.25f;
-
-        speed = _isAttacking ? 0f : speed;
-        speed = (healthComponent.currentStatus != DamageStatus.STUN) ? speed : 0;
-
-        transform.position += (Vector3)(moveDirection.normalized * speed * Time.deltaTime);
+        if (_isAttacking ) return;
+        base.Move();
     }
 
     /// <summary>
@@ -134,7 +119,7 @@ public class BitStealerEnemy : EnemyBase, IAttackable
         StopAllCoroutines();
         BitsController.RemoveTrigger(gameObject);
         PoolManager.Instance.GetObject(bitsParticleSystem, transform.position, quaternion.identity)
-            .GetComponent<BitsController>().StartBits(stealBitTrigger.numOfBitsCollected);
+            .GetComponent<BitsController>().StartBits(stealBitTrigger.numOfBitsCollected / 4);
         base.OnDeath();
     }
 

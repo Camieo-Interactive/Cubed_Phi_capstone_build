@@ -34,12 +34,4 @@ public class BitGenerator : BuildableUnit, IAttackable
     //  ------------------ Private ------------------
 
     private float timePassed = 0;
-
-    /// <summary>
-    /// Initializes the BitGenerator when built.
-    /// </summary>
-    private void Start()
-    {
-        OnBuild();
-    }
 }

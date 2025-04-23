@@ -110,20 +110,6 @@ public class AutoCube : BuildableUnit, IAttackable
     /// Checks if the target is within the attack range.
     /// </summary>
     private bool IsInRange() => Vector2.Distance(transform.position, _targetPosition) <= stats.range;
-    
-
-    /// <summary>
-    /// Initializes the turret upon building and sets the LineRenderer's range.
-    /// </summary>
-    private void Start()
-    {
-        OnBuild();
-        if (lineRenderer != null)
-        {
-            lineRenderer.SetPosition(0, firePoint.position);
-            lineRenderer.SetPosition(1, firePoint.position + Vector3.right * stats.range);
-        }
-    }
 
     /// <summary>
     /// Draws a gizmo to visualize the turret's attack range in the editor.

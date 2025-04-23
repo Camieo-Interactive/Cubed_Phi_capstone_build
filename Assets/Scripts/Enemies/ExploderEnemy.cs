@@ -20,32 +20,35 @@ public class ExploderEnemy : EnemyBase
     //  ------------------ Private ------------------
 
     private bool _hasTriggeredExplosion = false;
+    private bool _shouldExplodeOnDeath = false;
     private bool _isExploding = false;
+    private bool _isDying = false;
 
     /// <summary>
     /// Updates enemy behavior each frame, checking for tower proximity.
     /// </summary>
-    private void Update()
+    protected virtual void Check()
     {
         if (_isExploding)
             return;
 
         bool nearTower = Physics2D.OverlapCircle(
             transform.position,
-            attackStats.AttackRange,
+            attackStats.AttackDetectionRange,
             attackStats.AttackMask
         );
 
         if (nearTower && !_hasTriggeredExplosion)
         {
             _hasTriggeredExplosion = true;
+            _shouldExplodeOnDeath = true;
             exploderAnimator.Play("ExplosionStart", 0, 0f); // Make sure this state exists
         }
+    }
 
-        if (!_hasTriggeredExplosion)
-        {
-            Move(); // Still allowed to move until explosion animation starts
-        }
+    private void Update()
+    {
+        if (!_hasTriggeredExplosion) Move();
     }
 
     /// <summary>
@@ -56,7 +59,8 @@ public class ExploderEnemy : EnemyBase
         if (_isExploding) return;
 
         _isExploding = true;
-        SpawnExplosion(false);
+        _shouldExplodeOnDeath = false;
+        SpawnExplosion(_shouldExplodeOnDeath);
 
         healthComponent.ChangeHealth(new DamageValue
         {
@@ -71,6 +75,7 @@ public class ExploderEnemy : EnemyBase
     /// </summary>
     private void SpawnExplosion(bool isDefused)
     {
+        Debug.Log("Spawning Explosion");
         GameObject fx = PoolManager.Instance.GetObject(explosionPrefab, transform.position, Quaternion.identity);
 
         if (fx.TryGetComponent(out Explosion explosion))
@@ -93,10 +98,45 @@ public class ExploderEnemy : EnemyBase
     /// </summary>
     protected override void OnDeath()
     {
+        if (_isDying) return;
+
+        _isDying = true;
+        Debug.Log("Spawning OnDeath!");
         if (!_isExploding)
-            SpawnExplosion(true);
+        {
+            exploderAnimator.Play("ExplosionDefault", 0, 0f);
+            SpawnExplosion(!_shouldExplodeOnDeath);
+        }
 
         base.OnDeath();
+    }
+
+    public override void Init()
+    {
+        base.Init();
+        exploderAnimator.Play("ExplosionDefault", 0, 0f);
+        _hasTriggeredExplosion = false;
+        _shouldExplodeOnDeath = false;
+        _isExploding = false;
+        _isDying = false;
+    }
+
+    /// <summary>
+    /// Registers tick events and triggers on enable.
+    /// </summary>
+    protected override void PostEnable()
+    {
+        base.PostEnable();
+        TickSystem.OnTickAction += Check;
+    }
+
+    /// <summary>
+    /// Unregisters tick events and triggers on disable.
+    /// </summary>
+    protected override void PostDisable()
+    {
+        base.PostDisable();
+        TickSystem.OnTickAction -= Check;
     }
 
     private void OnDrawGizmosSelected()

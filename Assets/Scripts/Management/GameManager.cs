@@ -32,7 +32,6 @@ public class GameManager : SingletonBase<GameManager>
 
     [Tooltip("Deck currently in use.")]
     public Deck CardDeck;
-
     public int reRollDelta = 100;
     public int reRollMax = 1000;
 
@@ -41,6 +40,8 @@ public class GameManager : SingletonBase<GameManager>
 
     [Tooltip("Dictionary tracking the locations of buildings.")]
     public Dictionary<Vector3Int, Tuple<bool, GameObject>> buildingLocations = new();
+
+
 
     /// <summary>
     /// The total bits collected.
@@ -106,6 +107,7 @@ public class GameManager : SingletonBase<GameManager>
     {
         // Reset the list..
         BitsController.triggers = new List<GameObject>();
+        buildingLocations = new();
         BitsController.AddTrigger(mouseTrigger);
 
     }

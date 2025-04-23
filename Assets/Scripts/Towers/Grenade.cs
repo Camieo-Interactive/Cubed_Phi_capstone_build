@@ -27,11 +27,4 @@ public class Grenade : BuildableUnit, IAttackable
         // Trigger building destruction logic
         OnBuildingDestroy();
     }
-
-    //  ------------------ Private ------------------
-
-    /// <summary>
-    /// Initializes the grenade upon being built.
-    /// </summary>
-    private void Start() => OnBuild();
 }

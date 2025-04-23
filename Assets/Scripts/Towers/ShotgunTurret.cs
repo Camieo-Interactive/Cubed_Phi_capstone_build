@@ -55,12 +55,7 @@ public class ShotgunTurret : BuildableUnit, IAttackable
         StartCoroutine(Cooldown(stats.fireRate));
     }
 
-    //  ------------------ Private ------------------
-
-    /// <summary>
-    /// Initializes the turret visuals and sets the LineRenderers to visualize the firing range.
-    /// </summary>
-    private void Start()
+    public override void OnBuild()
     {
         base.OnBuild();
         lineRenderer.SetPosition(1, new Vector3(0.0f, stats.range, 0.0f));

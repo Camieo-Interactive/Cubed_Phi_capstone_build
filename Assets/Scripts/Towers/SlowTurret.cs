@@ -57,14 +57,9 @@ public class SlowTurret : BuildableUnit, IAttackable
         }
     }
 
-    //  ------------------ Private ------------------
-
-    /// <summary>
-    /// Initializes the turret upon building and sets up the LineRenderer.
-    /// </summary>
-    private void Start()
+    public override void OnBuild()
     {
-        OnBuild();
+        base.OnBuild();
         lineRenderer.SetPosition(0, Vector3.zero);
         lineRenderer.SetPosition(1, firePoint.right * stats.range);
     }

@@ -17,6 +17,8 @@ public class EnemyAttackStats : ScriptableObject
     [Space(8)]
     [Tooltip("The attack range of the enemy.")]
     public float AttackRange = 30f;
+    [Tooltip("The attack range of the enemy.")]
+    public float AttackDetectionRange = 1.5f;
 
     [Tooltip("The attack duration. [Fire rate or duration]")]
     public float AttackDuration = 10f;
@@ -29,5 +31,8 @@ public class EnemyAttackStats : ScriptableObject
 
     [Tooltip("Damage dealt to towers per attack tick.")]
     public int attackDamage = 0;
+    
+    [Tooltip("The spawnable of the enemy.")]
+    public GameObject spawnablePrefab;
 
 }

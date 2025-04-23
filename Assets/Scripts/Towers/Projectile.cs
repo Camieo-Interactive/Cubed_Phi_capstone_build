@@ -18,6 +18,11 @@ public class Projectile : MonoBehaviour
     [Tooltip("Trail renderer for visual effects.")]
     public TrailRenderer trailRenderer;
 
+    // Layers
+    private const int ENEMY_LAYER = 6;
+    private const int TOWER_LAYER = 7;
+    private const int ENEMY_BULLET_LAYER = 8;
+    private const int TOWER_BULLET_LAYER = 9;
 
     /// <summary>
     /// Spawns any additional effects and returns the projectile to the object pool.
@@ -29,7 +34,6 @@ public class Projectile : MonoBehaviour
         CleanupAndReturn();
     }
 
-
     /// <summary>
     /// Initializes the projectile when retrieved from the object pool.
     /// </summary>
@@ -39,6 +43,21 @@ public class Projectile : MonoBehaviour
         _dir = direction;
         _isEnemy = isEnemy;
         _isActive = true;
+
+        // Set the appropriate layer based on who fired the projectile
+        gameObject.layer = _isEnemy ? ENEMY_BULLET_LAYER : TOWER_BULLET_LAYER;
+
+        // Force the collision setting for this specific instance
+        if (!_isEnemy)
+        {
+            // For tower bullets - ignore tower layer
+            Physics2D.IgnoreLayerCollision(TOWER_BULLET_LAYER, TOWER_LAYER, true);
+        }
+        else
+        {
+            // For enemy bullets - ignore enemy layer
+            Physics2D.IgnoreLayerCollision(ENEMY_BULLET_LAYER, ENEMY_LAYER, true);
+        }
 
         // Rotate the projectile to face the direction it's moving
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -51,7 +70,6 @@ public class Projectile : MonoBehaviour
         _destroyCoroutine = StartCoroutine(WaitForDestroy());
     }
 
-
     //  ------------------ Private ------------------
 
     private bool _isActive = false;
@@ -59,6 +77,16 @@ public class Projectile : MonoBehaviour
     private Vector2 _dir;
     private bool _isEnemy = false;
     private Coroutine _destroyCoroutine;
+
+    /// <summary>
+    /// Called when the game object is first created
+    /// </summary>
+    private void Awake()
+    {
+        // Global setting - Set these at project level in Physics2D settings too
+        Physics2D.IgnoreLayerCollision(TOWER_BULLET_LAYER, TOWER_LAYER, true);
+        Physics2D.IgnoreLayerCollision(ENEMY_BULLET_LAYER, ENEMY_LAYER, true);
+    }
 
     /// <summary>
     /// Resets the trail renderer to avoid visual artifacts when reusing the projectile.
@@ -80,14 +108,24 @@ public class Projectile : MonoBehaviour
         rigidbody2D.linearVelocity = _dir * stats.projectileSpeed;
     }
 
-
     /// <summary>
     /// Handles the collision with other game objects and applies damage or spawn effects.
     /// </summary>
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        // Skip processing if inactive
+        if (!_isActive) return;
+
         int layer = collision.gameObject.layer;
-        if ((_isEnemy && layer == 6) || (!_isEnemy && layer == 7)) return;
+        
+        // Emergency runtime ignore - this is a last resort to prevent the collision from being processed
+        if ((!_isEnemy && layer == TOWER_LAYER) || (_isEnemy && layer == ENEMY_LAYER))
+        {
+            
+            // Ignore this specific collision
+            Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
+            return;
+        }
 
         HealthComponent healthComponent = collision.gameObject.GetComponent<HealthComponent>();
         if (healthComponent != null)
@@ -105,12 +143,23 @@ public class Projectile : MonoBehaviour
     }
 
     /// <summary>
+    /// Called when the object is enabled
+    /// </summary>
+    private void OnEnable()
+    {     
+        // Enforce the layer collision settings again
+        Physics2D.IgnoreLayerCollision(TOWER_BULLET_LAYER, TOWER_LAYER, true);
+        Physics2D.IgnoreLayerCollision(ENEMY_BULLET_LAYER, ENEMY_LAYER, true);
+    }
+
+    /// <summary>
     /// Handles returning the projectile to the object pool safely.
     /// </summary>
     private void CleanupAndReturn()
     {
         _isActive = false;
-
+        _isEnemy = false;
+        
         // Stop the destroy timer if it's still running
         if (_destroyCoroutine != null)
         {

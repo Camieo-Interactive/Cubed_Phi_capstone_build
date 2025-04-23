@@ -27,12 +27,14 @@ public class SpriteDamageComponent : MonoBehaviour
     {
         if (healthComponent != null)
             healthComponent.OnHealthChanged += HandleHealthChanged;
+        targetMask.sprite = null;
     }
 
     private void OnDisable()
     {
         if (healthComponent != null)
             healthComponent.OnHealthChanged -= HandleHealthChanged;
+        targetMask.sprite = null;
     }
 
     /// <summary>
@@ -60,9 +62,10 @@ public class SpriteDamageComponent : MonoBehaviour
             return -1;
 
         // Only show sprites starting at ≤ 90% health
-        if (percent > 0.9f)
+        if (percent > 0.9f) {
+            targetMask.sprite = null;
             return -1;
-
+        }
         float range = 0.9f; // the 0.0–0.9 range is mapped to sprite stages
         float normalized = Mathf.Clamp01((0.9f - percent) / range);
         int index = Mathf.FloorToInt(normalized * damageStages.Length);

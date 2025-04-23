@@ -44,14 +44,9 @@ public class Turret : BuildableUnit, IAttackable
         if (CanAttack) OnAttack();
     }
 
-    //  ------------------ Private ------------------
-
-    /// <summary>
-    /// Initializes the turret upon building and sets the LineRenderer's range.
-    /// </summary>
-    private void Start()
+    public override void OnBuild()
     {
-        OnBuild();
+        base.OnBuild();
         lineRenderer.SetPosition(1, new Vector3(0.0f, stats.range, 0.0f));
     }
 }

@@ -15,6 +15,6 @@ MonoBehaviour:
   cardName: Landmine
   cardSprite: {fileID: -1053605263, guid: f62fcab0b6ba7e74080b69611bccef39, type: 3}
   cardObject: {fileID: 7172660582400175214, guid: 0ba61eb0e4dd7864994a49411154826a, type: 3}
-  cardCost: 75
-  drawProbability: 0.35
-  cardTier: 1
+  cardCost: 50
+  drawProbability: 0.2
+  cardTier: 7

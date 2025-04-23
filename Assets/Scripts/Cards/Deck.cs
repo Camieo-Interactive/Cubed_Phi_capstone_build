@@ -68,15 +68,33 @@ public class Deck : MonoBehaviour
     /// </summary>
     public void GenerateDeck()
     {
-        cards = new GameObject[numberOfCards];
+
         if (numberOfDecks == 0 && starterDeck != null)
         {
             CardStats[] collection = starterDeck.cards;
+            cards = new GameObject[collection.Length];
             for (int i = 0; i < collection.Length; i++) CreateCard(i, collection[i]);
         }
-        else for (int i = 0; i < numberOfCards; i++) CreateCard(i);
+        else
+        {
+            cards = new GameObject[numberOfCards];
+            for (int i = 0; i < numberOfCards; i++) CreateCard(i);
+        }
         numberOfDecks++;
         _isFolded = false;
+    }
+
+    public void FilpDeck()
+    {
+        bool shouldAutoOpen = PlayerPrefs.GetInt("AutoOpenDeck", 1) == 1;
+        Debug.Log($"Should we flip the deck? {shouldAutoOpen}");
+        if (!shouldAutoOpen) return;
+        Debug.Log("Flip the deck!");
+        foreach (GameObject item in cards)
+        {
+            UICard card = item.GetComponent<UICard>();
+            card.FlipCard();
+        }
     }
 
     /// <summary>
@@ -89,13 +107,11 @@ public class Deck : MonoBehaviour
 
         for (int i = 0; i < cards.Length; i++)
         {
-            if (cards[i] == cardToRemove)
-            {
-                cards[i].GetComponent<Card>().CardUsed();
-                UICard iCard = cards[i].GetComponent<UICard>();
-                iCard.UnFlipCard();
-                break;
-            }
+            if (cards[i] != cardToRemove) continue;
+            cards[i].GetComponent<Card>().CardUsed();
+            UICard iCard = cards[i].GetComponent<UICard>();
+            iCard.UnFlipCard();
+            break;
         }
         cards = Array.FindAll(cards, card => card != null);
     }

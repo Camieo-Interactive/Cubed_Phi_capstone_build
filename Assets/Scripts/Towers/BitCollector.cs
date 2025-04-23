@@ -16,15 +16,11 @@ public class BitCollector: BuildableUnit {
         base.OnBuildingDestroy();
     }
 
-    /// <summary>
-    /// Initializes the BitGenerator when built.
-    /// </summary>
-    private void Start()
+    public override void OnBuild()
     {
-        OnBuild();
+        base.OnBuild();
         BitCollectorTrigg.AudioSrc = AudioSrc; 
         BitCollectorTrigg.BitCollectorAnimatior = buildableAnimator;
         BitsController.AddTrigger(ParticleSystemField.gameObject);
     }
-    
 }

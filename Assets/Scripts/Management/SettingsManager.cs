@@ -31,6 +31,10 @@ public class SettingsManager : MonoBehaviour
     [Tooltip("Toggle to switch fullscreen mode (PC only).")]
     public Toggle FullscreenToggle;
 
+    [Header("Gameplay Settings")]
+    [Tooltip("Toggle to automatically open the deck at game start.")]
+    public Toggle AutoOpenDeckToggle;
+
     [Header("Resolution Presets")]
     [Tooltip("Reference to the resolution preset asset.")]
     public ResolutionPresetAsset PresetAsset;
@@ -57,6 +61,7 @@ public class SettingsManager : MonoBehaviour
         InitializeAudioSliders();
         InitializeResolutionSettings();
         InitializeFullscreenToggle();
+        InitializeAutoOpenDeckToggle();
     }
 
     /// <summary>
@@ -88,6 +93,18 @@ public class SettingsManager : MonoBehaviour
         {
             BGMManager.Instance.SetSFXVolume(volume);
             PlayerPrefs.SetFloat("SFXVolume", volume);
+        });
+    }
+
+    private void InitializeAutoOpenDeckToggle()
+    {
+        bool autoOpenDeck = PlayerPrefs.GetInt("AutoOpenDeck", 1) == 1;
+        AutoOpenDeckToggle.SetIsOnWithoutNotify(autoOpenDeck);
+
+        AutoOpenDeckToggle.onValueChanged.AddListener(state =>
+        {
+            PlayerPrefs.SetInt("AutoOpenDeck", state ? 1 : 0);
+            PlayerPrefs.Save();
         });
     }
 
@@ -138,8 +155,8 @@ public class SettingsManager : MonoBehaviour
         // Apply resolution immediately
         SetResolution(savedIndex);
 #else
-    ResolutionText.gameObject.SetActive(false);
-    ResolutionDropdown.gameObject.SetActive(false);
+        ResolutionText.gameObject.SetActive(false);
+        ResolutionDropdown.gameObject.SetActive(false);
 #endif
     }
 

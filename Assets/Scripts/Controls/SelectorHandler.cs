@@ -1,3 +1,5 @@
+using System;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -90,7 +92,13 @@ public class SelectorHandler : MonoBehaviour
 
         GameManager.RaiseBitChange(-GameManager.Instance.selectedCard.stats.cardCost);
         Vector3 spawnPosition = grid.GetCellCenterWorld(cellPosition);
-        PoolManager.Instance.GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
+
+        // Build
+        GameObject baseObject = PoolManager.Instance
+        .GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
+
+        GameManager.Instance.buildingLocations.Add(grid.WorldToCell(spawnPosition), new Tuple<bool, GameObject>(true, baseObject));
+
 
         GameManager.Instance.CardDeck.RemoveCardFromDeck(GameManager.Instance.selectedCard.gameObject);
     }
@@ -107,7 +115,7 @@ public class SelectorHandler : MonoBehaviour
                 .GetObject(bitsParticleSystem, grid.GetCellCenterWorld(cell), Quaternion.identity)
                 .GetComponent<BitsController>()
                 .StartBits(unit.Sell());
-        
+
 
         sellMenu.SetActive(false);
     }

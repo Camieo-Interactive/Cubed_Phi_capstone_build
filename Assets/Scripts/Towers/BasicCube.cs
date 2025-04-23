@@ -135,19 +135,6 @@ public class BasicCube : BuildableUnit, IAttackable
     }
 
     /// <summary>
-    /// Initializes the turret upon building and sets the LineRenderer's range.
-    /// </summary>
-    private void Start()
-    {
-        OnBuild();
-        if (lineRenderer != null)
-        {
-            lineRenderer.SetPosition(0, firePoint.position);
-            lineRenderer.SetPosition(1, firePoint.position + Vector3.right * stats.range);
-        }
-    }
-
-    /// <summary>
     /// Draws a gizmo to visualize the turret's attack range in the editor.
     /// </summary>
     private void OnDrawGizmos()
