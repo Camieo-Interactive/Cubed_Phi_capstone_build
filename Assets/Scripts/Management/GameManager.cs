@@ -38,6 +38,8 @@ public class GameManager : SingletonBase<GameManager>
     [Tooltip("Grid currently in use.")]
     public Grid grid;
 
+    public Camera mainCamera;
+
     [Tooltip("Dictionary tracking the locations of buildings.")]
     public Dictionary<Vector3Int, Tuple<bool, GameObject>> buildingLocations = new();
 
@@ -72,6 +74,48 @@ public class GameManager : SingletonBase<GameManager>
     /// </summary>
     /// <param name="bitDelta">The change in bits (positive or negative).</param>
     public static void RaiseBitChange(long bitDelta) => OnBitChange?.Invoke(bitDelta);
+
+    public Vector2 GetRandomOffScreenPoint(float distanceFromEdge)
+    {
+        if (mainCamera == null)
+            mainCamera = Camera.main;
+
+        // Get camera boundaries in world space
+        float camHeight = 2f * mainCamera.orthographicSize;
+        float camWidth = camHeight * mainCamera.aspect;
+
+        float minX = mainCamera.transform.position.x - camWidth / 2f;
+        float maxX = mainCamera.transform.position.x + camWidth / 2f;
+        float minY = mainCamera.transform.position.y - camHeight / 2f;
+        float maxY = mainCamera.transform.position.y + camHeight / 2f;
+
+        Vector2 spawnPos = Vector2.zero;
+
+        // Choose a random side: 0 = Left, 1 = Right, 2 = Top, 3 = Bottom
+        int side = UnityEngine.Random.Range(0, 4);
+
+        switch (side)
+        {
+            case 0: // Left
+                spawnPos.x = minX - distanceFromEdge;
+                spawnPos.y = UnityEngine.Random.Range(minY, maxY);
+                break;
+            case 1: // Right
+                spawnPos.x = maxX + distanceFromEdge;
+                spawnPos.y = UnityEngine.Random.Range(minY, maxY);
+                break;
+            case 2: // Top
+                spawnPos.y = maxY + distanceFromEdge;
+                spawnPos.x = UnityEngine.Random.Range(minX, maxX);
+                break;
+            case 3: // Bottom
+                spawnPos.y = minY - distanceFromEdge;
+                spawnPos.x = UnityEngine.Random.Range(minX, maxX);
+                break;
+        }
+
+        return spawnPos;
+    }
 
     //  ------------------ Private ------------------
 
@@ -109,7 +153,6 @@ public class GameManager : SingletonBase<GameManager>
         BitsController.triggers = new List<GameObject>();
         buildingLocations = new();
         BitsController.AddTrigger(mouseTrigger);
-
     }
 
 }

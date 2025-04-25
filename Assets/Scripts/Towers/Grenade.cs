@@ -7,7 +7,6 @@ using UnityEngine;
 public class Grenade : BuildableUnit, IAttackable
 {
     //  ------------------ Public ------------------
-    public AudioSource AudioSrc;
     /// <summary>
     /// Placeholder method for validation checks.
     /// </summary>
@@ -20,7 +19,7 @@ public class Grenade : BuildableUnit, IAttackable
     {
         // Instantiate the explosion
         GameObject explosion = PoolManager.Instance.GetObject(stats.projectile, transform.position, Quaternion.identity);
-        AudioSrc.Play();
+        audioSource.Play();
         // Initialize the explosion with damage and range
         explosion.GetComponent<Explosion>().Init(new() { damage = -stats.damage }, stats.range);
         

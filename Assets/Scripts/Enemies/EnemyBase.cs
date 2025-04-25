@@ -39,13 +39,29 @@ public abstract class EnemyBase : MonoBehaviour
     /// </summary>
     protected virtual void Move()
     {
-        // Handle Lane switches.. 
         if (_laneSwitcher != null) HandleLaneSwitch();
         if (_teleportComp != null) HandleTeleport();
+
         float speed = (healthComponent.currentStatus != DamageStatus.SLOW) ? stats.movementSpeed : (stats.movementSpeed * 0.25f);
         speed = (healthComponent.currentStatus != DamageStatus.STUN) ? speed : 0;
-        transform.position += (Vector3)(moveDirection.normalized * speed * Time.deltaTime);
+
+        Vector3 delta = (Vector3)(moveDirection.normalized * speed * Time.deltaTime);
+        Vector3 newPosition = transform.position + delta;
+
+        if (EnemyManager.Instance != null)
+        {
+            float minY = EnemyManager.Instance.LowestLane;
+            float maxY = EnemyManager.Instance.highestLane;
+
+            float originalY = newPosition.y;
+            newPosition.y = Mathf.Clamp(newPosition.y, minY, maxY);
+
+            if (!Mathf.Approximately(originalY, newPosition.y)) moveDirection = Vector2.left;
+        }
+
+        transform.position = newPosition;
     }
+
     protected virtual bool movementConditional() => healthComponent.CurrentPercent < 0.5f;
     protected void HandleLaneSwitch() => moveDirection = (!_laneSwitcher.IsSwitchingLane && movementConditional()) ? _laneSwitcher.GetLaneSwitchDirection(moveDirection) : _laneSwitcher.MaybeResetDirection(moveDirection);
     protected void HandleTeleport()
@@ -60,7 +76,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         // Notify the enemy manager of the death
         OnDeathCallback?.Invoke(gameObject);
-        if(stats.deathParticleSystem != null) PoolManager.Instance.GetObject(stats.deathParticleSystem, transform.position, Quaternion.identity);
+        if (stats.deathParticleSystem != null) PoolManager.Instance.GetObject(stats.deathParticleSystem, transform.position, Quaternion.identity);
         // Return the enemy object to the pool
         try
         {

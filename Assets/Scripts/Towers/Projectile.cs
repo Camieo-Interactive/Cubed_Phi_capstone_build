@@ -22,22 +22,25 @@ public class Projectile : MonoBehaviour
     /// <summary>
     /// Spawns any additional effects and returns the projectile to the object pool.
     /// </summary>
-    public void CreateSpawnable()
+
+    public void CreateSpawnable(float blastRadius)
     {
         GameObject obj = PoolManager.Instance.GetObject(stats.spawnable, transform.position, transform.rotation);
-        obj.GetComponent<Explosion>()?.Init(_damage, 2.0f, false, DamageStatus.STUN);
+        obj.GetComponent<Explosion>()?.Init(_damage, blastRadius, false, DamageStatus.STUN);
         CleanupAndReturn();
     }
 
     /// <summary>
     /// Initializes the projectile when retrieved from the object pool.
     /// </summary>
-    public void Init(DamageValue damage, Vector2 direction, bool isEnemy = false)
+    public void Init(DamageValue damage, Vector2 direction, bool isEnemy = false, float blastRadius = 2.0f, Vector2? target = null)
     {
         _damage = damage;
         _dir = direction;
         _isEnemy = isEnemy;
         _isActive = true;
+        _blastRadius = blastRadius;
+        _targetPosition = target;
 
         // Set the appropriate layer based on who fired the projectile
         gameObject.layer = _isEnemy ? ENEMY_BULLET_LAYER : TOWER_BULLET_LAYER;
@@ -72,6 +75,9 @@ public class Projectile : MonoBehaviour
     private Vector2 _dir;
     private bool _isEnemy = false;
     private Coroutine _destroyCoroutine;
+    private float _blastRadius = 0.0f;
+    private float _arrivalThreshold = 0.5f;
+    private Vector2? _targetPosition = null;
 
     /// <summary>
     /// Called when the game object is first created
@@ -101,6 +107,12 @@ public class Projectile : MonoBehaviour
     {
         if (!_isActive) return;
         rigidbody2D.linearVelocity = _dir * stats.projectileSpeed;
+        if (_targetPosition.HasValue && Vector2.Distance(transform.position, _targetPosition.Value) <= _arrivalThreshold)
+        {
+            _targetPosition = null;
+            CreateSpawnable(_blastRadius);
+        }
+
     }
 
     /// <summary>
@@ -112,11 +124,11 @@ public class Projectile : MonoBehaviour
         if (!_isActive) return;
 
         int layer = collision.gameObject.layer;
-        
+
         // Emergency runtime ignore - this is a last resort to prevent the collision from being processed
         if ((!_isEnemy && layer == TOWER_LAYER) || (_isEnemy && layer == ENEMY_LAYER))
         {
-            
+
             // Ignore this specific collision
             Physics2D.IgnoreCollision(GetComponent<Collider2D>(), collision.collider, true);
             return;
@@ -130,7 +142,7 @@ public class Projectile : MonoBehaviour
 
         if (stats.spawnOnHit)
         {
-            CreateSpawnable();
+            CreateSpawnable(_blastRadius);
             return;
         }
 
@@ -141,7 +153,7 @@ public class Projectile : MonoBehaviour
     /// Called when the object is enabled
     /// </summary>
     private void OnEnable()
-    {     
+    {
         // Enforce the layer collision settings again
         Physics2D.IgnoreLayerCollision(TOWER_BULLET_LAYER, TOWER_LAYER, true);
         Physics2D.IgnoreLayerCollision(ENEMY_BULLET_LAYER, ENEMY_LAYER, true);
@@ -154,7 +166,7 @@ public class Projectile : MonoBehaviour
     {
         _isActive = false;
         _isEnemy = false;
-        
+
         // Stop the destroy timer if it's still running
         if (_destroyCoroutine != null)
         {

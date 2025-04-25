@@ -42,7 +42,7 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     {
         if(stats.deathParticleSystem != null) PoolManager.Instance.GetObject(stats.deathParticleSystem, transform.position, Quaternion.identity);
         try {
-        GameManager.Instance.buildingLocations.Remove(Grid.WorldToCell(transform.position));
+            GameManager.Instance.buildingLocations.Remove(Grid.WorldToCell(transform.position));
         }
         catch {
             Debug.LogWarning($"No instance of GameManager in the scene!!");

@@ -58,11 +58,11 @@ AudioRandomContainer:
   m_PrefabAsset: {fileID: 0}
   m_Name: Explosions
   m_Volume: 0
-  m_Pitch: 0
+  m_Pitch: 73
   m_AutomaticTriggerTime: 4.5
   m_LoopCount: 1
   m_VolumeRandomizationRange: {x: 0, y: 21.605835}
-  m_PitchRandomizationRange: {x: -367.8832, y: 586.8613}
+  m_PitchRandomizationRange: {x: -236.4963, y: 341.60587}
   m_AutomaticTriggerTimeRandomizationRange: {x: -41.16788, y: 0}
   m_LoopCountRandomizationRange: {x: 0, y: 0}
   m_Elements:

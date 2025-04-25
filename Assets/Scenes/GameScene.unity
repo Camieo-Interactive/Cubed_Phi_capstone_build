@@ -8142,6 +8142,7 @@ MonoBehaviour:
   reRollDelta: 50
   reRollMax: 1500
   grid: {fileID: 214124729}
+  mainCamera: {fileID: 0}
   BitsCollected: 50
 --- !u!114 &1529981904
 MonoBehaviour:

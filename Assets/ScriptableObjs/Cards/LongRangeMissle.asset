@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d9ef471b999ddf4488b94015272539cf, type: 3}
-  m_Name: BitGenerator
+  m_Name: LongRangeMissle
   m_EditorClassIdentifier: 
-  cardName: Bit Generator
-  cardSprite: {fileID: 501865990, guid: e0c4f23be842e6d48853181336f3e830, type: 3}
-  cardObject: {fileID: 3881930142875354817, guid: 7771f0e54841bc74da9d14d94a75efed, type: 3}
-  cardCost: 50
-  drawProbability: 1
-  cardTier: 0
+  cardName: Missle Strike
+  cardSprite: {fileID: -474616654808436957, guid: c17368acb90b52f41aba179d3eed0e92, type: 3}
+  cardObject: {fileID: 7172660582400175214, guid: 5eeb3fd6cbe2fcf40bdc63eb939738a9, type: 3}
+  cardCost: 200
+  drawProbability: 0.85
+  cardTier: 20

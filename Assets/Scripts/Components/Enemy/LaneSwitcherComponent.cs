@@ -28,15 +28,19 @@ public class LaneSwitcherComponent : MovementComponent
         float stride = LaneStride * strideDirection;
         float targetY = currentY + stride;
 
-        if (targetY < EnemyManager.Instance.LowestLane || targetY > EnemyManager.Instance.highestLane)
-            return baseDirection;
+        float minY = EnemyManager.Instance.LowestLane;
+        float maxY = EnemyManager.Instance.highestLane;
+
+        targetY = Mathf.Clamp(targetY, minY, maxY);
+
+        if (Mathf.Approximately(currentY, targetY)) return baseDirection;
 
         _isSwitching = true;
         _startingY = currentY;
-        _targetDeltaY = stride;
+        _targetDeltaY = targetY - currentY;
         _nextSwitchTime = Time.time + switchCooldown;
 
-        return new Vector2(baseDirection.x, stride);
+        return new Vector2(baseDirection.x, _targetDeltaY);
     }
 
     /// <summary>
@@ -64,4 +68,20 @@ public class LaneSwitcherComponent : MovementComponent
     private float _nextSwitchTime = 0f;
     private float _startingY = 0f;
     private float _targetDeltaY = 0f;
+
+    private void OnDisable()
+    {
+        _isSwitching = false;
+        _nextSwitchTime = 0f;
+        _startingY = 0f;
+        _targetDeltaY = 0f;
+    }
+
+    private void OnEnable()
+    {
+        _isSwitching = false;
+        _nextSwitchTime = 0f;
+        _startingY = 0f;
+        _targetDeltaY = 0f;
+    }
 }
