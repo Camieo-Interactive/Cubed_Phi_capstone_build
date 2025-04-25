@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+using static CubedPhiUtils;
+
 /// <summary>
 /// Represents an explosion that deals damage to surrounding enemies and triggers particle effects.
 /// </summary>
@@ -25,21 +27,14 @@ public class Explosion : MonoBehaviour
     public void Init(DamageValue damage, float range, bool isEnemy = false, DamageStatus stats = DamageStatus.NONE)
     {
         _range = range;
-        AudioSrc.Play();
-        // Play explosion and shrapnel particle effects
-        explosionParticleSystem.Play();
-        shrapnelParticleSystem.Play();
 
-        // Detect all colliders within the explosion radius
+        // Apply damage immediately
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, range);
-
-        // Apply damage to valid targets
         foreach (Collider2D hit in hits)
         {
             int layer = hit.gameObject.layer;
 
-            // Skip damage if the target is the same faction as the explosion
-            if ((isEnemy && layer == 6) || (!isEnemy && layer == 7)) continue;
+            if ((isEnemy && layer == ENEMY_LAYER) || (!isEnemy && layer == TOWER_LAYER)) continue;
 
             HealthComponent health = hit.GetComponent<HealthComponent>();
             if (health != null)
@@ -48,23 +43,27 @@ public class Explosion : MonoBehaviour
             }
         }
 
-        // Start the destruction process after the effects have played
-        StartCoroutine(DestroyAfterEffects());
+        // Play visual effects
+        explosionParticleSystem.Play();
+        shrapnelParticleSystem.Play();
+
+        // Start sequence: sound effect → wait → return to pool
+        StartCoroutine(HandleEffectsWithAudio());
     }
+
 
     //  ------------------ Private ------------------
 
-    /// <summary>
-    /// Waits for the particle effects to finish before deactivating the explosion object.
-    /// </summary>
-    private IEnumerator DestroyAfterEffects()
+    private IEnumerator HandleEffectsWithAudio()
     {
-        // Wait for the main explosion effect's duration
-        yield return new WaitForSeconds(explosionParticleSystem.main.duration + 1f);
+        AudioSrc.Play();
 
-        // Return the explosion object to the pool for reuse
+        // Wait for the sound to finish plus an extra second
+        yield return new WaitForSeconds(4f);
+
         PoolManager.Instance.ReturnObject(gameObject);
     }
+
 
     /// <summary>
     /// Draws a gizmo in the editor to visualize the explosion range.

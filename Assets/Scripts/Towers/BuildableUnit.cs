@@ -17,6 +17,9 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     [Tooltip("The health component responsible for managing this unit's health.")]
     public HealthComponent healthComponent;
 
+    [Tooltip("The Audio source use for handling the audio for the buildable unit's sounds.")]
+    public AudioSource audioSource; 
+
     [Tooltip("The animator used for handling the buildable unit's animations.")]
     public Animator buildableAnimator;
 
@@ -37,6 +40,7 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     /// </summary>
     public virtual void OnBuildingDestroy()
     {
+        if(stats.deathParticleSystem != null) PoolManager.Instance.GetObject(stats.deathParticleSystem, transform.position, Quaternion.identity);
         try {
         GameManager.Instance.buildingLocations.Remove(Grid.WorldToCell(transform.position));
         }

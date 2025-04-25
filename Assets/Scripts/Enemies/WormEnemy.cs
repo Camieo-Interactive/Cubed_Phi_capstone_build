@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 
+using static CubedPhiUtils;
+
 public class WormEnemy : BasicGunner
 {
     //  ------------------ Public ------------------
@@ -42,7 +44,7 @@ public class WormEnemy : BasicGunner
 
             foreach (var hit in hits)
             {
-                if (hit.collider == null || hit.collider.gameObject.layer != 7) continue;
+                if (hit.collider == null || hit.collider.gameObject.layer != TOWER_LAYER) continue;
 
                 if (!hit.collider.TryGetComponent<HealthComponent>(out var target)) continue;
 
@@ -67,7 +69,7 @@ public class WormEnemy : BasicGunner
     /// <summary>
     /// Waits for the attack cooldown before allowing the next attack.
     /// </summary>
-    private IEnumerator AttackCooldown()
+    private new IEnumerator AttackCooldown()
     {
         yield return new WaitForSeconds(attackStats.AttackCooldownDuration);
         _isAttacking = false;

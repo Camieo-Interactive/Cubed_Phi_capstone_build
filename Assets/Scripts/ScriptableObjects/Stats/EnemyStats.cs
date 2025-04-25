@@ -30,4 +30,7 @@ public class EnemyStats : ScriptableObject
 
     [Tooltip("Tier of the enemy (Higher tiers spawn later).")]
     public int tier;
+
+    [Tooltip("Death FX")]
+    public GameObject deathParticleSystem; 
 }

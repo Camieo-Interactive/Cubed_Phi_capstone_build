@@ -21,3 +21,4 @@ MonoBehaviour:
     m_Bits: 128
   attackDamage: 3
   spawnablePrefab: {fileID: 2922313298252073668, guid: 01f443f32347bf5418d39c3b870e13d3, type: 3}
+  attackParticleSystem: {fileID: 4298398670009088055, guid: e8ee49e396721844cb8b1b3b365feea1, type: 3}

@@ -1,4 +1,5 @@
 using Unity.Mathematics;
+using UnityEngine;
 
 public class FatherSlime : BasicGunner
 {
@@ -29,6 +30,7 @@ public class FatherSlime : BasicGunner
 
         // Spawn projectile using object pool
         PoolManager.Instance.GetObject(attackStats.spawnablePrefab, firePoint.position, quaternion.identity);
+        if(attackStats.attackParticleSystem != null) PoolManager.Instance.GetObject(attackStats.attackParticleSystem, transform.position, Quaternion.identity);
 
         // Start cooldown
         StartCoroutine(AttackCooldown());

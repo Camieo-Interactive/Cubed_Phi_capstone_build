@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+using static CubedPhiUtils;
 /// <summary>
 /// Handles projectile behavior, including movement, collisions, and object pooling.
 /// </summary>
@@ -17,12 +18,6 @@ public class Projectile : MonoBehaviour
 
     [Tooltip("Trail renderer for visual effects.")]
     public TrailRenderer trailRenderer;
-
-    // Layers
-    private const int ENEMY_LAYER = 6;
-    private const int TOWER_LAYER = 7;
-    private const int ENEMY_BULLET_LAYER = 8;
-    private const int TOWER_BULLET_LAYER = 9;
 
     /// <summary>
     /// Spawns any additional effects and returns the projectile to the object pool.

@@ -40,4 +40,10 @@ public class TowerStats : ScriptableObject
 
     [Tooltip("Sell value")]
     public int sellValue = 25;
+
+    [Tooltip("Shoot FX")]
+    public GameObject shootParticleSystem; 
+
+    [Tooltip("Death FX")]
+    public GameObject deathParticleSystem; 
 }

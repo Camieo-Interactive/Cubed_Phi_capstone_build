@@ -50,6 +50,7 @@ public class ShotgunTurret : BuildableUnit, IAttackable
             DamageValue damageValue = new() { damage = -stats.damage };
             projectile.Init(damageValue, direction);
         }
+        if (stats.shootParticleSystem != null) PoolManager.Instance.GetObject(stats.shootParticleSystem, firePoint.position, firePoint.rotation);
 
         // Start the cooldown before the turret can fire again
         StartCoroutine(Cooldown(stats.fireRate));

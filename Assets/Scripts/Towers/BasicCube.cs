@@ -35,6 +35,9 @@ public class BasicCube : BuildableUnit, IAttackable
         Projectile projectile = projectileObject.GetComponent<Projectile>();
 
         Vector2 direction = (_targetPosition - firePoint.position).normalized;
+        if (stats.shootParticleSystem != null) PoolManager.Instance.GetObject(stats.shootParticleSystem, firePoint.position, firePoint.rotation);
+        
+
         DamageValue damageValue = new() { damage = -stats.damage };
         projectile.Init(damageValue, direction);
 

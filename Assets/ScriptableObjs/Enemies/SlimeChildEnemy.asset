@@ -17,3 +17,4 @@ MonoBehaviour:
   spawnable: {fileID: 0}
   bitsOnKill: 0
   tier: 5
+  deathParticleSystem: {fileID: 4459974619802399305, guid: 6e357c6a105124d44825409eebda820c, type: 3}

@@ -35,4 +35,6 @@ public class EnemyAttackStats : ScriptableObject
     [Tooltip("The spawnable of the enemy.")]
     public GameObject spawnablePrefab;
 
+    [Tooltip("Attack Particle System")]
+    public GameObject attackParticleSystem;
 }

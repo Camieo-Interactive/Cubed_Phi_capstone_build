@@ -19,11 +19,11 @@ public class Turret : BuildableUnit, IAttackable
     /// Fires a projectile from the turret.
     /// </summary>
     public void OnAttack()
-    {    
+    {
         // Instantiate the projectile
         GameObject projectileObject = PoolManager.Instance.GetObject(stats.projectile, firePoint.position, quaternion.identity);
         Projectile projectile = projectileObject.GetComponent<Projectile>();
-
+        if (stats.shootParticleSystem != null) PoolManager.Instance.GetObject(stats.shootParticleSystem, firePoint.position, firePoint.rotation);
         // Initialize the projectile with damage values
         DamageValue damageValue = new() { damage = -stats.damage };
         projectile.Init(damageValue, Vector2.right);

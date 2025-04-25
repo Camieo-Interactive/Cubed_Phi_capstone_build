@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LauncherCube
   m_EditorClassIdentifier: 
   damage: 75
+  status: 0
   range: 7.5
   health: 15
   fireRate: 10
@@ -21,3 +22,6 @@ MonoBehaviour:
   detectionMask:
     serializedVersion: 2
     m_Bits: 64
+  sellValue: 25
+  shootParticleSystem: {fileID: 0}
+  deathParticleSystem: {fileID: 4459974619802399305, guid: f44ed4c8e45cc534abbbb61cb6d3c18b, type: 3}

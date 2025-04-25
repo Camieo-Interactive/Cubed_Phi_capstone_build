@@ -24,7 +24,7 @@ public class BasicGunner : EnemyBase, IAttackable
         // Spawn projectile using object pool
         GameObject projectileObj = PoolManager.Instance.GetObject(attackStats.spawnablePrefab, firePoint.position, quaternion.identity);
         Projectile projectile = projectileObj.GetComponent<Projectile>();
-
+        if(attackStats.attackParticleSystem != null) PoolManager.Instance.GetObject(attackStats.attackParticleSystem, firePoint.position, firePoint.rotation);
 
         DamageValue damage = new DamageValue
         {

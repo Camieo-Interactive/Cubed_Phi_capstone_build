@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: MagicCube
   m_EditorClassIdentifier: 
   damage: 20
+  status: 0
   range: 5
   health: 20
   fireRate: 0.5
@@ -21,3 +22,6 @@ MonoBehaviour:
   detectionMask:
     serializedVersion: 2
     m_Bits: 64
+  sellValue: 25
+  shootParticleSystem: {fileID: 0}
+  deathParticleSystem: {fileID: 4459974619802399305, guid: 1992f5eec19dc324daeacffb64acb76f, type: 3}

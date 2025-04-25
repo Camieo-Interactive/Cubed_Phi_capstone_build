@@ -33,8 +33,8 @@ public class AutoCube : BuildableUnit, IAttackable
 
         GameObject projectileObject = PoolManager.Instance.GetObject(stats.projectile, firePoint.position, Quaternion.identity);
         Projectile projectile = projectileObject.GetComponent<Projectile>();
-
         Vector2 direction = (_targetPosition - firePoint.position).normalized;
+        if (stats.shootParticleSystem != null) PoolManager.Instance.GetObject(stats.shootParticleSystem, firePoint.position, firePoint.rotation);
         DamageValue damageValue = new() { damage = -stats.damage };
         projectile.Init(damageValue, direction);
 

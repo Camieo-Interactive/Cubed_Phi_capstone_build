@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 261bc24471d3abf468cd5a6d9afaad39, type: 3}
-  m_Color: {r: 1, g: 0.68073237, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.9919772, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -226,7 +226,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 902c10805b69d7d41b1a4ab7ac42eb36, type: 2}
   healthComponent: {fileID: 3322999676489107287}
   moveDirection: {x: -1, y: 0}
-  laneSwitcherComponent: {fileID: 8330358440941055338}
+  MovementComponent: {fileID: 0}
   bitsParticleSystem: {fileID: 3236109327517393351, guid: 653f4e69d23a944438962aeaf06a17b4, type: 3}
   attackStats: {fileID: 11400000, guid: 6d8c1ee06b7b2f147a16d3b06e8fb0bf, type: 2}
 --- !u!1001 &7158708926925382832

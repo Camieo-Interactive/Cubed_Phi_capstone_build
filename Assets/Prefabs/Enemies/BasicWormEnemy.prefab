@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8327125627194887849}
   - component: {fileID: 3794169043391096363}
   - component: {fileID: 989208995381674703}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tentacle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,19 +107,10 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.5
+    widthMultiplier: 0
     widthCurve:
       serializedVersion: 2
       m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
       - serializedVersion: 3
         time: 0.34541985
         value: 1
@@ -189,7 +180,7 @@ GameObject:
   - component: {fileID: 6387804937657816503}
   - component: {fileID: 4921495316967259045}
   - component: {fileID: 1390774473924216998}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BasicWormEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +319,7 @@ MonoBehaviour:
   stats: {fileID: 11400000, guid: 8b55934896731884fbf0a5f7228c9c02, type: 2}
   healthComponent: {fileID: 5799460726027029849}
   moveDirection: {x: -1, y: 0}
-  MovementComponent: {fileID: 0}
+  MovementComponent: {fileID: 7450093645816219392}
   bitsParticleSystem: {fileID: 3236109327517393351, guid: 653f4e69d23a944438962aeaf06a17b4, type: 3}
   attackStats: {fileID: 11400000, guid: 7cf830854e4fa8f45a79fed3e7439c48, type: 2}
   firePoint: {fileID: 4255461835653849951}
@@ -415,7 +406,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4255461835653849951}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -447,7 +438,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3177681287293552125}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3033085841929437180}
   - component: {fileID: 6985845981061694101}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WormToothLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -566,7 +557,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5188344194720268657}
   - component: {fileID: 4147862650776508722}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WormToothRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +645,7 @@ GameObject:
   - component: {fileID: 2651576293291978378}
   - component: {fileID: 3108315061360113393}
   - component: {fileID: 3207638115921141115}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FiringParticles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5485,7 +5476,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8667223052343194338}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5520,7 +5511,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7970718319331324734}
   - component: {fileID: 5199746240313563585}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WormBody2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5607,7 +5598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2277363206215195110}
   - component: {fileID: 7519051425857177159}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WormBody1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
