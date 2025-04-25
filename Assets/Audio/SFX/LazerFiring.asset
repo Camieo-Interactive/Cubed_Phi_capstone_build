@@ -1,0 +1,82 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1233149941 &-4077938007610931290
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: engineCircular_001_{-4077938007610931290}
+  m_AudioClip: {fileID: 8300000, guid: b01a65f0c018c4745a54b21aa1a79795, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &-2640768921336865883
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: engineCircular_000_{-2640768921336865883}
+  m_AudioClip: {fileID: 8300000, guid: 644aeb54fe9481f48aa8916510f2d428, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &429846417749210881
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: engineCircular_002_{429846417749210881}
+  m_AudioClip: {fileID: 8300000, guid: 98540d4783f377540ba14ecb77b7b58c, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &2405562305411626540
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: engineCircular_004_{2405562305411626540}
+  m_AudioClip: {fileID: 8300000, guid: cdf1ae51a4c0d86459409a759187fa49, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1233149941 &2764086426926087458
+AudioContainerElement:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: engineCircular_003_{2764086426926087458}
+  m_AudioClip: {fileID: 8300000, guid: cf447068ed820514dbf598ee7ec5bce6, type: 3}
+  m_Volume: 0
+  m_Enabled: 1
+--- !u!1307931743 &6418180475301049370
+AudioRandomContainer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: LazerFiring
+  m_Volume: -14.5
+  m_Pitch: 791
+  m_AutomaticTriggerTime: 18.2
+  m_LoopCount: 1
+  m_VolumeRandomizationRange: {x: -10.51095, y: 14.014597}
+  m_PitchRandomizationRange: {x: -350.36493, y: 297.81018}
+  m_AutomaticTriggerTimeRandomizationRange: {x: -30.656929, y: 12.2627735}
+  m_LoopCountRandomizationRange: {x: 0, y: 0}
+  m_Elements:
+  - {fileID: -2640768921336865883}
+  - {fileID: -4077938007610931290}
+  - {fileID: 429846417749210881}
+  - {fileID: 2764086426926087458}
+  - {fileID: 2405562305411626540}
+  m_AvoidRepeatingLast: 0
+  m_PlaybackMode: 2
+  m_TriggerMode: 1
+  m_AutomaticTriggerMode: 1
+  m_LoopMode: 0
+  m_VolumeRandomizationEnabled: 0
+  m_PitchRandomizationEnabled: 1
+  m_AutomaticTriggerTimeRandomizationEnabled: 1
+  m_LoopCountRandomizationEnabled: 0

@@ -23,3 +23,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   sellValue: 25
+  shootParticleSystem: {fileID: 4298398670009088055, guid: e8ee49e396721844cb8b1b3b365feea1, type: 3}
+  deathParticleSystem: {fileID: 1486607597395338607, guid: b5a3157f3fb8f2a4da70e45ebc331291, type: 3}

@@ -50,17 +50,13 @@ public class ShotgunTurret : BuildableUnit, IAttackable
             DamageValue damageValue = new() { damage = -stats.damage };
             projectile.Init(damageValue, direction);
         }
+        if (stats.shootParticleSystem != null) PoolManager.Instance.GetObject(stats.shootParticleSystem, firePoint.position, firePoint.rotation);
 
         // Start the cooldown before the turret can fire again
         StartCoroutine(Cooldown(stats.fireRate));
     }
 
-    //  ------------------ Private ------------------
-
-    /// <summary>
-    /// Initializes the turret visuals and sets the LineRenderers to visualize the firing range.
-    /// </summary>
-    private void Start()
+    public override void OnBuild()
     {
         base.OnBuild();
         lineRenderer.SetPosition(1, new Vector3(0.0f, stats.range, 0.0f));

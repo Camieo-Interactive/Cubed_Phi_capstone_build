@@ -105,9 +105,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: a95cec6d055a378439e52ad097d72e3c, type: 2}
   healthComponent: {fileID: 6102849747027680216}
+  audioSource: {fileID: 9084814227194753396}
   buildableAnimator: {fileID: 0}
   baseObject: {fileID: 7172660582400175214}
-  AudioSrc: {fileID: 9084814227194753396}
 --- !u!95 &7245562785870691137
 Animator:
   serializedVersion: 7

@@ -4270,7 +4270,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.12156863}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.6156863}
     m_HighlightedColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
@@ -4500,7 +4500,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.12156863}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.6156863}
     m_HighlightedColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
@@ -4810,7 +4810,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 16, y: -28.000183}
+  m_AnchoredPosition: {x: 16, y: -28.000122}
   m_SizeDelta: {x: 324, y: 324}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &441595014
@@ -4896,6 +4896,7 @@ GameObject:
   - component: {fileID: 462024832}
   - component: {fileID: 462024831}
   - component: {fileID: 462024834}
+  - component: {fileID: 462024835}
   m_Layer: 0
   m_Name: MouseForceField
   m_TagString: BitCursor
@@ -5471,6 +5472,104 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a98da5b4f6c1a6428b8eba9482d30eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 462024835}
+--- !u!82 &462024835
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462024830}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: -5383875774759226064, guid: 37916061f6651df4bbe8c13bf8412841, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 6418180475301049370, guid: be98c9590fb661b43b29f609e64345b4, type: 2}
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &488785170
 GameObject:
   m_ObjectHideFlags: 0
@@ -6904,11 +7003,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1611506535}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1.5, y: 1.5}
-  m_Pivot: {x: 0, y: 1}
+  m_SizeDelta: {x: 2, y: 2}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &912239476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7413,7 +7512,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.12156863}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 0.6156863}
     m_HighlightedColor: {r: 0.9056604, g: 0.9056604, b: 0.9056604, a: 1}
     m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
@@ -7627,7 +7726,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -2074676819
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1310832889
 RectTransform:
@@ -8040,9 +8139,10 @@ MonoBehaviour:
   bitCount: {fileID: 1680818516}
   mouseTrigger: {fileID: 462024830}
   CardDeck: {fileID: 256114684}
-  reRollDelta: 100
-  reRollMax: 1000
+  reRollDelta: 50
+  reRollMax: 1500
   grid: {fileID: 214124729}
+  mainCamera: {fileID: 0}
   BitsCollected: 50
 --- !u!114 &1529981904
 MonoBehaviour:
@@ -8062,6 +8162,13 @@ MonoBehaviour:
   - {fileID: 7159984874550267967, guid: f5266a84e13b9164f80c191eb97bbb17, type: 3}
   - {fileID: 7347514581045391813, guid: 04d21c1829eea06458dbe6a65b0ab38d, type: 3}
   - {fileID: 7350387733073794881, guid: 01a091c234a4f444b98128371bd1dc68, type: 3}
+  - {fileID: 1819643071565652258, guid: 8f1128ab62a3890488bf87e3e93ae207, type: 3}
+  - {fileID: 4431759097380738135, guid: ce930a9beb919744299aefeec8aec061, type: 3}
+  - {fileID: 7819369221197023120, guid: aef179805421a334b9847b5d56e06e4e, type: 3}
+  - {fileID: 7708352702741200929, guid: 6384bee0ab3fb09469f76bfe04bc4bc7, type: 3}
+  - {fileID: 728726076854678497, guid: 760c361470910b447bc5702f385fed9b, type: 3}
+  - {fileID: 3697286332405071475, guid: c281b544cde3ba44b9db7494ea885642, type: 3}
+  - {fileID: 7708352702741200929, guid: 956e473e3d7c65142ae3d543d48f65a7, type: 3}
   spawnPoints:
   - {fileID: 787659353}
   - {fileID: 572166375}
@@ -8077,11 +8184,13 @@ MonoBehaviour:
   spawnInterval: 1
   startDelay: 20
   maxEnemies: 15
+  CurrentTier: 1
+  LowestLane: -7
+  highestLane: 0
   enemyWaves:
   - {fileID: 11400000, guid: 6b498b267dac0c84b9a5f0534846a2d5, type: 2}
   - {fileID: 11400000, guid: f64635423baa49948b4355b3393852fd, type: 2}
   progressBar: {fileID: 76172534}
-  CurrentTier: 1
   GameEndCanvas: {fileID: 985328899}
   GameOverScreen: {fileID: 584510210}
   GameFinishedScreen: {fileID: 48240677}
@@ -8388,7 +8497,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 2
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -8399,7 +8508,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: -2074676819
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!224 &1611506535
 RectTransform:
@@ -9041,7 +9150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.43137255}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.9490196}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

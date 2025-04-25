@@ -34,7 +34,6 @@ public static class SplashText
         "With many thanks to, Lawrence Reed",
         "With many thanks to, Bhavik Chand",
         "With many thanks to, Kyle Lynn",
-        "With many thanks to, Esther Nava",
         "With many thanks to, Professor G",
         "Bears.. ",
         "Bnuny.. ",
@@ -63,7 +62,7 @@ public static class SplashText
         "Under the neon glow..",
         "This obsession has turned, Into the great despair.",
         "NaN", 
-        "Also Play Cubed phi~",
+        "GR8 D2P@1R",
     };
     public static string GetSplashText() => Splashtext[UnityEngine.Random.Range(0, Splashtext.Length)];
     public static string GetCurrentSplash() => CurrentSplash;

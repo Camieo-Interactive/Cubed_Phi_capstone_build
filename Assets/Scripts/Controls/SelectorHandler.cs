@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -90,27 +91,51 @@ public class SelectorHandler : MonoBehaviour
 
         GameManager.RaiseBitChange(-GameManager.Instance.selectedCard.stats.cardCost);
         Vector3 spawnPosition = grid.GetCellCenterWorld(cellPosition);
-        PoolManager.Instance.GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
+
+        // Build
+        GameObject baseObject = PoolManager.Instance
+        .GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
+
+        GameManager.Instance.buildingLocations.Add(grid.WorldToCell(spawnPosition), new Tuple<bool, GameObject>(true, baseObject));
+
 
         GameManager.Instance.CardDeck.RemoveCardFromDeck(GameManager.Instance.selectedCard.gameObject);
     }
 
     public void sellTower()
     {
-        Vector3Int cell = grid.WorldToCell(_mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue()));
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, -_mainCamera.transform.position.z));
+        mouseWorldPos.z = 0f;
+
+        Vector3Int cell = grid.WorldToCell(mouseWorldPos);
 
         if (!GameManager.Instance.buildingLocations.TryGetValue(cell, out var data) || !data.Item1 || data.Item2 == null)
+        {
+            Debug.LogWarning($"[SellTower] No valid tower found at cell {cell}");
             return;
+        }
 
-        if (data.Item2.TryGetComponent(out BuildableUnit unit))
-            PoolManager.Instance
-                .GetObject(bitsParticleSystem, grid.GetCellCenterWorld(cell), Quaternion.identity)
-                .GetComponent<BitsController>()
-                .StartBits(unit.Sell());
-        
+        BuildableUnit unit = data.Item2.GetComponentInChildren<BuildableUnit>();
+        if (unit == null)
+        {
+            Debug.LogError($"[SellTower] No BuildableUnit component found in object {data.Item2.name}.");
+            return;
+        }
+
+        int sellAmount = unit.Sell();
+        if (sellAmount <= 0)
+        {
+            Debug.LogWarning($"[SellTower] Sell value is zero or less for unit {unit.name}");
+            return;
+        }
+
+        GameObject particle = PoolManager.Instance.GetObject(bitsParticleSystem, grid.GetCellCenterWorld(cell), Quaternion.identity);
+        particle.GetComponent<BitsController>()?.StartBits(sellAmount);
 
         sellMenu.SetActive(false);
     }
+
 
     //  ------------------ Private ------------------
     private Camera _mainCamera;

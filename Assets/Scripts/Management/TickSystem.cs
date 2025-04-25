@@ -44,6 +44,6 @@ public class TickSystem : SingletonBase<TickSystem>
             OnTickAction?.Invoke();
         }
     }
-
+    
 
 }

@@ -15,6 +15,9 @@ public class SlowTurret : BuildableUnit, IAttackable
     [Tooltip("LineRenderer component used to visualize the attack range.")]
     public LineRenderer lineRenderer;
 
+    [Tooltip("Particle system that the turret turns on and off.")]
+    public ParticleSystem lazerParticleSystem;
+
     /// <summary>
     /// Fires the turret, applying a cooldown before it can attack again.
     /// </summary>
@@ -26,15 +29,27 @@ public class SlowTurret : BuildableUnit, IAttackable
     public override void Check()
     {
         RaycastHit2D hit = Physics2D.Raycast(firePoint.position, Vector2.right, stats.range, stats.detectionMask);
-        
+
         if (hit.collider == null)
         {
             lineRenderer.enabled = false;
+            if (_hasActivatedAudio)
+            {
+                lazerParticleSystem.Stop();
+                audioSource.Stop();
+                _hasActivatedAudio = false;
+            }
             return;
         }
 
         // Target detected, enable the line renderer
         lineRenderer.enabled = true;
+        if (!_hasActivatedAudio)
+        {
+            lazerParticleSystem.Play();
+            audioSource.Play();
+            _hasActivatedAudio = true;
+        }
 
         // Convert the hit position to local space and update the line renderer
         Vector3 localHitPosition = firePoint.InverseTransformPoint(hit.point);
@@ -46,26 +61,23 @@ public class SlowTurret : BuildableUnit, IAttackable
             HealthComponent healthComponent = hit.collider.gameObject.GetComponent<HealthComponent>();
             if (healthComponent != null)
             {
-                healthComponent.ChangeHealth(new() 
-                { 
-                    damage = -stats.damage, 
-                    damageStatus = stats.status, 
-                    statusDuration = 1f 
+                healthComponent.ChangeHealth(new()
+                {
+                    damage = -stats.damage,
+                    damageStatus = stats.status,
+                    statusDuration = 1f
                 });
                 OnAttack();
             }
         }
     }
 
-    //  ------------------ Private ------------------
-
-    /// <summary>
-    /// Initializes the turret upon building and sets up the LineRenderer.
-    /// </summary>
-    private void Start()
+    public override void OnBuild()
     {
-        OnBuild();
+        base.OnBuild();
         lineRenderer.SetPosition(0, Vector3.zero);
         lineRenderer.SetPosition(1, firePoint.right * stats.range);
     }
+
+    private bool _hasActivatedAudio = false;
 }

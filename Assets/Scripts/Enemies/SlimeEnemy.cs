@@ -5,6 +5,8 @@ using UnityEngine;
 /// </summary>
 public class SlimeEnemy : BasicEnemy
 {
+    //  ------------------ Private ------------------
+    private bool _isDying = false;
     //  ------------------ Protected ------------------
 
     /// <summary>
@@ -12,6 +14,7 @@ public class SlimeEnemy : BasicEnemy
     /// </summary>
     protected override void OnDeath()
     {
+        if(_isDying) return;
         base.OnDeath();
         
         // Randomly decide how many new enemies to spawn (1 to 3)
@@ -22,11 +25,4 @@ public class SlimeEnemy : BasicEnemy
             EnemyManager.Instance.SpawnEnemyInstance(stats.spawnable, transform.position);
         }
     }
-
-    //  ------------------ Private ------------------
-
-    /// <summary>
-    /// Updates the enemy's movement every frame.
-    /// </summary>
-    private void Update() => Move();
 }

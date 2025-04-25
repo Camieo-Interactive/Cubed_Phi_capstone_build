@@ -35,6 +35,9 @@ public class BasicCube : BuildableUnit, IAttackable
         Projectile projectile = projectileObject.GetComponent<Projectile>();
 
         Vector2 direction = (_targetPosition - firePoint.position).normalized;
+        if (stats.shootParticleSystem != null) PoolManager.Instance.GetObject(stats.shootParticleSystem, firePoint.position, firePoint.rotation);
+        
+
         DamageValue damageValue = new() { damage = -stats.damage };
         projectile.Init(damageValue, direction);
 
@@ -132,19 +135,6 @@ public class BasicCube : BuildableUnit, IAttackable
     private bool IsInRange()
     {
         return Vector2.Distance(transform.position, _targetPosition) <= stats.range;
-    }
-
-    /// <summary>
-    /// Initializes the turret upon building and sets the LineRenderer's range.
-    /// </summary>
-    private void Start()
-    {
-        OnBuild();
-        if (lineRenderer != null)
-        {
-            lineRenderer.SetPosition(0, firePoint.position);
-            lineRenderer.SetPosition(1, firePoint.position + Vector3.right * stats.range);
-        }
     }
 
     /// <summary>

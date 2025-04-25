@@ -24,8 +24,8 @@ TagManager:
   - UI
   - Enemy
   - Tower
-  - Bullet
-  - 
+  - EnemyBullet
+  - TowerBullet
   - 
   - 
   - 

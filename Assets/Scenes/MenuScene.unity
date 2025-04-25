@@ -1308,7 +1308,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 46.200012, y: -53.41}
+  m_AnchoredPosition: {x: 46.200073, y: -53.41}
   m_SizeDelta: {x: 320, y: 362.82}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &868135656
@@ -2919,6 +2919,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1386306262}
     m_Modifications:
+    - target: {fileID: 782680832908695031, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2319096339195988444, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
       propertyPath: m_Pivot.x
       value: 1
@@ -2999,17 +3003,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3435484465164412778, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3720526343982890139, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
       propertyPath: mainMenu
       value: 
       objectReference: {fileID: 1386306263}
+    - target: {fileID: 4632122322298844467, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6617043246046187538, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7790787957210198771, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
       propertyPath: m_SizeDelta.y
       value: 350
       objectReference: {fileID: 0}
+    - target: {fileID: 8400735196491451072, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8711308531634418969, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
       propertyPath: m_Name
       value: SettingsCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 8930568175937874495, guid: a852cada78f478f4aaa9c47f432e72f2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

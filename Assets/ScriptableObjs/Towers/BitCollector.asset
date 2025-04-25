@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: BitCollector
   m_EditorClassIdentifier: 
   damage: 0
+  status: 0
   range: 0
   health: 10
   fireRate: 0
@@ -21,3 +22,6 @@ MonoBehaviour:
   detectionMask:
     serializedVersion: 2
     m_Bits: 0
+  sellValue: 25
+  shootParticleSystem: {fileID: 0}
+  deathParticleSystem: {fileID: 4459974619802399305, guid: 0cdc672d7d8fde7448ce00386ef70ae4, type: 3}

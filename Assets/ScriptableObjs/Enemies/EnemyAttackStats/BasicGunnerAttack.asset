@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6911f2176eb77b4bbfe5ad55e1509fd, type: 3}
+  m_Name: BasicGunnerAttack
+  m_EditorClassIdentifier: 
+  AttackRange: 3.5
+  AttackDetectionRange: 10
+  AttackDuration: 1
+  AttackCooldownDuration: 1
+  AttackMask:
+    serializedVersion: 2
+    m_Bits: 128
+  attackDamage: 3
+  spawnablePrefab: {fileID: 2922313298252073668, guid: 01f443f32347bf5418d39c3b870e13d3, type: 3}
+  attackParticleSystem: {fileID: 4298398670009088055, guid: e8ee49e396721844cb8b1b3b365feea1, type: 3}

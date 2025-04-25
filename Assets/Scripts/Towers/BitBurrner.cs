@@ -67,12 +67,7 @@ public class BitBurner : BuildableUnit, IAttackable
         yield return new WaitForSeconds(stats.rechargeTime);
         _isAttacking = false;
     }
-
-    /// <summary>
-    /// Called when the tower is placed/built.
-    /// </summary>
-    private void Start() => OnBuild();
-
+    
     /// <summary>
     /// Visualizes attack range in the scene editor.
     /// </summary>

@@ -19,11 +19,11 @@ public class Turret : BuildableUnit, IAttackable
     /// Fires a projectile from the turret.
     /// </summary>
     public void OnAttack()
-    {    
+    {
         // Instantiate the projectile
         GameObject projectileObject = PoolManager.Instance.GetObject(stats.projectile, firePoint.position, quaternion.identity);
         Projectile projectile = projectileObject.GetComponent<Projectile>();
-
+        if (stats.shootParticleSystem != null) PoolManager.Instance.GetObject(stats.shootParticleSystem, firePoint.position, firePoint.rotation);
         // Initialize the projectile with damage values
         DamageValue damageValue = new() { damage = -stats.damage };
         projectile.Init(damageValue, Vector2.right);
@@ -44,14 +44,9 @@ public class Turret : BuildableUnit, IAttackable
         if (CanAttack) OnAttack();
     }
 
-    //  ------------------ Private ------------------
-
-    /// <summary>
-    /// Initializes the turret upon building and sets the LineRenderer's range.
-    /// </summary>
-    private void Start()
+    public override void OnBuild()
     {
-        OnBuild();
+        base.OnBuild();
         lineRenderer.SetPosition(1, new Vector3(0.0f, stats.range, 0.0f));
     }
 }
