@@ -58,13 +58,13 @@ MonoBehaviour:
     m_Value: 3
   scatter:
     m_OverrideState: 1
-    m_Value: 0.8
+    m_Value: 0.388
   clamp:
     m_OverrideState: 0
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0, b: 0.07028246, a: 1}
+    m_Value: {r: 1, g: 0, b: 0.032726765, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 0.248
   smoothness:
     m_OverrideState: 1
     m_Value: 1
@@ -146,10 +146,10 @@ MonoBehaviour:
     m_Value: 10
   intensity:
     m_OverrideState: 1
-    m_Value: 0.645
+    m_Value: 0.128
   response:
     m_OverrideState: 1
-    m_Value: 0.483
+    m_Value: 0.048
   texture:
     m_OverrideState: 1
     m_Value: {fileID: 2800000, guid: 33b955dad4db67247a589959064f23fc, type: 3}
