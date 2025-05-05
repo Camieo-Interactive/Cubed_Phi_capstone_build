@@ -31,6 +31,9 @@ public class EnemyStats : ScriptableObject
     [Tooltip("Tier of the enemy (Higher tiers spawn later).")]
     public int tier;
 
+    [Tooltip("The maximum number of enemies that can spawn at once.")]
+    public int maxEnemies = int.MaxValue;
+
     [Tooltip("Death FX")]
     public GameObject deathParticleSystem; 
 }

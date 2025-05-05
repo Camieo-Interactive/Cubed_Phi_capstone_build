@@ -39,7 +39,12 @@ public class BasicGunner : EnemyBase, IAttackable
         // Start cooldown
         StartCoroutine(AttackCooldown());
     }
-
+    public override void Init()
+    {
+        base.Init();
+        _canAttack = true;
+        StopAllCoroutines();
+    }
     /// <summary>
     /// Handles enemy scanning and attacking logic per frame.
     /// </summary>

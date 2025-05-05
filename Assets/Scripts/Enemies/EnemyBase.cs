@@ -30,7 +30,10 @@ public abstract class EnemyBase : MonoBehaviour
     /// <summary>
     /// Initializes the enemy's health using the stats.
     /// </summary>
-    public virtual void Init() => healthComponent.InitializeHealth(stats.health);
+    public virtual void Init() {
+        healthComponent.InitializeHealth(stats.health);
+        moveDirection = Vector2.left;
+    }
 
     //  ------------------ Protected ------------------
 
