@@ -70,7 +70,7 @@ public class SelectorHandler : MonoBehaviour
     public void PlaceTile(Vector2 position)
     {
         Vector3Int cellPosition = grid.WorldToCell(SelectionWorldPosition(position));
-
+        GameControls.MoveReadValue = position;
         if (GameManager.Instance.buildingLocations.TryGetValue(cellPosition, out var isOccupied) && isOccupied.Item1)
         {
             if (sellMenu.activeSelf) return;
@@ -78,6 +78,7 @@ public class SelectorHandler : MonoBehaviour
             pos.z = 0;
             sellMenu.transform.position = pos;
             sellMenu.SetActive(true);
+            Debug.Log($"[SelectorHandler] Attempting to sell tower at {cellPosition}");
             return;
         }
         sellMenu.SetActive(false);
@@ -92,10 +93,12 @@ public class SelectorHandler : MonoBehaviour
         GameManager.RaiseBitChange(-GameManager.Instance.selectedCard.stats.cardCost);
         Vector3 spawnPosition = grid.GetCellCenterWorld(cellPosition);
 
+        Debug.Log($"[SelectorHandler] Placing {GameManager.Instance.selectedCard.stats.cardObject.name} at {spawnPosition}");
         // Build
         GameObject baseObject = PoolManager.Instance
         .GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
 
+        Debug.Log($"[SelectorHandler] Placing {GameManager.Instance.selectedCard.stats.cardObject.name} at {spawnPosition}");
         GameManager.Instance.buildingLocations.Add(grid.WorldToCell(spawnPosition), new Tuple<bool, GameObject>(true, baseObject));
 
 
@@ -104,7 +107,12 @@ public class SelectorHandler : MonoBehaviour
 
     public void sellTower()
     {
-        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        if (!GameControls.MoveReadValue.HasValue)
+        {
+            Debug.LogWarning("[SellTower] MoveReadValue is null.");
+            return;
+        }
+        Vector2 mouseScreenPos = GameControls.MoveReadValue.Value;
         Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, -_mainCamera.transform.position.z));
         mouseWorldPos.z = 0f;
 

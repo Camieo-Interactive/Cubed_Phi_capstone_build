@@ -14,6 +14,8 @@ public class Turret : BuildableUnit, IAttackable
 
     [Tooltip("LineRenderer component used for visualizing the attack range.")]
     public LineRenderer lineRenderer;
+    [Tooltip("Audio source for the attack sound effect.")]
+    public AudioSource attackAudioSource;
 
     /// <summary>
     /// Fires a projectile from the turret.
@@ -27,7 +29,7 @@ public class Turret : BuildableUnit, IAttackable
         // Initialize the projectile with damage values
         DamageValue damageValue = new() { damage = -stats.damage };
         projectile.Init(damageValue, Vector2.right);
-
+        if(attackAudioSource != null) attackAudioSource.Play();
         // Start the cooldown before the turret can fire again
         StartCoroutine(Cooldown(stats.fireRate));
     }

@@ -12,6 +12,7 @@ public class GameControls : MonoBehaviour
     [Tooltip("Reference to the SelectorHandler responsible for updating the selection sprite.")]
     public SelectorHandler selectorHandler;
     public static Vector3? CurrentTileSelected = null;
+    public static Vector2? MoveReadValue = null;
     //  ------------------ Private ------------------
 
     private InputAction _move;

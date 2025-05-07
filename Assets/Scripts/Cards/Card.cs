@@ -27,12 +27,14 @@ public class Card : MonoBehaviour
 
     public bool cardUsed = false;
     public Button cardButton;
+    [Tooltip("Audio Source for the click sound effect.")]
+    public AudioSource ClickAudioSource;
 
     /// <summary>
     /// Initializes the card with a random set of stats and assigns UI elements.
     /// </summary>
     public void Init() => Init(GameManager.Instance.currentCardList.PickRandomCard());
-    
+
     public void Init(CardStats newStats)
     {
         stats = newStats;
@@ -66,7 +68,10 @@ public class Card : MonoBehaviour
     /// </summary>
     public void CardPressed()
     {
-        if (!cardUsed) GameManager.Instance.selectedCard = this;
+        if (!cardUsed) {
+            ClickAudioSource.Play();
+            GameManager.Instance.selectedCard = this;
+        }
     }
 
     /// <summary>

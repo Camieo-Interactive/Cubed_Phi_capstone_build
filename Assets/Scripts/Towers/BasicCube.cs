@@ -23,6 +23,8 @@ public class BasicCube : BuildableUnit, IAttackable
 
     [Tooltip("Maximum angle difference allowed for firing.")]
     public float fireAngleThreshold = 5f;
+    [Tooltip("Audio source for the attack sound effect.")]
+    public AudioSource attackAudioSource;
 
     /// <summary>
     /// Fires a projectile towards the aligned target if aligned.
@@ -40,7 +42,7 @@ public class BasicCube : BuildableUnit, IAttackable
 
         DamageValue damageValue = new() { damage = -stats.damage };
         projectile.Init(damageValue, direction);
-
+        if(attackAudioSource != null) attackAudioSource.Play();
         StartCoroutine(Cooldown(stats.fireRate));
     }
 

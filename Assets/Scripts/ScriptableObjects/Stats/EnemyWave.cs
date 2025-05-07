@@ -10,4 +10,6 @@ public class EnemyWave : ScriptableObject {
     public List<GameObject> enemyPrefabs;
     [Tooltip("Which wave interval should this wave spawn?")]
     public int interval; 
+    [Tooltip("Final wave?")]
+    public bool isFinalWave = false;
 }

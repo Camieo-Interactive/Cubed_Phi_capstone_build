@@ -62,6 +62,9 @@ public class EnemyManager : SingletonBase<EnemyManager>
 
     [Tooltip("Game finished screen displayed when the player wins.")]
     public GameObject GameFinishedScreen;
+
+    [Tooltip("Wave incoming handler for displaying wave notifications.")]
+    public WaveIncomingHandler waveIncomingHandler;
     public override void PostAwake() { }
 
     /// <summary>
@@ -151,6 +154,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     private IEnumerator SpawnEnemyWave(EnemyWave wave)
     {
         _isWaveInProgress = true;
+        waveIncomingHandler.showWaveIncoming(wave.isFinalWave);
         Debug.Log($"Starting Wave at Tier {CurrentTier}!");
 
         // Spawn all enemies in the wave
