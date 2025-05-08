@@ -39,14 +39,10 @@ public class GameManager : SingletonBase<GameManager>
 
     [Tooltip("Grid currently in use.")]
     public Grid grid;
-
     public Camera mainCamera;
-
     [Tooltip("Dictionary tracking the locations of buildings.")]
     public Dictionary<Vector3Int, Tuple<bool, GameObject>> buildingLocations = new();
-
-
-
+    public static LevelStats levelStats = new LevelStats();
     /// <summary>
     /// The total bits collected.
     /// </summary>
@@ -173,6 +169,7 @@ public class GameManager : SingletonBase<GameManager>
         // Reset the list..
         BitsController.triggers = new List<GameObject>();
         buildingLocations = new();
+        levelStats = new LevelStats();
         BitsController.AddTrigger(mouseTrigger);
     }
 

@@ -18,6 +18,7 @@ public class WaveIncomingHandler : MonoBehaviour
 
     public void showWaveIncoming(bool isFinalWave = false)
     {
+        Debug.Log($"Wave Incoming played!: Is it a final wave? {isFinalWave}");
         _isFinalWave = isFinalWave;
         waveIncomingAnimator.Play("WaveIncoming");
     }

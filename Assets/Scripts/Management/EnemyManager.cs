@@ -72,8 +72,9 @@ public class EnemyManager : SingletonBase<EnemyManager>
     /// </summary>
     public void GameOver()
     {
-        GameEndCanvas.SetActive(true);
+        // GameWinScreen.SetActive(true);
         GameOverScreen.SetActive(true);
+        GameEndCanvas.SetActive(true);
         Time.timeScale = 0;
     }
 
@@ -107,7 +108,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     private int _currentEnemyCap = 1;
     private bool _isSpawning = false;
     private bool _isWaveInProgress = false;
-
+    private HashSet<int> _wavesPassed = new(); // Tracks passed waves
     private List<GameObject> _enemyList = new(); // Tracks active enemies
 
     /// <summary>
@@ -120,10 +121,15 @@ public class EnemyManager : SingletonBase<EnemyManager>
         while (CurrentTier <= totalStages)
         {
             // Check if we should spawn a wave based on the current tier
-            EnemyWave currentWave = enemyWaves.FirstOrDefault(w => w.interval == CurrentTier);
-
+            EnemyWave currentWave = enemyWaves.FirstOrDefault(
+                w => w.interval == CurrentTier
+                &&
+                !_wavesPassed.Contains(w.interval)
+            );
+            Debug.Log($"Current Tier: {CurrentTier}, Current Wave: {currentWave?.name}");
             if (currentWave != null && !_isWaveInProgress)
             {
+                _wavesPassed.Add(CurrentTier); // Track passed waves
                 StartCoroutine(SpawnEnemyWave(currentWave));
                 yield return new WaitUntil(() => !_isWaveInProgress);
             }
@@ -238,6 +244,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     /// </summary>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Find UI elements
         GameObject gameUI = GameObject.FindGameObjectWithTag("GameUi");
         GameEndCanvas = gameUI.transform.Find("GameOverCanvas")?.gameObject;
         GameOverScreen = GameEndCanvas.transform.Find("GameOver")?.gameObject;
@@ -247,6 +254,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
             LowestLane = Mathf.FloorToInt(spawnPoints.Min(t => t.position.y));
             highestLane = Mathf.CeilToInt(spawnPoints.Max(t => t.position.y));
         }
+
         StartCoroutine(EnemySpawnController());
         UpdateProgressBar(); // Initialize progress bar
     }

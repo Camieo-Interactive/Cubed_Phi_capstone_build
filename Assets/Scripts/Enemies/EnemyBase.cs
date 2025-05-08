@@ -79,6 +79,7 @@ public abstract class EnemyBase : MonoBehaviour
     {
         // Notify the enemy manager of the death
         OnDeathCallback?.Invoke(gameObject);
+        GameManager.levelStats.numberOfEnemiesKilled++;
         if (stats.deathParticleSystem != null) PoolManager.Instance.GetObject(stats.deathParticleSystem, transform.position, Quaternion.identity);
         // Return the enemy object to the pool
         try

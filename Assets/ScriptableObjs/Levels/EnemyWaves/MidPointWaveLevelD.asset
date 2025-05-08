@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 19bb749ae26d07346a9d09fe2bf54a00, type: 3}
-  m_Name: MidPointWaveLevelT
+  m_Name: MidPointWaveLevelD
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 1819643071565652258, guid: c65eae27d90843342817ae521dc0d315, type: 3}

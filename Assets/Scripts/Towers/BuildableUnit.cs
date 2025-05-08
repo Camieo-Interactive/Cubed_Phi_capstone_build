@@ -18,7 +18,7 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     public HealthComponent healthComponent;
 
     [Tooltip("The Audio source use for handling the audio for the buildable unit's sounds.")]
-    public AudioSource audioSource; 
+    public AudioSource audioSource;
 
     [Tooltip("The animator used for handling the buildable unit's animations.")]
     public Animator buildableAnimator;
@@ -32,7 +32,14 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     public virtual void OnBuild()
     {
         healthComponent.InitializeHealth(stats.health);
-        Grid = GameManager.Instance.grid;
+        try
+        {
+            Grid = GameManager.Instance.grid;
+        }
+        catch
+        {
+            Debug.LogWarning($"Not able to find the grid refrence in the scene.");
+        }
     }
 
     /// <summary>
@@ -40,11 +47,16 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
     /// </summary>
     public virtual void OnBuildingDestroy()
     {
-        if(stats.deathParticleSystem != null) PoolManager.Instance.GetObject(stats.deathParticleSystem, transform.position, Quaternion.identity);
-        try {
+        if (stats.deathParticleSystem != null) PoolManager.Instance.GetObject(stats.deathParticleSystem, transform.position, Quaternion.identity);
+        try
+        {
+            // Just in case.. 
+            if (Grid != null) Grid = GameManager.Instance.grid;
+            if (Grid == null) Debug.LogError($"Not able to find the grid refrence in the scene.");
             GameManager.Instance.buildingLocations.Remove(Grid.WorldToCell(transform.position));
         }
-        catch {
+        catch
+        {
             Debug.LogWarning($"No instance of GameManager in the scene!!");
         }
         try
@@ -75,7 +87,8 @@ public abstract class BuildableUnit : MonoBehaviour, IBuildable
         CanAttack = true;
     }
 
-    public virtual int Sell() {
+    public virtual int Sell()
+    {
         int value = stats.sellValue;
         OnBuildingDestroy();
         return value;

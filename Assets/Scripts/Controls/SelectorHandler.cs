@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
@@ -71,6 +72,8 @@ public class SelectorHandler : MonoBehaviour
     {
         Vector3Int cellPosition = grid.WorldToCell(SelectionWorldPosition(position));
         GameControls.MoveReadValue = position;
+        if (EventSystem.current.IsPointerOverGameObject())
+            return;
         if (GameManager.Instance.buildingLocations.TryGetValue(cellPosition, out var isOccupied) && isOccupied.Item1)
         {
             if (sellMenu.activeSelf) return;
@@ -78,6 +81,7 @@ public class SelectorHandler : MonoBehaviour
             pos.z = 0;
             sellMenu.transform.position = pos;
             sellMenu.SetActive(true);
+            _sellCellPosition = cellPosition;
             Debug.Log($"[SelectorHandler] Attempting to sell tower at {cellPosition}");
             return;
         }
@@ -99,6 +103,7 @@ public class SelectorHandler : MonoBehaviour
         .GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
 
         Debug.Log($"[SelectorHandler] Placing {GameManager.Instance.selectedCard.stats.cardObject.name} at {spawnPosition}");
+        GameManager.levelStats.NumberOfTowersCreated++;
         GameManager.Instance.buildingLocations.Add(grid.WorldToCell(spawnPosition), new Tuple<bool, GameObject>(true, baseObject));
 
 
@@ -116,7 +121,7 @@ public class SelectorHandler : MonoBehaviour
         Vector3 mouseWorldPos = _mainCamera.ScreenToWorldPoint(new Vector3(mouseScreenPos.x, mouseScreenPos.y, -_mainCamera.transform.position.z));
         mouseWorldPos.z = 0f;
 
-        Vector3Int cell = grid.WorldToCell(mouseWorldPos);
+        Vector3Int cell = _sellCellPosition;
 
         if (!GameManager.Instance.buildingLocations.TryGetValue(cell, out var data) || !data.Item1 || data.Item2 == null)
         {
@@ -147,7 +152,7 @@ public class SelectorHandler : MonoBehaviour
 
     //  ------------------ Private ------------------
     private Camera _mainCamera;
-
+    private Vector3Int _sellCellPosition;
     /// <summary>
     /// Initializes the main camera reference and hides the selection sprite initially.
     /// </summary>
