@@ -4,6 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.Collections;
 
 /// <summary>
 /// Manages enemy spawning, increasing difficulty dynamically based on enemy deaths.
@@ -12,8 +13,8 @@ public class EnemyManager : SingletonBase<EnemyManager>
 {
     //  ------------------ Public ------------------
 
-
     [Header("Spawn Settings")]
+    [Space(5)]
     [Tooltip("List of enemy prefabs to spawn.")]
     public List<GameObject> enemyPrefabs;
 
@@ -35,25 +36,46 @@ public class EnemyManager : SingletonBase<EnemyManager>
     [Tooltip("Maximum number of active enemies at once.")]
     public int maxEnemies = 10;
 
-    [HideInInspector]
+    [Header("Tier Settings")]
+    [Space(5)]
     [Tooltip("Current tier of the game.")]
+    [ReadOnly]
     public int CurrentTier = 1;
 
     [Tooltip("Lowest lane available for enemy spawn.")]
+    [ReadOnly]
     public int LowestLane = -7;
 
     [Tooltip("Highest lane available for enemy spawn.")]
+    [ReadOnly]
     public int highestLane = 0;
+    
+    [Tooltip("Stride value for lane spacing.")]
+    [ReadOnly]
+    public int strideLane = 1;
+
+    [Header("Mine Settings")]
+    [Space(5)]
+    [Tooltip("Prefab for the mine to be placed on each lane.")]
+    public GameObject minePrefab;
+
+    [Header("Mine Placement Settings")]
+    [Space(5)]
+    [Tooltip("X coordinate where mines will be placed.")]
+    public float mineXCoordinate;
 
     [Header("Wave Settings")]
+    [Space(5)]
     [Tooltip("Enemy waves to spawn at specific stage intervals.")]
     public List<EnemyWave> enemyWaves;
 
     [Header("UI Elements")]
+    [Space(5)]
     [Tooltip("Progress bar showing the number of enemy kills until the next stage.")]
     public Image progressBar;
 
     [Header("Game End Elements")]
+    [Space(5)]
     [Tooltip("Canvas used for displaying the game end UI.")]
     public GameObject GameEndCanvas;
 
@@ -62,6 +84,11 @@ public class EnemyManager : SingletonBase<EnemyManager>
 
     [Tooltip("Game finished screen displayed when the player wins.")]
     public GameObject GameFinishedScreen;
+
+    [Header("Wave Notification")]
+    [Space(5)]
+    [Tooltip("Wave incoming handler for displaying wave notifications.")]
+    public WaveIncomingHandler waveIncomingHandler;
     public override void PostAwake() { }
 
     /// <summary>
@@ -69,8 +96,9 @@ public class EnemyManager : SingletonBase<EnemyManager>
     /// </summary>
     public void GameOver()
     {
-        GameEndCanvas.SetActive(true);
+        // GameWinScreen.SetActive(true);
         GameOverScreen.SetActive(true);
+        GameEndCanvas.SetActive(true);
         Time.timeScale = 0;
     }
 
@@ -104,7 +132,7 @@ public class EnemyManager : SingletonBase<EnemyManager>
     private int _currentEnemyCap = 1;
     private bool _isSpawning = false;
     private bool _isWaveInProgress = false;
-
+    private HashSet<int> _wavesPassed = new(); // Tracks passed waves
     private List<GameObject> _enemyList = new(); // Tracks active enemies
 
     /// <summary>
@@ -117,10 +145,15 @@ public class EnemyManager : SingletonBase<EnemyManager>
         while (CurrentTier <= totalStages)
         {
             // Check if we should spawn a wave based on the current tier
-            EnemyWave currentWave = enemyWaves.FirstOrDefault(w => w.interval == CurrentTier);
-
+            EnemyWave currentWave = enemyWaves.FirstOrDefault(
+                w => w.interval == CurrentTier
+                &&
+                !_wavesPassed.Contains(w.interval)
+            );
+            Debug.Log($"Current Tier: {CurrentTier}, Current Wave: {currentWave?.name}");
             if (currentWave != null && !_isWaveInProgress)
             {
+                _wavesPassed.Add(CurrentTier); // Track passed waves
                 StartCoroutine(SpawnEnemyWave(currentWave));
                 yield return new WaitUntil(() => !_isWaveInProgress);
             }
@@ -146,11 +179,24 @@ public class EnemyManager : SingletonBase<EnemyManager>
     }
 
     /// <summary>
+    /// Places mines along all lanes at the specified X coordinate.
+    /// </summary>
+    private void PlaceMines()
+    {
+        for (int lane = LowestLane; lane <= highestLane; lane += strideLane)
+        {
+            Vector3 minePosition = new Vector3(mineXCoordinate, lane, 0);
+            PoolManager.Instance.GetObject(minePrefab, minePosition, Quaternion.identity);
+        }
+    }
+
+    /// <summary>
     /// Spawns a wave of enemies based on the EnemyWave definition
     /// </summary>
     private IEnumerator SpawnEnemyWave(EnemyWave wave)
     {
         _isWaveInProgress = true;
+        waveIncomingHandler.showWaveIncoming(wave.isFinalWave);
         Debug.Log($"Starting Wave at Tier {CurrentTier}!");
 
         // Spawn all enemies in the wave
@@ -229,11 +275,9 @@ public class EnemyManager : SingletonBase<EnemyManager>
         if (progressBar != null) progressBar.fillAmount = (float)CurrentTier / totalStages;
     }
 
-    /// <summary>
-    /// Called when the scene is loaded. Initializes UI elements and starts spawning.
-    /// </summary>
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void OnEnable()
     {
+        // Find UI elements
         GameObject gameUI = GameObject.FindGameObjectWithTag("GameUi");
         GameEndCanvas = gameUI.transform.Find("GameOverCanvas")?.gameObject;
         GameOverScreen = GameEndCanvas.transform.Find("GameOver")?.gameObject;
@@ -242,11 +286,14 @@ public class EnemyManager : SingletonBase<EnemyManager>
         {
             LowestLane = Mathf.FloorToInt(spawnPoints.Min(t => t.position.y));
             highestLane = Mathf.CeilToInt(spawnPoints.Max(t => t.position.y));
+            strideLane = Mathf.Max(1, Mathf.RoundToInt((highestLane - LowestLane) / (spawnPoints.Length - 1)));
         }
+        PlaceMines();
         StartCoroutine(EnemySpawnController());
         UpdateProgressBar(); // Initialize progress bar
     }
-
-    private void OnEnable() => SceneManager.sceneLoaded += OnSceneLoaded;
-    private void OnDisable() => SceneManager.sceneLoaded -= OnSceneLoaded;
+    private void OnDisable()
+    {
+        
+    }
 }

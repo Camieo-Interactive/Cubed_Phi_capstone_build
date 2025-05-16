@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using System.Linq;
+using EasyTextEffects;
 using TMPro;
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// Manages game state, including tracking and displaying the collected bits.
@@ -26,6 +27,7 @@ public class GameManager : SingletonBase<GameManager>
     [Header("UI Elements")]
     [Tooltip("Text UI element that displays the bit count.")]
     public TextMeshProUGUI bitCount;
+    public TextEffect bitCountEffect;
 
     [Tooltip("The Mouse object that is the trigger for particle effects.")]
     public GameObject mouseTrigger;
@@ -37,14 +39,14 @@ public class GameManager : SingletonBase<GameManager>
 
     [Tooltip("Grid currently in use.")]
     public Grid grid;
-
     public Camera mainCamera;
-
     [Tooltip("Dictionary tracking the locations of buildings.")]
     public Dictionary<Vector3Int, Tuple<bool, GameObject>> buildingLocations = new();
+    public static LevelStats levelStats = new LevelStats();
 
-
-
+    [Header("Gameplay Elements")]
+    [Tooltip("Enemies spawn bits on death")]
+    public bool enemiesSpawnBitsOnDeath = false;
     /// <summary>
     /// The total bits collected.
     /// </summary>
@@ -118,12 +120,31 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     //  ------------------ Private ------------------
-
+    private enum bitChangeType { Gain, Lose, None}
+    private bitChangeType _bitChangeType = bitChangeType.None;
     /// <summary>
     /// Handles bit change events by updating the total bits and the UI text.
     /// </summary>
     /// <param name="bitDelta">The change in bits (positive or negative).</param>
-    private void HandleBitChange(long bitDelta) => bitCount.text = $"Bits: {BitsCollected += bitDelta}";
+    private void HandleBitChange(long bitDelta) {
+        bitCount.text = $"Bits: {BitsCollected += bitDelta}";
+        if(bitDelta > 0 && _bitChangeType != bitChangeType.Gain) {
+            _bitChangeType = bitChangeType.Gain;
+            bitCountEffect.StartManualEffect("GainBitsComp");
+        }
+        else if (bitDelta < 0 && _bitChangeType != bitChangeType.Lose) {
+            _bitChangeType = bitChangeType.Lose;
+            bitCountEffect.StartManualEffect("LoseBitsComp");
+        }
+        StartCoroutine(WaitForEffect(5f));
+    }
+
+    private IEnumerator WaitForEffect(float time)
+    {
+        yield return new WaitForSeconds(time);
+        bitCountEffect.StopManualEffects();
+        _bitChangeType = bitChangeType.None;
+    }
 
 
     /// <summary>
@@ -152,6 +173,7 @@ public class GameManager : SingletonBase<GameManager>
         // Reset the list..
         BitsController.triggers = new List<GameObject>();
         buildingLocations = new();
+        levelStats = new LevelStats();
         BitsController.AddTrigger(mouseTrigger);
     }
 

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332c32f02f277e340a533ce901a0e6aa, type: 3}
+  m_Name: DanteCycleLevels
+  m_EditorClassIdentifier: 
+  cycleName: 'Cycle: 0x02D'
+  cycle: {fileID: 11400000, guid: fcaada3ca58f87c429c4a3cdaaab772b, type: 2}
+  levels: []

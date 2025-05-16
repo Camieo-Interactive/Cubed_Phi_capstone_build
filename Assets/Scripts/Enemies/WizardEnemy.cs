@@ -16,6 +16,13 @@ public class WizardEnemy : BasicGunner
     [Tooltip("Particle system played when the wizard teleports.")]
     public ParticleSystem teleportEffect;
 
+    public override void Init()
+    {
+        base.Init();
+        _canTeleport = false;
+        _teleportDelayCoroutine = null;
+    }
+
     //  ------------------ Protected ------------------
 
     protected bool _canTeleport = false;

@@ -13,6 +13,8 @@ public class BasicGunner : EnemyBase, IAttackable
 
     [Tooltip("Point from which projectiles are fired.")]
     public Transform firePoint;
+    [Tooltip("Audio source for the attack sound effect.")]
+    public AudioSource attackAudioSource;
 
     /// <summary>
     /// Fires a projectile and starts the attack cooldown.
@@ -24,7 +26,7 @@ public class BasicGunner : EnemyBase, IAttackable
         // Spawn projectile using object pool
         GameObject projectileObj = PoolManager.Instance.GetObject(attackStats.spawnablePrefab, firePoint.position, quaternion.identity);
         Projectile projectile = projectileObj.GetComponent<Projectile>();
-        if(attackStats.attackParticleSystem != null) PoolManager.Instance.GetObject(attackStats.attackParticleSystem, firePoint.position, firePoint.rotation);
+        if (attackStats.attackParticleSystem != null) PoolManager.Instance.GetObject(attackStats.attackParticleSystem, firePoint.position, firePoint.rotation);
 
         DamageValue damage = new DamageValue
         {
@@ -34,12 +36,17 @@ public class BasicGunner : EnemyBase, IAttackable
         };
 
         projectile.Init(damage, Vector2.left, true);
-
+        if (attackAudioSource != null) attackAudioSource.Play();
 
         // Start cooldown
         StartCoroutine(AttackCooldown());
     }
-
+    public override void Init()
+    {
+        base.Init();
+        _canAttack = true;
+        StopAllCoroutines();
+    }
     /// <summary>
     /// Handles enemy scanning and attacking logic per frame.
     /// </summary>

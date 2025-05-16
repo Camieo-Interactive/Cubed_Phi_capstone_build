@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ef471b999ddf4488b94015272539cf, type: 3}
+  m_Name: LandmineLow
+  m_EditorClassIdentifier: 
+  cardName: Landmine
+  cardSprite: {fileID: -1053605263, guid: f62fcab0b6ba7e74080b69611bccef39, type: 3}
+  cardObject: {fileID: 7172660582400175214, guid: 0ba61eb0e4dd7864994a49411154826a, type: 3}
+  cardCost: 50
+  drawProbability: 0.2
+  cardTier: 1

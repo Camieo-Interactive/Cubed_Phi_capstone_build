@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Landmine
   m_EditorClassIdentifier: 
   damage: 95
+  status: 0
   range: 2
   health: 10000
   fireRate: 0
@@ -21,3 +22,6 @@ MonoBehaviour:
   detectionMask:
     serializedVersion: 2
     m_Bits: 0
+  sellValue: 25
+  shootParticleSystem: {fileID: 0}
+  deathParticleSystem: {fileID: 0}

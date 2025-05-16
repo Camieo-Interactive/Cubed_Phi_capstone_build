@@ -1,4 +1,5 @@
 using Unity.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 /// <summary>
@@ -30,7 +31,10 @@ public abstract class EnemyBase : MonoBehaviour
     /// <summary>
     /// Initializes the enemy's health using the stats.
     /// </summary>
-    public virtual void Init() => healthComponent.InitializeHealth(stats.health);
+    public virtual void Init() {
+        healthComponent.InitializeHealth(stats.health);
+        moveDirection = Vector2.left;
+    }
 
     //  ------------------ Protected ------------------
 
@@ -76,6 +80,8 @@ public abstract class EnemyBase : MonoBehaviour
     {
         // Notify the enemy manager of the death
         OnDeathCallback?.Invoke(gameObject);
+        GameManager.levelStats.numberOfEnemiesKilled++;
+        if (GameManager.Instance.enemiesSpawnBitsOnDeath == true) PoolManager.Instance.GetObject(bitsParticleSystem, transform.position, quaternion.identity);
         if (stats.deathParticleSystem != null) PoolManager.Instance.GetObject(stats.deathParticleSystem, transform.position, Quaternion.identity);
         // Return the enemy object to the pool
         try

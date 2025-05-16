@@ -23,6 +23,9 @@ public class AutoCube : BuildableUnit, IAttackable
 
     [Tooltip("Maximum angle difference allowed for firing.")]
     public float fireAngleThreshold = 5f;
+    [Tooltip("Audio source for the attack sound effect.")]
+    public AudioSource attackAudioSource;
+
 
     /// <summary>
     /// Fires a projectile towards the aligned target if aligned.
@@ -37,6 +40,7 @@ public class AutoCube : BuildableUnit, IAttackable
         if (stats.shootParticleSystem != null) PoolManager.Instance.GetObject(stats.shootParticleSystem, firePoint.position, firePoint.rotation);
         DamageValue damageValue = new() { damage = -stats.damage };
         projectile.Init(damageValue, direction);
+        if(attackAudioSource != null) attackAudioSource.Play();
 
         StartCoroutine(Cooldown(stats.fireRate));
     }

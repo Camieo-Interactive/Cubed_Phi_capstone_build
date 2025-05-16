@@ -76,8 +76,8 @@ SpriteRenderer:
   m_SortingLayerID: 1897895555
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7fc7f85661497e449a2ce50dac9e6432, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.2660749, a: 1}
+  m_Sprite: {fileID: -1179486782297415079, guid: cce7507663093d24f93b7b0c74aab679, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -167,6 +167,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stats: {fileID: 11400000, guid: 06206c4c11e53784ab7fd1e9ca6a10cb, type: 2}
   healthComponent: {fileID: 7413406897664476589}
+  audioSource: {fileID: 0}
   buildableAnimator: {fileID: 5763627103759581001}
   baseObject: {fileID: 3881930142875354817}
   AudioSrc: {fileID: 5270398432716579320}
@@ -452,8 +453,8 @@ SpriteRenderer:
   m_SortingLayerID: 1897895555
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 807534654, guid: 1c6bd2370ddf30341b37ea79a98c30d0, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.2660749, a: 1}
+  m_Sprite: {fileID: -6367219737070946404, guid: cce7507663093d24f93b7b0c74aab679, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -539,8 +540,8 @@ SpriteRenderer:
   m_SortingLayerID: 1897895555
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7fc7f85661497e449a2ce50dac9e6432, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.2660749, a: 1}
+  m_Sprite: {fileID: -1179486782297415079, guid: cce7507663093d24f93b7b0c74aab679, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -626,8 +627,8 @@ SpriteRenderer:
   m_SortingLayerID: 1897895555
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7fc7f85661497e449a2ce50dac9e6432, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.2660749, a: 1}
+  m_Sprite: {fileID: -1179486782297415079, guid: cce7507663093d24f93b7b0c74aab679, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -713,8 +714,8 @@ SpriteRenderer:
   m_SortingLayerID: 1897895555
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7fc7f85661497e449a2ce50dac9e6432, type: 3}
-  m_Color: {r: 0, g: 1, b: 0.2660749, a: 1}
+  m_Sprite: {fileID: -1179486782297415079, guid: cce7507663093d24f93b7b0c74aab679, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

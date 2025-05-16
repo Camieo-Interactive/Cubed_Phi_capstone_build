@@ -44,7 +44,7 @@ public class Deck : MonoBehaviour
         AudioSrc.Play();
         // Increase the fold amount
         _currentFoldAmount = Math.Min(_currentFoldAmount + manager.reRollDelta, manager.reRollMax);
-        rerollText.text = $"{_currentFoldAmount} Bits";
+        rerollText.text = $"Reroll: {_currentFoldAmount} Bits";
         _isFolded = true;
         // Unflip the cards
         foreach (GameObject item in cards)
@@ -119,7 +119,7 @@ public class Deck : MonoBehaviour
     //  ------------------ Private ------------------
     private bool _isFolded = false;
     private int _currentFoldAmount = 0;
-    private void Start() => rerollText.text = $"{_currentFoldAmount} Bits";
+    private void Start() => rerollText.text =  $"Reroll: {_currentFoldAmount} Bits";
     private void CreateCard(int index, CardStats stats = null)
     {
         cards[index] = PoolManager.Instance.GetObject(cardPrefab, Vector3.zero, Quaternion.identity, transform);

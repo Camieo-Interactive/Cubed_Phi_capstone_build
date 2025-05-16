@@ -7,6 +7,7 @@ public class BitCollectorTrigger : MonoBehaviour, ITriggerEffect
     public bool OnParticleTriggered(int particleCount)
     {
         GameManager.RaiseBitChange(particleCount);
+        GameManager.levelStats.NumberOfBitsCollected += particleCount;
         AnimatorStateInfo stateInfo = BitCollectorAnimatior.GetCurrentAnimatorStateInfo(0);
         if (!stateInfo.IsName("GeneratedBits") || stateInfo.normalizedTime >= 1f)
         {

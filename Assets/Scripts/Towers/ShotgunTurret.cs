@@ -21,6 +21,8 @@ public class ShotgunTurret : BuildableUnit, IAttackable
 
     [Tooltip("Right aiming line renderer.")]
     public LineRenderer Right;
+    [Tooltip("Audio source for the attack sound effect.")]
+    public AudioSource attackAudioSource;
 
     /// <summary>
     /// Checks if there are any targets within the turret's range and fires if applicable.
@@ -51,7 +53,7 @@ public class ShotgunTurret : BuildableUnit, IAttackable
             projectile.Init(damageValue, direction);
         }
         if (stats.shootParticleSystem != null) PoolManager.Instance.GetObject(stats.shootParticleSystem, firePoint.position, firePoint.rotation);
-
+        if(attackAudioSource != null) attackAudioSource.Play();
         // Start the cooldown before the turret can fire again
         StartCoroutine(Cooldown(stats.fireRate));
     }

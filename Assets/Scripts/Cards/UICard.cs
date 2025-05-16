@@ -34,7 +34,8 @@ public class UICard : MonoBehaviour
     [Header("Animation")]
     [Tooltip("Animator controlling the flip animation.")]
     public Animator animator;
-    public AudioSource AudioSrc;
+    [Tooltip("Audio source for flip sound effects.")]
+    public AudioSource FlipCardAudioSource;
 
     //  ------------------ Private ------------------
 
@@ -47,7 +48,7 @@ public class UICard : MonoBehaviour
     {
         button.interactable = false;
         animator.Play("FlipCard");
-        AudioSrc.Play();
+        FlipCardAudioSource.Play();
     }
 
     /// <summary>
@@ -57,7 +58,7 @@ public class UICard : MonoBehaviour
     {
         if (!_isFlipped) return;
         animator.Play("UnFlipCard");
-        AudioSrc.Play();
+        FlipCardAudioSource.Play();
     }
 
     /// <summary>

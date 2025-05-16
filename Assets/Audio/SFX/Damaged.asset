@@ -27,12 +27,12 @@ AudioRandomContainer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Damaged
-  m_Volume: 0
+  m_Volume: -5
   m_Pitch: 0
   m_AutomaticTriggerTime: 0
   m_LoopCount: 1
   m_VolumeRandomizationRange: {x: -18.102188, y: 23.941603}
-  m_PitchRandomizationRange: {x: -315.32843, y: 446.7154}
+  m_PitchRandomizationRange: {x: -315, y: 446.7154}
   m_AutomaticTriggerTimeRandomizationRange: {x: 0, y: 0}
   m_LoopCountRandomizationRange: {x: 0, y: 0}
   m_Elements:

@@ -12,7 +12,7 @@ using UnityEngine;
 public class CardStats : ScriptableObject
 {
     //  ------------------ Public ------------------
-    
+
     [Header("Card Attributes")]
 
     [Tooltip("The name of the card.")]
@@ -28,10 +28,10 @@ public class CardStats : ScriptableObject
     public int cardCost;
     [Header("Card Probability")]
 
-    [Tooltip("The probability of drawing or spawning this card (0.0 to 1.0). Lower the rarer.")]
-    [Range(0f, 1f)]
+    [Tooltip("The relative weight for drawing this card. Higher values increase chances relative to other cards.")]
+    [Range(0f, 100f)] // A wider range might be more appropriate
     public float drawProbability;
 
     [Tooltip("Tier which the card is avaliable for use. 0 Being avaliable at the start of game, and higher being later.")]
-    public int cardTier; 
+    public int cardTier;
 }

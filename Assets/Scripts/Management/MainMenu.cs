@@ -11,7 +11,7 @@ public class MainMenu : MonoBehaviour
 
     [Header("Platform-Specific UI")]
     [Tooltip("Quit button, only shown on PC builds.")]
-    public Button QuitButton;
+    public GameObject QuitButton;
     public void OnStartSelected() => StartCoroutine(LoadGameSceneAsync());
     public void OnInstructionsSelected()
     {
