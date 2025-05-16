@@ -1,18 +1,38 @@
 using UnityEngine;
 
 /// <summary>
-/// Enum representing different damage statuses with tooltips for each status.
+/// Represents the various damage statuses that an entity can have.
 /// </summary>
+[Tooltip("Represents the various damage statuses that an entity can have.")]
 public enum DamageStatus
 {
+    /// <summary>
+    /// No damage status.
+    /// </summary>
     [Tooltip("No damage status.")]
-    NONE, // Nothing
+    NONE,
+
+    /// <summary>
+    /// The entity is stunned.
+    /// </summary>
     [Tooltip("The entity is stunned.")]
-    STUN, // Stun 
+    STUN,
+
+    /// <summary>
+    /// The entity is poisoned.
+    /// </summary>
     [Tooltip("The entity is poisoned.")]
-    POISON, // Poison
+    POISON,
+
+    /// <summary>
+    /// The entity is on fire.
+    /// </summary>
     [Tooltip("The entity is on fire.")]
-    FIRE, // On Fire
-    [Tooltip("The entity is Slowed")]
-    SLOW, // Slowed
+    FIRE,
+
+    /// <summary>
+    /// The entity is slowed.
+    /// </summary>
+    [Tooltip("The entity is slowed.")]
+    SLOW,
 }

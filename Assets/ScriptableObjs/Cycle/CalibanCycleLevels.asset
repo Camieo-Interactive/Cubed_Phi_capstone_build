@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332c32f02f277e340a533ce901a0e6aa, type: 3}
+  m_Name: CalibanCycleLevels
+  m_EditorClassIdentifier: 
+  cycleName: 'Cycle: 0x01C'
+  cycle: {fileID: 11400000, guid: 053dfc8112a0f474197196b6d91b1b38, type: 2}
+  levels:
+  - {fileID: 11400000, guid: 9763f190181fcd94097dea0fcf25acde, type: 2}
+  - {fileID: 11400000, guid: d4630d8700d5b3c40aa522a05f0da3e0, type: 2}
+  - {fileID: 11400000, guid: 74676c4dd182f9e459bdb3bd86d833e0, type: 2}
+  - {fileID: 11400000, guid: 0f9cf67650fcc524e914a4c10bf1d3b5, type: 2}
+  - {fileID: 11400000, guid: 75f7cef295bac984bba8a989b7aef4fb, type: 2}
+  - {fileID: 11400000, guid: 3e84f4f88eb663b4fb488a4f19aed8d9, type: 2}

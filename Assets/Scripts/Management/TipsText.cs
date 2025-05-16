@@ -18,7 +18,6 @@ public static class TipsText
         "Tip: There is a max number of enemies on the screen at once.",
         "Tip: Single use cards are a good way to delay the game.",
         "Tip: Sometimes, you just need to take a break.",
-        "Tip: You can use the K.I.L.M system to sweeten up the antagonists.",
         "Tip: You should put your units in the middle of the board.",
         "Tip: Always leave a space for Bit collectors.",
         "Tip: Bit burners are invincible.",
@@ -26,7 +25,17 @@ public static class TipsText
         "Tip: Landmines are a good way to deal with fast enemies.",
         "Tip: Grenades deal higher damage than landmines.",
         "Tip: Each cycle has a mechanic learn them well.",
-        "Tip: You can unlock secret cards by using the K.I.L.M system.",
+        "Tip: Ghosts go fast, and phase through towers!",
+        "Tip: Franken Enemys then gain speed the lower their health is!",
+        "Tip: When the Spawn flips, its best to not have towers dedicated to one side.",
+        "Tip: Bit generators should have a small space in the middle of groups for collectors.",
+        "Tip: When on rail levels, its best to use turrets or high powered towers in the rail car.",
+        "Tip: Fake cards are annoying, But there is a max amount of fakes you can have.",
+        "Tip: Use Landmines as a way to delay enemies.",
+        "Tip: Worms counter walls, walls counter melee enemies",
+        "Tip: In the wack-a-enemy levels, its best to target the furthest along!",
+        "Tip: Some gunner enemies rotate 360",
+        "Tip: Use Bit stealers to collect bits"
     };
     public static string GetTip() => TipText[UnityEngine.Random.Range(0, TipText.Length)];
 }

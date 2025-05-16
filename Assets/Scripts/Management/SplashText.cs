@@ -9,9 +9,6 @@ public static class SplashText
         "Hello world",
         "These messages are not real.",
         "These messages are real.",
-        "These messages are not real, but they are real.",
-        "These messages are real, but they are not real.",
-        "These messages are real, but they are not real, but they are real.",
         "These messages are not cannon.",
         "These messages are cannon.",
         "These messages are not cannon, but they are cannon.",
@@ -92,6 +89,8 @@ public static class SplashText
         "We like the yap sheesh.",
         "Your not on the hi list!",
         "KEVIN!",
+        "Kermit Kujo approved, and tested",
+        "So there's this dude named grimm right, loves this character called alice and ..",
         "Damit kevin",
         "If you think this a political thing, your missing the point",
         "Goodbye, to the GR8 D2P@1R",
@@ -99,7 +98,7 @@ public static class SplashText
         "We make the homies say ho! and the girlies wanna scream!",
         "RFK Jr. put me on the autism registery... :<",
         "Someone quickly commisison Animan Studios for a cubed phi trailer!",
-        "If you give me 10,000 american, I will make a 20 hour unskippable gay sex scene with Caliban and Dante",
+        "If you give me 10,000 american, I will make a 20 hour unskippable say gex scene with Caliban and Dante",
         "20 dollars is 20 dollars",
         "If you read this, you are a loser.",
         "If you read this, you get the joke.",
@@ -114,16 +113,14 @@ public static class SplashText
         "If read this, then you know",
         "I need my autism samplier platter.",
         "Teto <<< Miku",
-        "Watch vivianevixen Steam on twitch!",
+        "Ahh, I dunnoo ",
         "Play Touhou.",
         "Watch KKHTA",
         "Watch Nixonverse",
         "Caliban is the best character.",
         "Dante is the best character.",
-        "Telesto is the best character.",
         "FOR THE LOVE OF GOD, PLEASE STOP!",
         "FOR THE LOVE OF GOD, CALIBAN IS NOT A SELF INSERT!",
-        "Would it be werid, if I told you caliban was based off my miscarried brother?",
         "Would it be werid, if I told you that some of the characters are based off people I've met?",
         "Would it be werid, if I told you that some of the characters are based off people I've met and hated?",
         "Its the Party of your lifetime.",
@@ -138,6 +135,6 @@ public static class SplashText
         "GR8 D2P@1R",
     };
     public static string GetSplashText() => Splashtext[UnityEngine.Random.Range(0, Splashtext.Length)];
-    public static string GetCurrentSplash() => CurrentSplash;
+    public static string GetCurrentSplash() => GetSplashText();
     public static string CurrentSplash = Splashtext[UnityEngine.Random.Range(0, Splashtext.Length)];
 }

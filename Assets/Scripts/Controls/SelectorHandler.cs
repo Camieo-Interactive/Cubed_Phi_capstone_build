@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 /// <summary>
 /// Handles mouse interactions with the grid, displaying a selection sprite when hovering over valid tiles.
@@ -34,6 +35,7 @@ public class SelectorHandler : MonoBehaviour
 
     [Tooltip("Sell Gameobject")]
     public GameObject sellMenu;
+    public GraphicRaycaster sellMenuRaycaster;
 
     /// <summary>
     /// Updates the position and visibility of the selection sprite based on mouse position.
@@ -72,12 +74,13 @@ public class SelectorHandler : MonoBehaviour
     {
         Vector3Int cellPosition = grid.WorldToCell(SelectionWorldPosition(position));
         GameControls.MoveReadValue = position;
-        if (EventSystem.current.IsPointerOverGameObject())
+        if (CubedPhiUtils.IsPointerOverUI(position, sellMenuRaycaster, EventSystem.current))
             return;
         if (GameManager.Instance.buildingLocations.TryGetValue(cellPosition, out var isOccupied) && isOccupied.Item1)
         {
             if (sellMenu.activeSelf) return;
-            Vector3 pos = SelectionWorldPosition(position);
+            Vector3 aboveCellOffset = new Vector3(0, grid.cellSize.y + 1.5f, 0); // Adjusted offset to align 1.5 units above the tower
+            Vector3 pos = grid.GetCellCenterWorld(cellPosition) + aboveCellOffset;
             pos.z = 0;
             sellMenu.transform.position = pos;
             sellMenu.SetActive(true);
@@ -97,15 +100,20 @@ public class SelectorHandler : MonoBehaviour
         GameManager.RaiseBitChange(-GameManager.Instance.selectedCard.stats.cardCost);
         Vector3 spawnPosition = grid.GetCellCenterWorld(cellPosition);
 
-        Debug.Log($"[SelectorHandler] Placing {GameManager.Instance.selectedCard.stats.cardObject.name} at {spawnPosition}");
+
         // Build
-        GameObject baseObject = PoolManager.Instance
-        .GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
+        if (GameManager.Instance.selectedCard.stats.cardObject != null)
+        {
+            Debug.Log($"[SelectorHandler] Placing {GameManager.Instance.selectedCard.stats.cardObject.name} at {spawnPosition}");
+            GameObject baseObject = PoolManager.Instance
+            .GetObject(GameManager.Instance.selectedCard.stats.cardObject, spawnPosition, Quaternion.identity);
 
-        Debug.Log($"[SelectorHandler] Placing {GameManager.Instance.selectedCard.stats.cardObject.name} at {spawnPosition}");
-        GameManager.levelStats.NumberOfTowersCreated++;
-        GameManager.Instance.buildingLocations.Add(grid.WorldToCell(spawnPosition), new Tuple<bool, GameObject>(true, baseObject));
+            Debug.Log($"[SelectorHandler] Placing {GameManager.Instance.selectedCard.stats.cardObject.name} at {spawnPosition}");
+            GameManager.levelStats.NumberOfTowersCreated++;
+            GameManager.Instance.buildingLocations.Add(grid.WorldToCell(spawnPosition), new Tuple<bool, GameObject>(true, baseObject));
 
+            if (TutorialMananger.Instance != null) TutorialMananger.TriggerTowerPlaced();
+        }
 
         GameManager.Instance.CardDeck.RemoveCardFromDeck(GameManager.Instance.selectedCard.gameObject);
     }

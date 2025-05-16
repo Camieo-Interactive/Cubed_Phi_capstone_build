@@ -43,6 +43,10 @@ public class GameManager : SingletonBase<GameManager>
     [Tooltip("Dictionary tracking the locations of buildings.")]
     public Dictionary<Vector3Int, Tuple<bool, GameObject>> buildingLocations = new();
     public static LevelStats levelStats = new LevelStats();
+
+    [Header("Gameplay Elements")]
+    [Tooltip("Enemies spawn bits on death")]
+    public bool enemiesSpawnBitsOnDeath = false;
     /// <summary>
     /// The total bits collected.
     /// </summary>

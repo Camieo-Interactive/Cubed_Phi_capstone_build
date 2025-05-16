@@ -33,7 +33,7 @@ public class Card : MonoBehaviour
     /// <summary>
     /// Initializes the card with a random set of stats and assigns UI elements.
     /// </summary>
-    public void Init() => Init(GameManager.Instance.currentCardList.PickRandomCard());
+    public virtual void Init() => Init(GameManager.Instance.currentCardList.PickRandomCard());
 
     public void Init(CardStats newStats)
     {
@@ -58,6 +58,9 @@ public class Card : MonoBehaviour
 
     public void SetCardProperties()
     {
+        if (cardImage == null) return;
+        if (cardNameText == null) return;
+        if (cardCostText == null) return;
         cardImage.sprite = stats.cardSprite;
         cardNameText.text = stats.cardName;
         cardCostText.text = $"Cost: {stats.cardCost}";
@@ -66,9 +69,10 @@ public class Card : MonoBehaviour
     /// <summary>
     /// Selects this card.
     /// </summary>
-    public void CardPressed()
+    public virtual void CardPressed()
     {
-        if (!cardUsed) {
+        if (!cardUsed)
+        {
             ClickAudioSource.Play();
             GameManager.Instance.selectedCard = this;
         }
@@ -77,5 +81,5 @@ public class Card : MonoBehaviour
     /// <summary>
     /// Deselects this card.
     /// </summary>
-    public void CardDeselected() => GameManager.Instance.selectedCard = null;
+    public virtual void CardDeselected() => GameManager.Instance.selectedCard = null;
 }

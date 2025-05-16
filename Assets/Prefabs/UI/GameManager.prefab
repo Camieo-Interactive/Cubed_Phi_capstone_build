@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 255514949049507292}
   - component: {fileID: 3611493839676682854}
   - component: {fileID: 7173425941902006899}
+  - component: {fileID: 8980910977898468133}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -106,6 +107,9 @@ MonoBehaviour:
   CurrentTier: 1
   LowestLane: -7
   highestLane: 0
+  strideLane: 1
+  minePrefab: {fileID: 7172660582400175214, guid: 0ba61eb0e4dd7864994a49411154826a, type: 3}
+  mineXCoordinate: -17
   enemyWaves:
   - {fileID: 11400000, guid: 6b498b267dac0c84b9a5f0534846a2d5, type: 2}
   - {fileID: 11400000, guid: f64635423baa49948b4355b3393852fd, type: 2}
@@ -113,6 +117,7 @@ MonoBehaviour:
   GameEndCanvas: {fileID: 0}
   GameOverScreen: {fileID: 0}
   GameFinishedScreen: {fileID: 0}
+  waveIncomingHandler: {fileID: 0}
 --- !u!114 &7375492940140973178
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,3 +277,15 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &8980910977898468133
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2870872479198364484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ec9c3f6b1d06b843b9ff58d0e018f23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
