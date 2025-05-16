@@ -81,7 +81,7 @@ public abstract class EnemyBase : MonoBehaviour
         // Notify the enemy manager of the death
         OnDeathCallback?.Invoke(gameObject);
         GameManager.levelStats.numberOfEnemiesKilled++;
-        if (GameManager.Instance.enemiesSpawnBitsOnDeath == true) PoolManager.Instance.GetObject(bitsParticleSystem, transform.position, quaternion.identity);
+        if (GameManager.Instance.enemiesSpawnBitsOnDeath == true) PoolManager.Instance.GetObject(bitsParticleSystem, transform.position, quaternion.identity).GetComponent<BitsController>().StartBits(10);
         if (stats.deathParticleSystem != null) PoolManager.Instance.GetObject(stats.deathParticleSystem, transform.position, Quaternion.identity);
         // Return the enemy object to the pool
         try
