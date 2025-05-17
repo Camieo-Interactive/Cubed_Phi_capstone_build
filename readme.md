@@ -1,6 +1,6 @@
 # Cubed Phi: Tower Defense Game
 
-![Cubed Phi Capstone Poster](img/CubedPhiCapstonePoster.png)
+![Cubed Phi Capstone Poster](imgs/CubedPhiCapstonePoster.png)
 
 ## Details 
 
@@ -8,7 +8,7 @@ Cubed Phi is a 2D top-down Tower Defense game built in Unity, designed for cross
 
 The game was orginaly made for Unoffical Otterjam 2025, you can play it on [Itch.io](https://xor-saber.itch.io/cubed-phi). :>
 
-![Cubed Phi Capstone Poster](img/Caliban.png)
+![Cubed Phi Capstone Poster](imgs/Caliban.png)
 
 ## Game Description
 **Cubed Phi** is a unique tower defense game where you build towers by collecting bits! The gameplay revolves around acquiring these bits by hovering over particle effects on the screen. These bits can then be used to either re-roll your current deck of cards or place new towers. Each tower has its own abilities, so experimentation is encouraged!
@@ -17,7 +17,7 @@ You win by killing all the enemies at the end of a wave, and you fail if even on
 
 ---
 
-![Cubed Phi Capstone Poster](img/Dante.png)
+![Cubed Phi Capstone Poster](imgs/Dante.png)
 
 ## Tips:
 - **Always build a bit collector at the start of a level!** This will help you accumulate bits quickly and set up your defenses more effectively.
